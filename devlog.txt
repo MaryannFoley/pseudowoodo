@@ -27,10 +27,9 @@ maryannF, jackL, thomasZ -- 2018-11-21 00:50
 - Thomas created the component map and the site map
 - Maryann and Jack wrote up the other aspects of the design doc
 ==============================================================
-fristL -- 2018-99-99 99:99
+maryannF -- 2018-11-26 00:35
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+-Fixed design.pdf
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
