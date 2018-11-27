@@ -18,7 +18,7 @@ def scramble():
     return "No hablo queso!"
 
 @app.route("/result")
-def result:
+def result():
     return "No hablo queso!"
 
 @app.route("/favs")
