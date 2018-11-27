@@ -1,36 +1,42 @@
-import urllib
+import json, os, random, sqlite3, urllib
 from urllib.parse import urlparse
-import urllib.request
-import json
-import random
-
-
 from flask import Flask,request,render_template,session,url_for,redirect
+
+DB_FILE = "database.db"
+
+db = sqlite3.connect(DB_FILE)
+c = db.cursor()
+
+#Creating our tables in our database
+c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pass TEXT)")
+
 app = Flask(__name__)
+app.secret_key=os.urandom(32)
 
 @app.route("/")
 def home():
-    return "No hablo queso!"
+    #flash errors need to be implemented
+    return render_template('home.html')
 
 @app.route("/login")
 def login():
-    return "No hablo queso!"
+    return render_template('login.html')
 
 @app.route("/signup")
 def signup():
-    return "No hablo queso!"
+    return render_template('signup.html')
 
 @app.route("/scramble")
 def scramble():
-    return "No hablo queso!"
+    return render_template('scramble.html')
 
 @app.route("/result")
 def result():
-    return "No hablo queso!"
+    return render_template('result.html')
 
-@app.route("/favs")
-def favs():
-    return "No hablo queso!"
+@app.route("/faves")
+def faves():
+    return render_template('faves.html')
 
 @app.route("/testing")
 def testing():
