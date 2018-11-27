@@ -9,8 +9,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.py#
+*.py~
+
+# text
+*.txt~
 
 # Gitignore
+.gitignore~
 
 # C extensions
 *.so
