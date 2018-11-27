@@ -40,6 +40,10 @@ thomasZ -- 2018-11-26 14:05
 - Created app.py and the routes
 - Made wordscrambler function
 ==============================================================
+maryannF -- 2018-11-27 00:40
+--------------------------------------------------------------
+- update design.pdf to reflect templates
+==============================================================
 thomasZ -- 2018-11-27 01:32
 --------------------------------------------------------------
 - Learned about and tested the Musixmatch API
