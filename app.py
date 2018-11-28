@@ -8,7 +8,8 @@ db = sqlite3.connect(DB_FILE)
 c = db.cursor()
 
 #Creating our tables in our database
-c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pass TEXT)")
+c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, pass TEXT)")
+c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, isbn TEXT)")
 
 app = Flask(__name__)
 app.secret_key=os.urandom(32)
@@ -25,6 +26,11 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
+
+@app.route("/create_account")
+def create_account():
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
 
 @app.route("/scramble")
 def scramble():
