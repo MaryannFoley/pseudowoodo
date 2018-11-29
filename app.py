@@ -24,7 +24,7 @@ def home():
 
 @app.route("/auth", methods=['POST'])
 def auth():
-    
+    # IMPORTANT: NEED TO CHECK WHY FLASHING DOESN'T WORK
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
     u.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pwd TEXT)")
