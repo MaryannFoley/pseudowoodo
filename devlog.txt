@@ -80,10 +80,16 @@ an account will store that account into the database!
 - Fixed the flashing not working (it works now for register at least)
 - Attempted to work on login functionality
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-11-29 12:42
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Logging in should be working on the backend side of things
+- That includes account verifications, flash error messages,
+adding user to session
+- Logging out also now pops the user out of session
+- The redirects also should now work
+- Home (our root page) now displays accordingly to if user is
+logged in or not (logged in, displays home.html; logged out,
+displays login.html)
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------

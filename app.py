@@ -17,8 +17,10 @@ app.secret_key=os.urandom(32)
 #==================================== HOME ====================================
 @app.route("/")
 def home():
-    #flash errors need to be implemented
-    return render_template('home.html')
+    print(session)
+    if session.get('username'):
+        return render_template('home.html')
+    return render_template('login.html')
 
 #=============================== REGISTER/LOGIN ===============================
 
@@ -44,22 +46,47 @@ def create_account():
     db.close();
     return redirect(url_for("home"))
     
-@app.route("/login", methods=['GET'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     print(session)
-    if session.get("uname"):
-        return render_template("home.html")
-    return render_template("login.html",Title = 'Login')
+    if session.get('username'):
+        return redirect(url_for("home"))
+    return render_template("login.html")
 
 @app.route("/register")
 def register():
     return render_template('register.html')
 
-@app.route("/auth")
+@app.route("/auth", methods=['POST'])
 def auth():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
+    givenUname=request.form["username"]
+    givenPwd=request.form["password"]
+    u.execute("SELECT name, pass FROM users");
+    found = False #if the user is found
+    for person in u: #for every person in the users table
+        if givenUname==person[0]:
+            found = True #user exists
+            if givenPwd==person[1]:
+                session["username"]=givenUname
+                if session.get("error"):
+                    session.pop("error")
+            else:
+                flash("Please recheck your credentials and try again.")#means password was wrong
+        if (found):
+            break #exit for loop is user is found
+    if (not found):
+        flash("Please recheck your credentials and try again.")#username was wrong
+    db.commit();
+    db.close();
+    return redirect(url_for("login"))
 
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    if session.get('username'):
+        session.pop('username')
+    return redirect(url_for('home'))
 #==================================== OTHER ====================================
     
 @app.route("/scramble")
