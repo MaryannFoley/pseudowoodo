@@ -1,6 +1,6 @@
 import json, os, random, sqlite3, urllib
 from urllib.parse import urlparse
-from flask import Flask,request,render_template,session,url_for,redirect
+from flask import flash,Flask,request,render_template,session,url_for,redirect
 
 DB_FILE = "database.db"
 
@@ -14,24 +14,53 @@ c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, isbn TEXT)")
 app = Flask(__name__)
 app.secret_key=os.urandom(32)
 
+#==================================== HOME ====================================
 @app.route("/")
 def home():
     #flash errors need to be implemented
     return render_template('home.html')
 
+#=============================== REGISTER/LOGIN ===============================
+
+@app.route("/auth", methods=['POST'])
+def auth():
+    
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    u.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pwd TEXT)")
+    uname = request.form["new_username"]
+    pwordA = request.form["new_password"]
+    pwordB = request.form["confirm_password"]
+    u.execute("SELECT name, pass FROM users");
+    for person in u:
+        if uname==person[0]: #checks if your username is unique
+            flash("Username taken")# username already exists
+            return render_template("register.html")
+    if pwordA != pwordB:
+        flash("Passwords don\'t match") # given passwords don't match
+        return render_template("register.html")
+    else:
+        u.execute("INSERT INTO users values(?,?)", (uname, pwordA))
+    db.commit();
+    db.close();
+    return redirect(url_for("home"))
+    
 @app.route("/login")
 def login():
+    print(session)
     return render_template('login.html')
 
-@app.route("/signup")
-def signup():
-    return render_template('signup.html')
+@app.route("/register")
+def register():
+    return render_template('register.html')
 
 @app.route("/create_account")
 def create_account():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
+#==================================== OTHER ====================================
+    
 @app.route("/scramble")
 def scramble():
     return render_template('scramble.html')
