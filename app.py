@@ -24,7 +24,6 @@ def home():
 
 @app.route("/create_account", methods=['POST'])
 def create_account():
-    # IMPORTANT: NEED TO CHECK WHY FLASHING DOESN'T WORK
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
     u.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pwd TEXT)")
@@ -45,10 +44,12 @@ def create_account():
     db.close();
     return redirect(url_for("home"))
     
-@app.route("/login")
+@app.route("/login", methods=['GET'])
 def login():
     print(session)
-    return render_template('login.html')
+    if session.get("uname"):
+        return render_template("home.html")
+    return render_template("login.html",Title = 'Login')
 
 @app.route("/register")
 def register():
