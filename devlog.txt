@@ -78,6 +78,7 @@ an account will store that account into the database!
 - Bug: flashing doesn't work...? [UPDATE: FIXED]
 - Fixed incorrect route names
 - Fixed the flashing not working (it works now for register at least)
+- Attempted to work on login functionality
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
