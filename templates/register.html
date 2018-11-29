@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block title %} Code Scramble - Register {% endblock %}
 {% set msgs = get_flashed_messages() %}
+{% for each in msgs %}
+{{each}}
 <br>
-{% for msg in msgs %}
-<p style="color: red">{{msg}}</p>
 {% endfor %}
-
-
 {% block content %}
 <h3><i> Register for an Code Scramble </h3></i>
-<form action="/auth" method="POST">
+<form action="/create_account" method="POST">
 
   <b>
     Username: <input type = "text" name = "new_username" placeholder = "user">

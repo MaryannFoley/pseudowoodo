@@ -22,8 +22,8 @@ def home():
 
 #=============================== REGISTER/LOGIN ===============================
 
-@app.route("/auth", methods=['POST'])
-def auth():
+@app.route("/create_account", methods=['POST'])
+def create_account():
     # IMPORTANT: NEED TO CHECK WHY FLASHING DOESN'T WORK
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
@@ -54,8 +54,8 @@ def login():
 def register():
     return render_template('register.html')
 
-@app.route("/create_account")
-def create_account():
+@app.route("/auth")
+def auth():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 

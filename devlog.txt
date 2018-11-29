@@ -75,7 +75,9 @@ thomasZ -- 2018-11-29 01:26
 --------------------------------------------------------------
 - Added registering functionality, meaning that registering
 an account will store that account into the database!
-- Bug: flashing doesn't work...?
+- Bug: flashing doesn't work...? [UPDATE: FIXED]
+- Fixed incorrect route names
+- Fixed the flashing not working (it works now for register at least)
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
