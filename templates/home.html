@@ -3,8 +3,25 @@
 {% block content %}
 
 <h1>Code Scramble</h1>
-<a href = "/scramble"><button type="button" name="books">Book</button>  </a> <br><br>
-<a href = "/scramble"><button type="button" name="movies">Movie</button>  </a> <br><br>
-<a href = "/scramble"><button type="button" name="games">Video Game</button>  </a> <br><br>
-<a href = "/scramble"><button type="button" name="Music">Music</button>  </a> <br><br>
+
+<form action="/scramble", method="POST">
+  <input type="hidden" name="media" value="Books">
+  <button type="submit">Books</button>
+</form>
+<br>
+<form action="/scramble", method="POST">
+  <input type="hidden" name="media" value="Movies">
+  <button type="submit">Movies</button>
+</form>
+<br>
+<form action="/scramble", method="POST">
+  <input type="hidden" name="media" value="Video Games">
+  <button type="submit">Video Games</button>
+</form>
+<br>
+<form action="/scramble", method="POST">
+  <input type="hidden" name="media" value="Music">
+  <button type="submit">Music</button>
+</form>
+<br>
 {% endblock %}

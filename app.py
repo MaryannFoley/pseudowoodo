@@ -89,13 +89,16 @@ def logout():
     return redirect(url_for('home'))
 #==================================== OTHER ====================================
     
-@app.route("/scramble", methods=['GET'])
+@app.route("/scramble", methods=['POST'])
 def scramble():
-    print("hello hello")
+    media_type = request.form['media']
+    types = ['Books', 'Movies', 'Video Games', 'Music']
+    for type in types:
+        if media_type == type:
+            return render_template('scramble.html', media_type=media_type)
+    print("if you get here, something's very wrong")
+    return "if you get here, something's very wrong"
     
-    print(y)
-    return render_template('scramble.html')
-
 @app.route("/result")
 def result():
     return render_template('result.html')
