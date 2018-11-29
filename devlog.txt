@@ -91,10 +91,11 @@ adding user to session
 logged in or not (logged in, displays home.html; logged out,
 displays login.html)
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-11-29 13:12
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Attempted implementing backend for the scramble template;
+unsuccessful so far (idea: hrefs will most likely need to
+become forms to pass hidden values)
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------

@@ -89,8 +89,11 @@ def logout():
     return redirect(url_for('home'))
 #==================================== OTHER ====================================
     
-@app.route("/scramble")
+@app.route("/scramble", methods=['GET'])
 def scramble():
+    print("hello hello")
+    
+    print(y)
     return render_template('scramble.html')
 
 @app.route("/result")
