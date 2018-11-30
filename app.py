@@ -1,5 +1,10 @@
-import json, os, random, sqlite3, urllib
+import json
+import os
+import random
+import sqlite3
+import urllib
 from urllib.parse import urlparse
+
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
 DB_FILE = "database.db"
@@ -45,7 +50,7 @@ def create_account():
     db.commit();
     db.close();
     return redirect(url_for("home"))
-    
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     print(session)
@@ -88,7 +93,7 @@ def logout():
         session.pop('username')
     return redirect(url_for('home'))
 #==================================== OTHER ====================================
-    
+
 @app.route("/scramble", methods=['POST'])
 def scramble():
     media_type = request.form['media']
@@ -98,7 +103,7 @@ def scramble():
             return render_template('scramble.html', media_type=media_type)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
-    
+
 @app.route("/result")
 def result():
     return render_template('result.html')
@@ -125,7 +130,7 @@ def testing():
     artist = data["message"]["body"]["track_list"][0]["track"]["artist_name"]
     print(data)
     return render_template("TESTING_ONLY.html", body=body, artist=artist)
-    
+
 
 if __name__ == "__main__":
     app.debug = True
