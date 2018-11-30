@@ -109,10 +109,10 @@ jackL -- 2018-11-29 14:05
 1. Implemented api calls for movie genres
 2. Working on obtaining a list of movies of a certain genre
 ==============================================================
-fristL -- 2018-99-99 99:99
+maryannF -- 2018-11-29 14:05
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+1. Created file BookAPI.py that will implement the book-focused apis (will later be merged with other api py files)
+2. Implemented the retrival of a list from the NYT Books API
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
