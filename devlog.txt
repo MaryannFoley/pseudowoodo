@@ -114,10 +114,9 @@ maryannF -- 2018-11-29 14:05
 1. Created file BookAPI.py that will implement the book-focused apis (will later be merged with other api py files)
 2. Implemented the retrival of a list from the NYT Books API
 ==============================================================
-fristL -- 2018-99-99 99:99
+maryannF -- 2018-11-29 22:24
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+1. Update design.pdf to include the NYT api
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
