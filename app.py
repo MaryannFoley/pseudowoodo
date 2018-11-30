@@ -15,11 +15,15 @@ c = db.cursor()
 #Creating our tables in our database
 c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, pass TEXT)")
 c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, isbn TEXT)")
+c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, movie_id TEXT)")
+c.execute("CREATE TABLE IF NOT EXISTS games_faves (user TEXT, game_id TEXT)")
+c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
 
 app = Flask(__name__)
 app.secret_key=os.urandom(32)
 
 #==================================== HOME ====================================
+
 @app.route("/")
 def home():
     print(session)
@@ -92,6 +96,21 @@ def logout():
     if session.get('username'):
         session.pop('username')
     return redirect(url_for('home'))
+
+#==================================== FAVES ====================================
+
+@app.route("/faves")
+def faves():
+    username=session.get('username')
+    return render_template('user.html', user_name=username)
+
+@app.route("/add_fav")
+def add_fave():
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    db.commit()
+    db.close()
+    return ""
 #==================================== OTHER ====================================
 
 @app.route("/scramble", methods=['POST'])
@@ -108,9 +127,7 @@ def scramble():
 def result():
     return render_template('result.html')
 
-@app.route("/faves")
-def faves():
-    return render_template('faves.html')
+
 
 @app.route("/testing")
 def testing():
