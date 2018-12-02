@@ -1,26 +1,36 @@
-{% extends "base.html" %}
-{% block title %} Code Scramble - Register {% endblock %}
-{% set msgs = get_flashed_messages() %}
-{% for each in msgs %}
-{{each}}
-<br>
-{% endfor %}
-{% block content %}
-<h3><i> Register for an Code Scramble </h3></i>
-<form action="/create_account" method="POST">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Code Scramble - Register</title>
+  </head>
 
-  <b>
-    Username: <input type = "text" name = "new_username" placeholder = "user">
-    <br><br>
-    Password&#160: <input type = "password" name = "new_password" placeholder = "password">
-    <br><br>
-    Confirm
-    <br>
-    Password&#160: <input type = "password" name = "confirm_password" placeholder = "confirm password">
-  </b>
-  <br><br>
-  <input type="submit" name="submit" value = "Register">
-  <br><br>
-</form>
+  <body>
+    <font color = 'red'>
+      {% set msgs = get_flashed_messages() %}{# program is now  aware there are flash messages #}
+      {% for each in msgs %}{# Loops through messages #}
+      <br>{{each}}
+      <br>
+      {% endfor %}
+    </font>
 
-{% endblock %}
+    <h3><i> Register for an Code Scramble </h3></i>
+    <form action="/create_account" method="POST">
+
+      <b>
+	Username: <input type = "text" name = "new_username" placeholder = "user">
+	<br><br>
+	Password&#160: <input type = "password" name = "new_password" placeholder = "password">
+	<br><br>
+	Confirm
+	<br>
+	Password&#160: <input type = "password" name = "confirm_password" placeholder = "confirm password">
+      </b>
+      <br><br>
+      <input type="submit" name="submit" value = "Register">
+      <br><br>
+    </form>
+    
+    <footer>&copy; Copyright -- pseudowoodo 2018</footer>
+
+  </body>
+</html>
