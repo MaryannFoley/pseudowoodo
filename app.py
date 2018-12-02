@@ -135,7 +135,18 @@ def scramble():
             info = BooksAPI.nyt(apigenre_type)
             #print(info)
             title = info['book_details'][0]['title']
-            title_words = title.split(" ")
+            title_words_punctuated = title.split(" ")
+            title_words = []
+            for word in title_words_punctuated:
+                no_period = word.replace('.', '')
+                no_question = no_period.replace('?', '')
+                no_exclamation = no_question.replace('!', '')
+                no_semicolon = no_exclamation.replace(';', '')
+                no_colon = no_semicolon.replace(':', '')
+                no_leftparenth = no_colon.replace('(', '')
+                no_rightparenth = no_leftparenth.replace(')', '')
+                no_quote = no_rightparenth.replace('"', '')
+                title_words.append(no_quote)
             scrambled_title_words = []
             for word in title_words:
                 scrambled_title_words.append(scrambler.scramble_word(word))

@@ -127,10 +127,11 @@ the type of media, it will load a genre selection screen
 - Implemented API call from BookAPI with one genre so now, scramble.html
 will show one singular, scrambled book title of that genre
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-12-02 18:06
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- The title's words are now passed into scramble.html
+- They are stripped of most frequent punctuation and are now all uppercase
+- Textboxes within forms are generated for each word
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------

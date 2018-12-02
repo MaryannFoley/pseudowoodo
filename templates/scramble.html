@@ -5,10 +5,21 @@
 
 <p> 
   Scrambled Title: 
-  
   {% for word in scrambled_title_words %}
   <b> {{ word }} </b>
   {% endfor %}
+
+
+  <form action="/check", method="POST">
+    
+  {% for word in title_words %}
+  <input type="text" name="guess_for_{{word}}" placeholder={{word}}>
+  <input type="hidden" name="unscrambled" value="word">
+  {% endfor %}
+
+  <button type="submit">Check your guess!</button>
+  </form>
+
 </p>
 
 {% endblock %}
