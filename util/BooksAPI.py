@@ -16,14 +16,18 @@ def nyt(genre):
         raw1=request1.read()
         jdict1=json.loads(raw1)
         results=jdict1["results"]
-        print
         rand=int(random.random()*len(results))
         #print(jdict1)
-        print(results)
-        print(rand)
+        #print(results)
+        #print('\n')
+        #print(rand)
+        
+        #print(len(results))
+        #print('\n')
+        #print(results)
         bookChoice=results[rand]
-        print(bookChoice)
-
+        
+        return bookChoice
     except Exception as e:
         raise
 nyt("combined-print-and-e-book-fiction")

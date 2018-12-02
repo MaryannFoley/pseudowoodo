@@ -7,6 +7,8 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
+from util import BooksAPI, scrambler
+
 DB_FILE = "database.db"
 
 db = sqlite3.connect(DB_FILE)
@@ -113,13 +115,33 @@ def add_fave():
     return ""
 #==================================== OTHER ====================================
 
-@app.route("/scramble", methods=['POST'])
-def scramble():
+@app.route("/genre", methods=['POST'])
+def genre():
     media_type = request.form['media']
     types = ['Books', 'Movies', 'Video Games', 'Music']
     for type in types:
         if media_type == type:
-            return render_template('scramble.html', media_type=media_type)
+            return render_template('genre.html', media_type=media_type)
+    print("if you get here, something's very wrong")
+    return "if you get here, something's very wrong"
+
+@app.route("/scramble", methods=['POST'])
+def scramble():
+    genre_type = request.form['genre']
+    apigenre_type = request.form['apigenre']
+    types = ['Combined Print and E-Book Fiction', '', '', '']
+    for type in types:
+        if genre_type == type:
+            info = BooksAPI.nyt(apigenre_type)
+            #print(info)
+            title = info['book_details'][0]['title']
+            title_words = title.split(" ")
+            scrambled_title_words = []
+            for word in title_words:
+                scrambled_title_words.append(scrambler.scramble_word(word))
+            print(title_words)
+            print(scrambled_title_words)
+            return render_template('scramble.html', genre_type=genre_type, title=title, title_words=title_words, scrambled_title_words=scrambled_title_words)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 

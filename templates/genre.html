@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} {{scramble}} {% endblock %}
+{% block content %}
+<h2> {{ media_type }} </h2>
+
+<p>
+
+  <form action="/scramble", method="POST">
+    <input type="hidden" name="genre" value="Combined Print and E-Book Fiction">
+    <input type="hidden" name="apigenre" value="combined-print-and-e-book-fiction">
+    <button type="submit">Combined Print and E-Book Fiction</button>
+  </form>
+  <br>
+  
+</p>
+
+{% endblock %}
