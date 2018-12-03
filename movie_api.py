@@ -13,8 +13,8 @@ raw = request.urlopen(url)
 info = raw.read()
 genres = json.loads(info)
 # i { 'id' : int, 'name' : 'genre name' }
-for i in genres["genres"]:
-    print(i)
+#for i in genres["genres"]:
+#    print(i)
 
 
 def get_list(genres):
@@ -27,8 +27,15 @@ def get_list(genres):
     raw = request.urlopen(url)
     info = raw.read()
     data = json.loads(info)
-    #for i in data['results']:
-    #    print('id : ' + str(i['id']) + ' title : ' + i['title'])
+    for i in data['results']:
+        print('popularity : ' + str(i['popularity']) + ' title : ' + i['title'])
+        print(get_poster(i))
+
+#input movie from data['results']
+def get_poster(movie):
+    url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/"
+    img = movie['poster_path']
+    return url + img
 
 test = [28, 35]
 get_list(test)
