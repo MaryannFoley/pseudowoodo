@@ -185,18 +185,20 @@ def check():
             #print('titlewords:', title_words)
             
             if word == request.form['guess_for_'+word].upper():
-                #print('correct!')
+                print('correct!')
                 correctly_guessed.append(True)
             else:
                 #print('yeet')
                 correctly_guessed.append(False)
-                
-            
 
-    
-    #for each in request.form:
-    return render_template('scramble.html', genre_type=genre_type, title_words=title_words,
-                           scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+    #print(request.form)
+    for each in correctly_guessed:
+        print(each)
+        if not correctly_guessed[each]:
+            #print(request.form['status_for_'+word])
+            return render_template('scramble.html', genre_type=genre_type, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+    return render_template('result.html')
+        
     
     #print(request.form)
 
