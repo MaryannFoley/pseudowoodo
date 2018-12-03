@@ -25,10 +25,8 @@ def nyt(genre):
         #print(len(results))
         #print('\n')
         #print(results)
-=======
         print(results)
         print(rand)
->>>>>>> Stashed changes:BooksAPI.py
         bookChoice=results[rand]
         
         return bookChoice
