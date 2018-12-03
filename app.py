@@ -196,7 +196,6 @@ def check():
     for each in correctly_guessed:
         print('-----')
         print(each)
-        print(correctly_guessed[each])
         print('-----')
         if not each:
             #print(request.form['status_for_'+word])

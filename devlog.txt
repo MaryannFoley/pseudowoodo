@@ -151,7 +151,8 @@ been guessed correctly
 thomasZ -- 2018-12-03 13:53
 --------------------------------------------------------------
 - Fixed bug with previous devlog entry's accomplishments
-- Another bug: single word titles, index goes out of range
+- Another bug: single word titles, index goes out of range [FIXED]
+- Above is fixed, error due to bad printing statement
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
