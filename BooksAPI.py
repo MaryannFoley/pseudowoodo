@@ -17,21 +17,11 @@ def nyt(genre):
         jdict1=json.loads(raw1)
         results=jdict1["results"]
         rand=int(random.random()*len(results))
-        #print(jdict1)
-        #print(results)
-        #print('\n')
-        #print(rand)
-        
-        #print(len(results))
-        #print('\n')
-        #print(results)
-=======
         print(results)
         print(rand)
->>>>>>> Stashed changes:BooksAPI.py
         bookChoice=results[rand]
-        
-        return bookChoice
+        print(bookChoice)
+
     except Exception as e:
         raise
 
