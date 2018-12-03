@@ -7,6 +7,8 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
+from util import BooksAPI, scrambler
+
 DB_FILE = "database.db"
 
 db = sqlite3.connect(DB_FILE)
@@ -113,15 +115,92 @@ def add_fave():
     return ""
 #==================================== OTHER ====================================
 
-@app.route("/scramble", methods=['POST'])
-def scramble():
+@app.route("/genre", methods=['POST'])
+def genre():
     media_type = request.form['media']
     types = ['Books', 'Movies', 'Video Games', 'Music']
     for type in types:
         if media_type == type:
-            return render_template('scramble.html', media_type=media_type)
+            return render_template('genre.html', media_type=media_type)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
+
+@app.route("/scramble", methods=['POST'])
+def scramble():
+    genre_type = request.form['genre']
+    apigenre_type = request.form['apigenre']
+    types = ['Combined Print and E-Book Fiction', '', '', '']
+    for type in types:
+        if genre_type == type:
+            info = BooksAPI.nyt(apigenre_type)
+            #print(info)
+            title = info['book_details'][0]['title']
+            title_words_punctuated = title.split(" ")
+            title_words = []
+            for word in title_words_punctuated:
+                no_period = word.replace('.', '')
+                no_question = no_period.replace('?', '')
+                no_exclamation = no_question.replace('!', '')
+                no_semicolon = no_exclamation.replace(';', '')
+                no_colon = no_semicolon.replace(':', '')
+                no_leftparenth = no_colon.replace('(', '')
+                no_rightparenth = no_leftparenth.replace(')', '')
+                no_quote = no_rightparenth.replace('"', '')
+                title_words.append(no_quote)
+            scrambled_title_words = []
+            correctly_guessed = []
+            for word in title_words:
+                scrambled_title_words.append(scrambler.scramble_word(word))
+                correctly_guessed.append(False)
+            print(title_words)
+            print(scrambled_title_words)
+            return render_template('scramble.html', genre_type=genre_type, title_words=title_words,
+                                   scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+    print("if you get here, something's very wrong")
+    return "if you get here, something's very wrong"
+
+@app.route("/check", methods=['POST'])
+def check():
+    print(request.form)
+    genre_type = request.form['genre']
+    title_words = []
+    scrambled_title_words = []
+    correctly_guessed = []
+    
+
+    for each in request.form:
+        print(each)
+
+    print('---------------------')
+    
+    for each in request.form:
+        if 'scrambled' in each:
+            print('word:', request.form[each])
+            word = each.split('_')[2]
+            title_words.append(word)
+            scrambled_title_words.append(request.form['scrambled_for_'+word])
+            #print(request.form['scrambled_for_'+word])
+            #print('scram-list', scrambled_title_words)
+            
+            #print('titlewords:', title_words)
+            
+            if word == request.form['guess_for_'+word].upper():
+                print('correct!')
+                correctly_guessed.append(True)
+            else:
+                #print('yeet')
+                correctly_guessed.append(False)
+
+    #print(request.form)
+    for each in correctly_guessed:
+        print(each)
+        if not correctly_guessed[each]:
+            #print(request.form['status_for_'+word])
+            return render_template('scramble.html', genre_type=genre_type, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+    return render_template('result.html')
+        
+    
+    #print(request.form)
 
 @app.route("/result")
 def result():

@@ -8,5 +8,5 @@ def scramble_word(word):
     scrambled = ""
     for letter in wordletters:
         scrambled = scrambled + letter
-    return scrambled.lower()
+    return scrambled.upper()
 
