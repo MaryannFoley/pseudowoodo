@@ -133,10 +133,11 @@ thomasZ -- 2018-12-02 18:06
 - They are stripped of most frequent punctuation and are now all uppercase
 - Textboxes within forms are generated for each word
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-12-02 21:06
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Wrote a bunch of code (took hours *sigh*)
+- Implemented a version of checker where if you get the title
+correct, it'll have no more textboxes
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------

@@ -148,13 +148,57 @@ def scramble():
                 no_quote = no_rightparenth.replace('"', '')
                 title_words.append(no_quote)
             scrambled_title_words = []
+            correctly_guessed = []
             for word in title_words:
                 scrambled_title_words.append(scrambler.scramble_word(word))
+                correctly_guessed.append(False)
             print(title_words)
             print(scrambled_title_words)
-            return render_template('scramble.html', genre_type=genre_type, title=title, title_words=title_words, scrambled_title_words=scrambled_title_words)
+            return render_template('scramble.html', genre_type=genre_type, title_words=title_words,
+                                   scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
+
+@app.route("/check", methods=['POST'])
+def check():
+    print(request.form)
+    genre_type = request.form['genre']
+    title_words = []
+    scrambled_title_words = []
+    correctly_guessed = []
+    
+
+    for each in request.form:
+        print(each)
+
+    print('---------------------')
+    
+    for each in request.form:
+        if 'scrambled' in each:
+            print('word:', request.form[each])
+            word = each.split('_')[2]
+            title_words.append(word)
+            scrambled_title_words.append(request.form['scrambled_for_'+word])
+            #print(request.form['scrambled_for_'+word])
+            #print('scram-list', scrambled_title_words)
+            
+            #print('titlewords:', title_words)
+            
+            if word == request.form['guess_for_'+word].upper():
+                #print('correct!')
+                correctly_guessed.append(True)
+            else:
+                #print('yeet')
+                correctly_guessed.append(False)
+                
+            
+
+    
+    #for each in request.form:
+    return render_template('scramble.html', genre_type=genre_type, title_words=title_words,
+                           scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+    
+    #print(request.form)
 
 @app.route("/result")
 def result():
