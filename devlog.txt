@@ -156,8 +156,8 @@ thomasZ -- 2018-12-03 13:53
 ==============================================================
 jackL -- 2018-12-03 14:09
 --------------------------------------------------------------
-1. Finished movie retrieval given genre
-2. Made poster retrieval work
+- Finished movie retrieval given genre
+- Made poster retrieval work
 ==============================================================
 thomasZ -- 2018-12-03 20:14
 --------------------------------------------------------------
@@ -165,10 +165,9 @@ thomasZ -- 2018-12-03 20:14
 - Implemented solution where you can easily add genres and their
 API-value equivalent into lists and it'll show up as buttons
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-12-03 22:09
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Implemented movie (functionality is now as far as books)
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------

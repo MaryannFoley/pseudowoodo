@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
-from util import BooksAPI, scrambler
+from util import BooksAPI, MoviesAPI, scrambler
 
 DB_FILE = "database.db"
 
@@ -26,11 +26,11 @@ app.secret_key=os.urandom(32)
 
 #============================== GLOBAL VARIABLES ==============================
 
-types_Books = ['Combined Print and E-Book Fiction', 'Science', 'Young Adult', 'Advice How-to and Miscellaneous']
-types_Books_API = ['combined-print-and-e-book-fiction', 'science', 'young-adult', 'advice-how-to-and-miscellaneous']
+types_Books = BooksAPI.nyt_genres()[0]
+types_Books_API = BooksAPI.nyt_genres()[1]
 
-types_Movies = ['blah']
-types_Movies_API = []
+types_Movies = MoviesAPI.get_genres()[0]
+types_Movies_API = MoviesAPI.get_genres()[1]
 
 types_Music = []
 types_Music_API = []
@@ -141,7 +141,7 @@ def genre():
                 types_API = types_Books_API
             elif media_type == 'Movies':
                 types = types_Movies
-                types_API == types_Movies_API
+                types_API = types_Movies_API
             elif media_type == 'Music':
                 types = types_Music
                 types_API = types_Music_API
@@ -168,15 +168,23 @@ def scramble():
     if media_type == 'Books':
         types = types_Books
         types_API = types_Books_API
+        info = BooksAPI.nyt(apigenre_type)
+        title = info['book_details'][0]['title']
     elif media_type == 'Movies':
         types = types_Movies
-        types_API == types_Movies_API
+        types_API = types_Movies_API
+        info = MoviesAPI.get_random_one([apigenre_type])
+        title = info['title'].upper()
     elif media_type == 'Music':
         types = types_Music
         types_API = types_Music_API
+        info = BooksAPI.nyt(apigenre_type)# needs to be updated
+        title = info['book_details'][0]['title']
     else:
         types = types_Games
         types_API = types_Games_API
+        info = BooksAPI.nyt(apigenre_type) #needs to be updated
+        title = info['book_details'][0]['title']
 
     #print('types', types)
     #print('types_API', types_API)
@@ -187,11 +195,11 @@ def scramble():
         #print('type:', type)
         if genre_type == type:
             #print('apigenre: ', apigenre_type)
-            info = BooksAPI.nyt(apigenre_type) #this needs to be updated for the other apis
+            
             #print(info)
             #print('-----------------------------------------')
             #print(info['book_details'])
-            title = info['book_details'][0]['title']
+            
             #print(title)
             title_words_punctuated = title.split(" ")
             title_words = []
@@ -227,21 +235,18 @@ def check():
     
 
     for each in request.form:
-        print(each)
+        print(each+': ', request.form[each])
 
-    print('---------------------')
+    #print('---------------------')
     
     for each in request.form:
         if 'scrambled' in each:
-            print('word:', request.form[each])
             word = each.split('_')[2]
+            print(word)
+            
             title_words.append(word)
             scrambled_title_words.append(request.form['scrambled_for_'+word])
-            #print(request.form['scrambled_for_'+word])
-            #print('scram-list', scrambled_title_words)
-            
-            #print('titlewords:', title_words)
-            
+                        
             if word == request.form['guess_for_'+word].upper():
                 #print('correct!')
                 correctly_guessed.append(True)
@@ -250,7 +255,7 @@ def check():
                 correctly_guessed.append(False)
 
     #print(request.form)
-    print(correctly_guessed)
+    #print(correctly_guessed)
     for each in correctly_guessed:
         #print('-----')
         #print(each)

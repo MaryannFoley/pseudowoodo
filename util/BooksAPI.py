@@ -34,7 +34,32 @@ def nyt(genre):
     except Exception as e:
         raise
 
+def nyt_genres():
+    try:
+        URLbase="https://api.nytimes.com/svc/books/v3/lists/names.json?api-key="
+        key="031e6a0aa9cc40f69ac3128de3f9d7fb"
+        request1=urllib.request.urlopen(URLbase+key)
+        raw1=request1.read()
+        jdict1=json.loads(raw1)
+        results=jdict1["results"]
 
+        list_names = []
+        list_names_encoded = []
+        
+        for each in results:
+            list_names.append(each['list_name'])
+            list_names_encoded.append(each['list_name_encoded'])
+
+        return list_names, list_names_encoded
+        
+        #print(results)
+        return results
+    except Exception as e:
+        raise
+
+#nyt_genres()
+        
+    
 #print(nyt("young-adult"))
 
 def getInfo():

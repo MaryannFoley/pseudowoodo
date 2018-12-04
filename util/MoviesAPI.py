@@ -1,4 +1,4 @@
-import json
+import json, random
 from urllib import request
 
 from flask import Flask
@@ -7,11 +7,24 @@ from flask import Flask
 # genre
 # id - way to store specific movie for favorites list
 
+def get_genres():
+    url = "https://api.themoviedb.org/3/genre/movie/list?api_key=fa2c0e8dd8956b932e67bbe3a99c3255&language=en-US"
+    raw = request.urlopen(url)
+    info = raw.read()
+    genres = json.loads(info)['genres']
 
-url = "https://api.themoviedb.org/3/genre/movie/list?api_key=fa2c0e8dd8956b932e67bbe3a99c3255&language=en-US"
-raw = request.urlopen(url)
-info = raw.read()
-genres = json.loads(info)
+    genre_numbers = []
+    genre_names = []
+
+    #print(genres)
+    
+    for genre in genres:
+        #print(genre)
+        genre_numbers.append(genre['id'])
+        genre_names.append(genre['name'])
+
+    return genre_names, genre_numbers
+    
 # i { 'id' : int, 'name' : 'genre name' }
 #for i in genres["genres"]:
 #    print(i)
@@ -27,9 +40,10 @@ def get_list(genres):
     raw = request.urlopen(url)
     info = raw.read()
     data = json.loads(info)
-    for i in data['results']:
-        print('popularity : ' + str(i['popularity']) + ' title : ' + i['title'])
-        print(get_poster(i))
+    #for i in data['results']:
+        #print('popularity : ' + str(i['popularity']) + ' title : ' + i['title'])
+        #print(get_poster(i))
+    return data['results']
 
 #input movie from data['results']
 def get_poster(movie):
@@ -37,6 +51,10 @@ def get_poster(movie):
     img = movie['poster_path']
     return url + img
 
-test = [28, 35]
-get_list(test)
+def get_random_one(test):
+    list = get_list(test)
+    return random.choice(list)
 
+test = [878]
+print(get_random_one(test))
+#print(get_list(test))
