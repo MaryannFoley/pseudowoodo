@@ -28,8 +28,10 @@ Steps to create a venv:
 
 #### Dependencies!
 - sqlite3
+
 This allows us to access the DB to save favorites
 - flask
+
 The back end framework that allows you to host the website
 - wheel
 
