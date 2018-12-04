@@ -263,7 +263,7 @@ def check():
         if not each:
             #print(request.form['status_for_'+word])
             return render_template('scramble.html', genre_type=genre_type, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
-    return render_template('result.html')
+    return redirect(url_for('result'))
         
     
     #print(request.form)
