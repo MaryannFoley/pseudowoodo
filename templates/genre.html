@@ -8,10 +8,7 @@
   {% for i in range(genres| length) %}
   <form action="/scramble", method="POST">
     <input type="hidden" name="genre" value="{{genres[i]}}">
-    {# {{genres[i]}} #}
-    {# {{genres_API[i]}} #}
     <input type="hidden" name="apigenre" value="{{genres_API[i]}}">
-    <input type="hidden" name="media_type" value={{media_type}}>
     <button type="submit">{{genres[i]}}</button>
   </form>
   {% endfor %}

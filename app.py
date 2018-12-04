@@ -26,6 +26,7 @@ app.secret_key=os.urandom(32)
 
 #============================== GLOBAL VARIABLES ==============================
 
+#===== Book Genres =====
 types_Books = BooksAPI.nyt_genres()[0]
 types_Books_API = BooksAPI.nyt_genres()[1]
 
@@ -37,6 +38,9 @@ types_Music_API = []
 
 types_Games = []
 types_Games_API = []
+
+#======== Misc =========
+
 
 #==================================== HOME ====================================
 
@@ -131,7 +135,11 @@ def add_fave():
 
 @app.route("/genre", methods=['POST'])
 def genre():
-    media_type = request.form['media']
+    session['media_type'] = request.form['media']
+    print(session)
+    
+    media_type = session.get('media_type')
+    
     types = ['Books', 'Movies', 'Video Games', 'Music']
     for type in types:
         if media_type == type:
@@ -148,59 +156,49 @@ def genre():
             else:
                 types = types_Games
                 types_API = types_Games_API
-        
+
+            session['from'] = 'genre.html'
             return render_template('genre.html', media_type=media_type, genres=types, genres_API=types_API)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 
 @app.route("/scramble", methods=['POST'])
 def scramble():
-    genre_type = request.form['genre']
-    apigenre_type = request.form['apigenre']
-    media_type = request.form['media_type']
 
-    #print('genre_type: ', genre_type)
-    #print('apigenre_type: ', apigenre_type)
-    #print('media_type: ', media_type)
-    
+    if 'from' in session and session.get('from') == "genre.html":
+        session['genre'] = request.form['genre']
+        session['genre_encoded'] = request.form['apigenre']
+        session.pop('from')
 
+    media_type = session['media_type']
+    genre = session.get('genre')
+    genre_encoded = session.get('genre_encoded')
+
+    print(session)
     
     if media_type == 'Books':
         types = types_Books
         types_API = types_Books_API
-        info = BooksAPI.nyt(apigenre_type)
+        info = BooksAPI.nyt(genre_encoded)
         title = info['book_details'][0]['title']
     elif media_type == 'Movies':
         types = types_Movies
         types_API = types_Movies_API
-        info = MoviesAPI.get_random_one([apigenre_type])
+        info = MoviesAPI.get_random_one([genre_encoded])
         title = info['title'].upper()
     elif media_type == 'Music':
         types = types_Music
         types_API = types_Music_API
-        info = BooksAPI.nyt(apigenre_type)# needs to be updated
+        info = BooksAPI.nyt(genre_encoded)# needs to be updated
         title = info['book_details'][0]['title']
     else:
         types = types_Games
         types_API = types_Games_API
-        info = BooksAPI.nyt(apigenre_type) #needs to be updated
+        info = BooksAPI.nyt(genre_encoded) #needs to be updated
         title = info['book_details'][0]['title']
 
-    #print('types', types)
-    #print('types_API', types_API)
-
-    #print('types:', types)
     for type in types:
-        #print('genre_type:', genre_type)
-        #print('type:', type)
-        if genre_type == type:
-            #print('apigenre: ', apigenre_type)
-            
-            #print(info)
-            #print('-----------------------------------------')
-            #print(info['book_details'])
-            
-            #print(title)
+        if genre == type:
             title_words_punctuated = title.split(" ")
             title_words = []
             for word in title_words_punctuated:
@@ -218,31 +216,32 @@ def scramble():
             for word in title_words:
                 scrambled_title_words.append(scrambler.scramble_word(word))
                 correctly_guessed.append(False)
-            #print(title_words)
-            #print(scrambled_title_words)
-            return render_template('scramble.html', genre_type=genre_type, title_words=title_words,
+            return render_template('scramble.html', genre=genre, title_words=title_words,
                                    scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 
 @app.route("/check", methods=['POST'])
 def check():
-    print(request.form)
-    genre_type = request.form['genre']
+
+    print(session)
+
+    #print(request.form)
+    genre = session.get('genre')
     title_words = []
     scrambled_title_words = []
     correctly_guessed = []
     
 
-    for each in request.form:
-        print(each+': ', request.form[each])
+    #for each in request.form:
+    #    print(each+': ', request.form[each])
 
     #print('---------------------')
     
     for each in request.form:
         if 'scrambled' in each:
             word = each.split('_')[2]
-            print(word)
+            #print(word)
             
             title_words.append(word)
             scrambled_title_words.append(request.form['scrambled_for_'+word])
@@ -254,15 +253,10 @@ def check():
                 #print('incorrect')
                 correctly_guessed.append(False)
 
-    #print(request.form)
-    #print(correctly_guessed)
     for each in correctly_guessed:
-        #print('-----')
-        #print(each)
-        #print('-----')
         if not each:
-            #print(request.form['status_for_'+word])
-            return render_template('scramble.html', genre_type=genre_type, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+            return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+        session['foo'] = 'this is foo'
     return redirect(url_for('result'))
         
     
@@ -270,7 +264,12 @@ def check():
 
 @app.route("/result")
 def result():
-    return render_template('result.html')
+    print(session)
+    foo = session.get('foo')
+    print(session.get('foo'))
+    session.pop('foo')
+    print(session)
+    return render_template('result.html', foo_var=foo)
 
 
 

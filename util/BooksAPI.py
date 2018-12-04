@@ -24,8 +24,8 @@ def nyt(genre):
         #print(len(results))
         #print('\n')
         #print(results)
-        print(results)
-        print(rand)
+        #print(results)
+        #print(rand)
         bookChoice=results[rand]
 
         #print(bookChoice)
@@ -68,7 +68,7 @@ def getInfo():
         request1=urllib.request.urlopen(URL)
         raw1=request1.read()
         jdict1=json.loads(raw1)
-        print(jdict1)
+        #print(jdict1)
     except Exception as e:
         raise
 
