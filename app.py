@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
-from util import BooksAPI, MoviesAPI, scrambler
+from util import BooksAPI, MoviesAPI, MusicAPI, scrambler
 
 DB_FILE = "database.db"
 
@@ -33,8 +33,8 @@ types_Books_API = BooksAPI.nyt_genres()[1]
 types_Movies = MoviesAPI.get_genres()[0]
 types_Movies_API = MoviesAPI.get_genres()[1]
 
-types_Music = []
-types_Music_API = []
+types_Music = MusicAPI.get_genres()[0]
+types_Music_API = MusicAPI.get_genres()[1]
 
 types_Games = []
 types_Games_API = []
@@ -200,16 +200,22 @@ def scramble():
         
         title = info['title'].upper()
         date = info['release_date']
+        album = info['album_name']
 
     #---------------------------
     
     elif media_type == 'Music':
         types = types_Music
         types_API = types_Music_API
-        info = BooksAPI.nyt(genre_encoded)# needs to be updated
+        info = MusicAPI.get_song(genre_encoded)['track']
         
-        title = 'insert music title here'
-        date = 'insert date here'
+        title = info['track_name']
+        date = info['first_release_date'][0:10]
+        album = info['album_name']
+        artist = info['artist_name']
+
+        session['Album'] = album
+        session['Artist'] = artist
 
     #---------------------------
         

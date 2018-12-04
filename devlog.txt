@@ -179,10 +179,11 @@ thomasZ -- 2018-12-04 16:33
 - Books functionality is complete (but PM wants us to change it?)
 - Movies functionality is on its way
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-12-04 18:39
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Music functionality is coming along
+- Music functionality is up to scramble.html showing properly;
+its and check's functionality isn't done yet
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
