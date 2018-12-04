@@ -35,6 +35,7 @@ The back end framework that allows you to host the website
 
 ## Where to obtain API keys
 [NYT Books API (Bestseller lists)](http://developer.nytimes.com/signup)
+
 [Goodreads API (Book info)](https://www.goodreads.com/api/keys)
 - You must have an account to make a Goodreads developer key
 
