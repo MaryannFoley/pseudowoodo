@@ -57,3 +57,6 @@ def get_random_one(test):
 test = [878]
 print(get_random_one(test))
 #print(get_list(test))
+
+#notes for thomas
+#title, author/director/artist/publisher, link_to_purchase

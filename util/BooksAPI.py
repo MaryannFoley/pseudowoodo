@@ -72,5 +72,5 @@ def getInfo():
     except Exception as e:
         raise
 
-#nyt("combined-print-and-e-book-fiction")
+print(nyt("combined-print-and-e-book-fiction"))
 #getInfo()

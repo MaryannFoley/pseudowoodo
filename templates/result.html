@@ -3,13 +3,14 @@
 {% block content %}
 <h2> Congratulations! You've Guess It! </h2>
 
+{% for deet in details %}
 
+{% if deet == "Amazon" %}
+<p> Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a> </p>
+{% else %}
+<p>{{deet}}: {{details[deet]}}</p>
+{% endif %}
 
-<p>
-
-  Title: {{ title }} <br>
-  
-
-</p>
+{% endfor %}
 
 {% endblock %}

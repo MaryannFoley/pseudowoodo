@@ -131,7 +131,7 @@ def add_fave():
     db.commit()
     db.close()
     return ""
-#==================================== OTHER ====================================
+#==================================== MEDIA ====================================
 
 @app.route("/genre", methods=['POST'])
 def genre():
@@ -180,39 +180,62 @@ def scramble():
         types = types_Books
         types_API = types_Books_API
         info = BooksAPI.nyt(genre_encoded)
+        
         title = info['book_details'][0]['title']
+        date = info['published_date']
+        description = info['book_details'][0]['description']
+        link = info['amazon_product_url']
+        author = info['book_details'][0]['author']
+        
+        session['Description'] = description
+        session['Amazon'] = link
+        session['Author'] = author
+
+    #---------------------------
+        
     elif media_type == 'Movies':
         types = types_Movies
         types_API = types_Movies_API
         info = MoviesAPI.get_random_one([genre_encoded])
+        
         title = info['title'].upper()
+        date = info['release_date']
+
+    #---------------------------
+    
     elif media_type == 'Music':
         types = types_Music
         types_API = types_Music_API
         info = BooksAPI.nyt(genre_encoded)# needs to be updated
-        title = info['book_details'][0]['title']
+        
+        title = 'insert music title here'
+        date = 'insert date here'
+
+    #---------------------------
+        
     else:
         types = types_Games
         types_API = types_Games_API
         info = BooksAPI.nyt(genre_encoded) #needs to be updated
+        
         title = info['book_details'][0]['title']
+        date = 'video game date ehre'
+        
+    #print(info)
 
-    session['title'] = title.upper()
+    session['Title'] = title.upper()
+    session['Date'] = date
+    print('Date', date)
         
     for type in types:
         if genre == type:
             title_words_punctuated = title.split(" ")
             title_words = []
             for word in title_words_punctuated:
-                no_period = word.replace('.', '')
-                no_question = no_period.replace('?', '')
-                no_exclamation = no_question.replace('!', '')
-                no_semicolon = no_exclamation.replace(';', '')
-                no_colon = no_semicolon.replace(':', '')
-                no_leftparenth = no_colon.replace('(', '')
-                no_rightparenth = no_leftparenth.replace(')', '')
-                no_quote = no_rightparenth.replace('"', '')
-                title_words.append(no_quote)
+
+                checked_word = remove_punct(word)
+                title_words.append(checked_word)
+
             scrambled_title_words = []
             correctly_guessed = []
             for word in title_words:
@@ -242,9 +265,7 @@ def check():
     
     for each in request.form:
         if 'scrambled' in each:
-            word = each.split('_')[2]
-            #print(word)
-            
+            word = each.split('_')[2]            
             title_words.append(word)
             scrambled_title_words.append(request.form['scrambled_for_'+word])
                         
@@ -265,32 +286,44 @@ def check():
 
 @app.route("/result")
 def result():
-    title = session.get('title')
+
     media_type = session.get('media_type')
+
+    book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon']
+    movie_deets = ['Title', 'Poster', 'Description', 'Date']
+    game_deets = []
+    music_deets = ['Title', 'Artist', 'Album', 'Date', 'Cover']
+    
+    pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}  
+
+    details = {}
+    for media in pairing:
+        if media == media_type:
+            for deet in pairing[media]:
+                details[deet] = session.get(deet)
+    
+    print(details)
+
+        
+    
     print(session)
-    return render_template('result.html', title=title)
+    return render_template('result.html', details=details)
+
+#==================================== HELPER ===================================
+
+def remove_punct(word):
+    no_period = word.replace('.', '')
+    no_question = no_period.replace('?', '')
+    no_exclamation = no_question.replace('!', '')
+    no_semicolon = no_exclamation.replace(';', '')
+    no_colon = no_semicolon.replace(':', '')
+    no_leftparenth = no_colon.replace('(', '')
+    no_rightparenth = no_leftparenth.replace(')', '')
+    no_quote = no_rightparenth.replace('"', '')
+    return no_quote
 
 
-
-@app.route("/testing")
-def testing():
-    baseurl = "http://api.musixmatch.com/ws/1.1/"
-    apikey = "&apikey=13ac239b500b6542edd7120afe6078e1" #for Musixmatch
-    letters = ["Hello", "Disturbi", "Payp"]
-    word = random.choice(letters)
-    url = baseurl + "track.search?q_track=" + word + apikey
-
-    httpresponse = urllib.request.urlopen(url) #this is initial httpresponse
-    readresponse = httpresponse.read() #we are reading response
-    decodedresponse = readresponse.decode() #we decode it for the json to load later
-    #print(readresponse)
-
-    data = json.loads(decodedresponse)
-    body = data["message"]["body"]["track_list"][0]["track"]["track_name"]
-    artist = data["message"]["body"]["track_list"][0]["track"]["artist_name"]
-    print(data)
-    return render_template("TESTING_ONLY.html", body=body, artist=artist)
-
+#===================================== RUN  ====================================
 
 if __name__ == "__main__":
     app.debug = True
