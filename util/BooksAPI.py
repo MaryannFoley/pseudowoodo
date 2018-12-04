@@ -25,6 +25,8 @@ def nyt(genre):
         #print(len(results))
         #print('\n')
         #print(results)
+        print(results)
+        print(rand)
         bookChoice=results[rand]
 
         #print(bookChoice)
@@ -33,4 +35,18 @@ def nyt(genre):
     except Exception as e:
         raise
 
+
 print(nyt("young-adult"))
+
+def getInfo():
+    try:
+	URL="https://www.goodreads.com/book/title.json?key=lKPxIV6sgpHQ2rZ51dwn9A&title=LOOK+ALIVE+TWENTY-FIVE"
+	request1=urllib.request.urlopen(URL)
+	raw1=request1.read()
+	jdict1=json.loads(raw1)
+	print(jdict1)
+	except Exception as e:
+            raise
+
+nyt("combined-print-and-e-book-fiction")
+getInfo()
