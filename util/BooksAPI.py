@@ -1,4 +1,3 @@
-
 import urllib.request
 import json
 import random
@@ -36,17 +35,17 @@ def nyt(genre):
         raise
 
 
-print(nyt("young-adult"))
+#print(nyt("young-adult"))
 
 def getInfo():
     try:
-	URL="https://www.goodreads.com/book/title.json?key=lKPxIV6sgpHQ2rZ51dwn9A&title=LOOK+ALIVE+TWENTY-FIVE"
-	request1=urllib.request.urlopen(URL)
-	raw1=request1.read()
-	jdict1=json.loads(raw1)
-	print(jdict1)
-	except Exception as e:
-            raise
+        URL="https://www.goodreads.com/book/title.json?key=lKPxIV6sgpHQ2rZ51dwn9A&title=LOOK+ALIVE+TWENTY-FIVE"
+        request1=urllib.request.urlopen(URL)
+        raw1=request1.read()
+        jdict1=json.loads(raw1)
+        print(jdict1)
+    except Exception as e:
+        raise
 
-nyt("combined-print-and-e-book-fiction")
-getInfo()
+#nyt("combined-print-and-e-book-fiction")
+#getInfo()
