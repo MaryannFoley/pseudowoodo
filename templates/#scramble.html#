@@ -25,7 +25,7 @@
     
     <input type="hidden" name="scrambled_for_{{word}}" value={{scrambled_title_words[i]}}>
     <input type="hidden" name="status_for_{{word}}" value={{correctly_guessed[i]}}>
-    <input type="hidden" name="from" value="scrambled">
+    
     
     {% endfor %}
 
