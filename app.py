@@ -197,6 +197,8 @@ def scramble():
         info = BooksAPI.nyt(genre_encoded) #needs to be updated
         title = info['book_details'][0]['title']
 
+    session['title'] = title.upper()
+        
     for type in types:
         if genre == type:
             title_words_punctuated = title.split(" ")
@@ -225,7 +227,7 @@ def scramble():
 def check():
 
     print(session)
-
+    
     #print(request.form)
     genre = session.get('genre')
     title_words = []
@@ -256,7 +258,6 @@ def check():
     for each in correctly_guessed:
         if not each:
             return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
-        session['foo'] = 'this is foo'
     return redirect(url_for('result'))
         
     
@@ -264,12 +265,10 @@ def check():
 
 @app.route("/result")
 def result():
+    title = session.get('title')
+    media_type = session.get('media_type')
     print(session)
-    foo = session.get('foo')
-    print(session.get('foo'))
-    session.pop('foo')
-    print(session)
-    return render_template('result.html', foo_var=foo)
+    return render_template('result.html', title=title)
 
 
 
