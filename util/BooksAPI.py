@@ -26,8 +26,11 @@ def nyt(genre):
         #print('\n')
         #print(results)
         bookChoice=results[rand]
-        
+
+        #print(bookChoice)
         return bookChoice
+    
     except Exception as e:
         raise
-nyt("combined-print-and-e-book-fiction")
+
+print(nyt("young-adult"))

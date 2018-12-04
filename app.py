@@ -24,6 +24,20 @@ c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
 app = Flask(__name__)
 app.secret_key=os.urandom(32)
 
+#============================== GLOBAL VARIABLES ==============================
+
+types_Books = ['Combined Print and E-Book Fiction', 'Science', 'Young Adult', 'Advice How-to and Miscellaneous']
+types_Books_API = ['combined-print-and-e-book-fiction', 'science', 'young-adult', 'advice-how-to-and-miscellaneous']
+
+types_Movies = ['blah']
+types_Movies_API = []
+
+types_Music = []
+types_Music_API = []
+
+types_Games = []
+types_Games_API = []
+
 #==================================== HOME ====================================
 
 @app.route("/")
@@ -121,7 +135,21 @@ def genre():
     types = ['Books', 'Movies', 'Video Games', 'Music']
     for type in types:
         if media_type == type:
-            return render_template('genre.html', media_type=media_type)
+            
+            if media_type == 'Books':
+                types = types_Books
+                types_API = types_Books_API
+            elif media_type == 'Movies':
+                types = types_Movies
+                types_API == types_Movies_API
+            elif media_type == 'Music':
+                types = types_Music
+                types_API = types_Music_API
+            else:
+                types = types_Games
+                types_API = types_Games_API
+        
+            return render_template('genre.html', media_type=media_type, genres=types, genres_API=types_API)
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 
@@ -129,12 +157,42 @@ def genre():
 def scramble():
     genre_type = request.form['genre']
     apigenre_type = request.form['apigenre']
-    types = ['Combined Print and E-Book Fiction', '', '', '']
+    media_type = request.form['media_type']
+
+    #print('genre_type: ', genre_type)
+    #print('apigenre_type: ', apigenre_type)
+    #print('media_type: ', media_type)
+    
+
+    
+    if media_type == 'Books':
+        types = types_Books
+        types_API = types_Books_API
+    elif media_type == 'Movies':
+        types = types_Movies
+        types_API == types_Movies_API
+    elif media_type == 'Music':
+        types = types_Music
+        types_API = types_Music_API
+    else:
+        types = types_Games
+        types_API = types_Games_API
+
+    #print('types', types)
+    #print('types_API', types_API)
+
+    #print('types:', types)
     for type in types:
+        #print('genre_type:', genre_type)
+        #print('type:', type)
         if genre_type == type:
-            info = BooksAPI.nyt(apigenre_type)
+            #print('apigenre: ', apigenre_type)
+            info = BooksAPI.nyt(apigenre_type) #this needs to be updated for the other apis
             #print(info)
+            #print('-----------------------------------------')
+            #print(info['book_details'])
             title = info['book_details'][0]['title']
+            #print(title)
             title_words_punctuated = title.split(" ")
             title_words = []
             for word in title_words_punctuated:
@@ -152,8 +210,8 @@ def scramble():
             for word in title_words:
                 scrambled_title_words.append(scrambler.scramble_word(word))
                 correctly_guessed.append(False)
-            print(title_words)
-            print(scrambled_title_words)
+            #print(title_words)
+            #print(scrambled_title_words)
             return render_template('scramble.html', genre_type=genre_type, title_words=title_words,
                                    scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
     print("if you get here, something's very wrong")
@@ -185,18 +243,18 @@ def check():
             #print('titlewords:', title_words)
             
             if word == request.form['guess_for_'+word].upper():
-                print('correct!')
+                #print('correct!')
                 correctly_guessed.append(True)
             else:
-                print('incorrect')
+                #print('incorrect')
                 correctly_guessed.append(False)
 
     #print(request.form)
     print(correctly_guessed)
     for each in correctly_guessed:
-        print('-----')
-        print(each)
-        print('-----')
+        #print('-----')
+        #print(each)
+        #print('-----')
         if not each:
             #print(request.form['status_for_'+word])
             return render_template('scramble.html', genre_type=genre_type, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)

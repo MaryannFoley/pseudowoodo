@@ -159,10 +159,11 @@ jackL -- 2018-12-03 14:09
 1. Finished movie retrieval given genre
 2. Made poster retrieval work
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-12-03 20:14
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Fixed the bug where only one-worded genres worked
+- Implemented solution where you can easily add genres and their
+API-value equivalent into lists and it'll show up as buttons
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
