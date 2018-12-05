@@ -7,8 +7,8 @@ from urllib import request
 # id - way to store specific movie for favorites list
 
 def get_genres():
-    f=open("util/MoviesKey.txt","r")
-    s=f.read()
+    f=open("./MoviesKey.txt","r")
+    s=f.read().rstrip("\n")
     f.close()
     url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+s+"&language=en-US"
     raw = request.urlopen(url)
@@ -33,8 +33,8 @@ def get_genres():
 
 
 def get_list(genres):
-    f=open("util/MoviesKey.txt","r")
-    s=f.read()
+    f=open("./MoviesKey.txt","r")
+    s=f.read().rstrip("\n")
     f.close()
     url_base = "https://api.themoviedb.org/3/discover/movie?api_key="+s+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
     g_query = "&with_genres="
