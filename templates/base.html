@@ -2,36 +2,36 @@
 <html>
   <head>
     {% block head %}
-    <title>    {% block title %} {% endblock %}</title>
+    <title> {% block title %} {% endblock %}</title>
     {% endblock %}
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
       .button{
-      font-family: "Times New Roman", Times, serif;
-      float: left;
-      background-color:#F4F4F4;
-      border: none;
-      color: black;
-      padding: 14px 16px;
-      text-align: center;
-      text-decoration: none;
-      diaplay: inline-block;
-      font-size: 15px;
-      margin: 0px 0px;
-      cursor: pointer;
+	  font-family: "Times New Roman", Times, serif;
+	  float: left;
+	  background-color:#F4F4F4;
+	  border: none;
+	  color: black;
+	  padding: 14px 16px;
+	  text-align: center;
+	  text-decoration: none;
+	  diaplay: inline-block;
+	  font-size: 15px;
+	  margin: 0px 0px;
+	  cursor: pointer;
       }
       
       body {
-      background-image: url("http://www.itaniumsolutions.org/pics/max/15/151403_black-purple-wallpaper.jpg");
-      background-position: 0px 0px; 
-      background-repeat: no-repeat;
-      background-size: cover;
-      
-      .container-fluid{
-      background-color:#F4F4F4;
-      }
-      ul.nav a:hover { color: #C0B283 !important; }
-      ul.nav a { color: #373737 !important; }
+	  background-image: url("http://www.itaniumsolutions.org/pics/max/15/151403_black-purple-wallpaper.jpg");
+	  background-position: 0px 0px; 
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	  
+	  .container-fluid{
+	      background-color:#F4F4F4;
+	  }
+	  ul.nav a:hover { color: #C0B283 !important; }
+	  ul.nav a { color: #373737 !important; }
 
 
 
@@ -40,7 +40,6 @@
     </style>
   </head>
   <body>
-<<<<<<< HEAD
     
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -56,19 +55,8 @@
     </nav>
 </br>
 
-=======
-       <a href = "/"> <button type="button" name ="LI"> Homepage </button>  </a>
-       <a href = "/logout"> <button type="button" name ="LI"> Logout </button>  </a>
-       
-       <font color = 'red'>
-	 {% set msgs = get_flashed_messages() %}{# program is now  aware there are flash messages #}
-            {% for each in msgs %}{# Loops through messages #}
-                <br>{{each}}
-                <br>
-            {% endfor %}
-       </font>
-        {% block content %}
->>>>>>> fcecad5170c1d4beb2c985832a9a220086846c78
+<a href = "/"> <button type="button" name ="LI"> Homepage </button>  </a>
+<a href = "/logout"> <button type="button" name ="LI"> Logout </button>  </a>
 
 <font color = 'red'>
   {% set msgs = get_flashed_messages() %}{# program is now  aware there are flash messages #}
@@ -78,6 +66,14 @@
   {% endfor %}
 </font>
 {% block content %}
+
+<font color = 'red'>
+  {% set msgs = get_flashed_messages() %}{# program is now  aware there are flash messages #}
+  {% for each in msgs %}{# Loops through messages #}
+  <br>{{each}}
+  <br>
+  {% endfor %}
+</font>
 
 {% endblock %}
 
