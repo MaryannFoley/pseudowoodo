@@ -40,6 +40,7 @@
     </style>
   </head>
   <body>
+<<<<<<< HEAD
     
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -55,6 +56,19 @@
     </nav>
 </br>
 
+=======
+       <a href = "/"> <button type="button" name ="LI"> Homepage </button>  </a>
+       <a href = "/logout"> <button type="button" name ="LI"> Logout </button>  </a>
+       
+       <font color = 'red'>
+	 {% set msgs = get_flashed_messages() %}{# program is now  aware there are flash messages #}
+            {% for each in msgs %}{# Loops through messages #}
+                <br>{{each}}
+                <br>
+            {% endfor %}
+       </font>
+        {% block content %}
+>>>>>>> fcecad5170c1d4beb2c985832a9a220086846c78
 
 <font color = 'red'>
   {% set msgs = get_flashed_messages() %}{# program is now  aware there are flash messages #}

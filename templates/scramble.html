@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} {{scramble}} {% endblock %}
 {% block content %}
+  
 <h2> {{ genre }} </h2>
 
 <p> 
@@ -8,7 +9,7 @@
   {% for word in scrambled_title_words %}
   <b> {{ word }} </b>
   {% endfor %}
- 
+  
   <form action="/check", method="POST">
 
     <input type="hidden" name="genre" value="{{genre_type}}">
@@ -25,7 +26,6 @@
     
     <input type="hidden" name="scrambled_for_{{word}}" value={{scrambled_title_words[i]}}>
     <input type="hidden" name="status_for_{{word}}" value={{correctly_guessed[i]}}>
-    <input type="hidden" name="from" value="scrambled">
     
     {% endfor %}
 

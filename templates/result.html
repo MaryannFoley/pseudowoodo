@@ -3,11 +3,32 @@
 {% block content %}
 <h2> Congratulations! You've Guess It! </h2>
 
+{% for deet in details %}
+
+{% if deet == "Amazon" %}
+<p> Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a> </p>
+
+{% else %}
+{% if deet == "Poster" %}
+<p> <img src={{details[deet]}} alt="Img"> </p>
+
+{% else %}
+{% if deet == "Lyrics" %}
+<p> Lyrics: <a href={{details[deet]}}>{{details[deet]}}</a> </p>
+
+{% else %}
+{% if deet == "Date" %}
+<p> Release Date: {{details[deet]}} </p>
 
 
-<p> there will be information coming up
+{% else %}
+<p>{{deet}}: {{details[deet]}}</p>
 
-  {{ foo_var }}
-</p>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
 
+
+{% endfor %}
 {% endblock %}

@@ -169,7 +169,71 @@ thomasZ -- 2018-12-03 22:09
 --------------------------------------------------------------
 - Implemented movie (functionality is now as far as books)
 ==============================================================
-fristL -- 2018-99-99 99:99
+jackL -- 2018-12-04 14:06
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Started video game api
+- cleaned up code for movie api
+==============================================================
+thomasZ -- 2018-12-04 16:33
+--------------------------------------------------------------
+- Books functionality is complete (but PM wants us to change it?)
+- Movies functionality is on its way
+==============================================================
+thomasZ -- 2018-12-04 18:39
+--------------------------------------------------------------
+- Music functionality is coming along
+- Music functionality is up to scramble.html showing properly;
+its and check's functionality isn't done yet
+==============================================================
+thomasZ -- 2018-12-05 01:20
+--------------------------------------------------------------
+- (Temporarily) commented out key reading b/c it wasn't working
+- Movie posters now show in result page
+==============================================================
+thomasZ -- 2018-12-05 01:35
+--------------------------------------------------------------
+- Books, Movies, and Music should all be working now
+- PM mentioned in class she wanted to use GoodReads API as well for
+books but it may or may not be implemented
+==============================================================
+jackL -- 2018-12-05 01:37
+--------------------------------------------------------------
+- Fixed key reading issues with api processing files
+- Completed dictionary API
+- Need to fix video game api calling
+==============================================================
+thomasZ -- 2018-12-05 13:06
+--------------------------------------------------------------
+- Implemented proper try/raise blocks
+- However, it appears a FileNotFoundError still persists despite the file
+being in plain sight in the correct directory
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
