@@ -7,19 +7,20 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
-from util import BooksAPI, MoviesAPI, MusicAPI, scrambler
+from util import BooksAPI, MoviesAPI, MusicAPI, scrambler, db
 
-DB_FILE = "database.db"
-
-db = sqlite3.connect(DB_FILE)
-c = db.cursor()
-
-#Creating our tables in our database
-c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, pass TEXT)")
-c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, isbn TEXT)")
-c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, movie_id TEXT)")
-c.execute("CREATE TABLE IF NOT EXISTS games_faves (user TEXT, game_id TEXT)")
-c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
+# DB_FILE = "database.db"
+#
+# db = sqlite3.connect(DB_FILE)
+# c = db.cursor()
+#
+# #Creating our tables in our database
+# c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, pass TEXT)")
+# c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, isbn TEXT)")
+# c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, movie_id TEXT)")
+# c.execute("CREATE TABLE IF NOT EXISTS games_faves (user TEXT, game_id TEXT)")
+# c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
+db.create()
 
 app = Flask(__name__)
 app.secret_key=os.urandom(32)
@@ -128,10 +129,10 @@ def faves():
 
     book_favorites = u.execute("SELECT * FROM book_faves, movie_faves, games_faves, music_faves WHERE book_faves.user = username")
     print(book_favorites)
-    
+
     db.commit()
     db.close()
-    
+
     return render_template('user.html', user_name=username, favorites=favorites)
 
 @app.route("/add_fav")
@@ -147,13 +148,13 @@ def add_fave():
 def genre():
     session['media_type'] = request.form['media']
     print(session)
-    
+
     media_type = session.get('media_type')
-    
+
     types = ['Books', 'Movies', 'Video Games', 'Music']
     for type in types:
         if media_type == type:
-            
+
             if media_type == 'Books':
                 types = types_Books
                 types_API = types_Books_API
@@ -185,29 +186,29 @@ def scramble():
     genre_encoded = session.get('genre_encoded')
 
     print(session)
-    
+
     if media_type == 'Books':
         types = types_Books
         types_API = types_Books_API
         info = BooksAPI.nyt(genre_encoded)
-        
+
         title = info['book_details'][0]['title']
         date = info['published_date']
         description = info['book_details'][0]['description']
         link = info['amazon_product_url']
         author = info['book_details'][0]['author']
-        
+
         session['Description'] = description
         session['Amazon'] = link
         session['Author'] = author
 
     #---------------------------
-        
+
     elif media_type == 'Movies':
         types = types_Movies
         types_API = types_Movies_API
         info = MoviesAPI.get_random_one([genre_encoded])
-        
+
         title = info['title'].upper()
         date = info['release_date']
         description = info['overview']
@@ -217,12 +218,12 @@ def scramble():
         session['Poster'] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + poster
 
     #---------------------------
-    
+
     elif media_type == 'Music':
         types = types_Music
         types_API = types_Music_API
         info = MusicAPI.get_song(genre_encoded)['track']
-        
+
         title = info['track_name'].upper()
         date = info['first_release_date'][0:10]
         album = info['album_name']
@@ -234,21 +235,21 @@ def scramble():
         session['Lyrics'] = lyrics
 
     #---------------------------
-        
+
     else:
         types = types_Games
         types_API = types_Games_API
         info = BooksAPI.nyt(genre_encoded) #needs to be updated
-        
+
         title = info['book_details'][0]['title']
         date = 'video game date ehre'
-        
+
     #print(info)
 
     session['Title'] = title.upper()
     session['Date'] = date
     print('Date', date)
-        
+
     for type in types:
         if genre == type:
             title_words_punctuated = title.split(" ")
@@ -272,25 +273,25 @@ def scramble():
 def check():
 
     print(session)
-    
+
     #print(request.form)
     genre = session.get('genre')
     title_words = []
     scrambled_title_words = []
     correctly_guessed = []
-    
+
 
     #for each in request.form:
     #    print(each+': ', request.form[each])
 
     #print('---------------------')
-    
+
     for each in request.form:
         if 'scrambled' in each:
-            word = each.split('_')[2]            
+            word = each.split('_')[2]
             title_words.append(word)
             scrambled_title_words.append(request.form['scrambled_for_'+word])
-                        
+
             if word == request.form['guess_for_'+word].upper():
                 #print('correct!')
                 correctly_guessed.append(True)
@@ -302,8 +303,8 @@ def check():
         if not each:
             return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
     return redirect(url_for('result'))
-        
-    
+
+
     #print(request.form)
 
 @app.route("/result")
@@ -315,19 +316,19 @@ def result():
     movie_deets = ['Title', 'Poster', 'Description', 'Date']
     game_deets = []
     music_deets = ['Title', 'Artist', 'Album', 'Date', 'Lyrics']
-    
-    pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}  
+
+    pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}
 
     details = {}
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
                 details[deet] = session.get(deet)
-    
+
     print(details)
 
-        
-    
+
+
     print(session)
     return render_template('result.html', details=details)
 
