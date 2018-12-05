@@ -126,7 +126,8 @@ def faves():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    favorites = u.execute("SELECT * FROM book_faves, movie_faves, games_faves, music_faves WHERE user = username")
+    book_favorites = u.execute("SELECT * FROM book_faves, movie_faves, games_faves, music_faves WHERE book_faves.user = username")
+    print(book_favorites)
     
     db.commit()
     db.close()

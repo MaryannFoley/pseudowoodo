@@ -16,7 +16,6 @@ def get_genres():
     #f=open("./MoviesKey.txt","r")
     #s=f.read().rstrip("\n")
     #f.close()
-    url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+movie_key+"&language=en-US"
     raw = request.urlopen(url)
     info = raw.read()
     genres = json.loads(info)['genres']

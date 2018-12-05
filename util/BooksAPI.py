@@ -18,7 +18,7 @@ def nyt(genre):
         #s=f.read().rstrip("\n")
         #f.close()
         #print(s)
-        URL=NYTSTUB+"api-key="+NYTKEY+"&list="+genre
+        #URL=NYTSTUB+"api-key="+NYTKEY+"&list="+genre
         request1=urllib.request.urlopen(URL)
         raw1=request1.read()
         jdict1=json.loads(raw1)
