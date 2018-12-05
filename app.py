@@ -200,7 +200,11 @@ def scramble():
         
         title = info['title'].upper()
         date = info['release_date']
-        album = info['album_name']
+        description = info['overview']
+        poster = info['poster_path']
+
+        session['Description'] = description
+        session['Poster'] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + poster
 
     #---------------------------
     

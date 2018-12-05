@@ -8,9 +8,14 @@
 {% if deet == "Amazon" %}
 <p> Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a> </p>
 {% else %}
+{% if deet == "Poster" %}
+<p> <img src={{details[deet]}} alt="Img"> </p>
+
+{% else %}
 <p>{{deet}}: {{details[deet]}}</p>
 {% endif %}
+{% endif %}
+
 
 {% endfor %}
-
 {% endblock %}
