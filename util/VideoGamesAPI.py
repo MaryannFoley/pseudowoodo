@@ -21,6 +21,14 @@ header = {
 
 
 def get_genres():
+    f=open("util/VideoGamesKey.txt","r")
+    key=f.read()
+    f.close()
+    base_url = "https://api-endpoint.igdb.com"
+    header = {
+            "user-key" : key,
+            "Accept": "application/json"
+            }
     url = ""
     raw = request.urlopen(url)
     info = raw.read()
@@ -30,21 +38,24 @@ def get_genres():
     genre_names = []
 
     #print(genres)
-    
+
     for genre in genres:
         #print(genre)
         genre_numbers.append(genre['id'])
         genre_names.append(genre['name'])
 
     return genre_names, genre_numbers
-    
+
 # i { 'id' : int, 'name' : 'genre name' }
 #for i in genres["genres"]:
 #    print(i)
 
 
 def get_list(genres):
-    url_base = "https://api.themoviedb.org/3/discover/movie?api_key=fa2c0e8dd8956b932e67bbe3a99c3255&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
+    f=open("util/VideoGamesKey1.txt","r")
+    key=f.read()
+    f.close()
+    url_base = "https://api.themoviedb.org/3/discover/movie?api_key="+key+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
     g_query = "&with_genres="
     for i in genres:
         g_query += str(i) + "%2C"
