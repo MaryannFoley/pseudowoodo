@@ -190,7 +190,9 @@ thomasZ -- 2018-12-05 01:20
 - (Temporarily) commented out key reading b/c it wasn't working
 - Movie posters now show in result page
 ==============================================================
-fristL -- 2018-99-99 99:99
+jackL -- 2018-12-05 01:37
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- Fixed key reading issues with api processing files
+- Completed dictionary API
+- Need to fix video game api calling
+
