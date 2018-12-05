@@ -1,0 +1,196 @@
+
+Team pseudowoodo - Sarar Aseer, Maryann Foley, Jack Lu, Thomas Zhao
+Softdev pd 8
+---------------------
+The DevLog of <To be named project>
+
+
+ ______   ______   __   __   __       ______   _______     
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
+==============================================================
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+Team -- 2018-11-19 13:33
+--------------------------------------------------------------
+- Created devlog.
+- Discussed possible project ideas; seems most popular idea was
+something with a book API and a dictionary API.
+==============================================================
+maryannF, jackL, thomasZ -- 2018-11-21 00:50
+--------------------------------------------------------------
+- Thomas created the component map and the site map
+- Maryann and Jack wrote up the other aspects of the design doc
+==============================================================
+maryannF -- 2018-11-26 00:35
+--------------------------------------------------------------
+- Fixed design.pdf component map
+==============================================================
+sararA -- 2018-11-26 14:03
+--------------------------------------------------------------
+- setup basic templates(base,home,login,register,scramble,favorites)
+==============================================================
+thomasZ -- 2018-11-26 14:05
+--------------------------------------------------------------
+- Created app.py and the routes
+- Made wordscrambler function
+==============================================================
+maryannF -- 2018-11-27 00:40
+--------------------------------------------------------------
+- update design.pdf to reflect templates
+==============================================================
+thomasZ -- 2018-11-27 01:32
+--------------------------------------------------------------
+- Learned about and tested the Musixmatch API
+- Create a test route/API calls for this and they worked!
+- Musixmatch seems usable to us!
+==============================================================
+sararA -- 2018-11-27 14:03
+--------------------------------------------------------------
+- added result.html
+==============================================================
+jackL -- 2018-11-27 14:10
+--------------------------------------------------------------
+- Worked on igdb (video game api)
+- Worked on tmdb (movie api)
+==============================================================
+thomasZ -- 2018-11-27 14:10
+--------------------------------------------------------------
+- Started working on the database
+==============================================================
+jackL -- 2018-11-27 13:26
+--------------------------------------------------------------
+- Worked on getting a list of games of a specific genre
+==============================================================
+thomasZ -- 2018-11-28 13:23
+--------------------------------------------------------------
+- Started creating the database
+==============================================================
+thomasZ -- 2018-11-29 01:26
+--------------------------------------------------------------
+- Added registering functionality, meaning that registering
+an account will store that account into the database!
+- Bug: flashing doesn't work...? [UPDATE: FIXED]
+- Fixed incorrect route names
+- Fixed the flashing not working (it works now for register at least)
+- Attempted to work on login functionality
+==============================================================
+thomasZ -- 2018-11-29 12:42
+--------------------------------------------------------------
+- Logging in should be working on the backend side of things
+- That includes account verifications, flash error messages,
+adding user to session
+- Logging out also now pops the user out of session
+- The redirects also should now work
+- Home (our root page) now displays accordingly to if user is
+logged in or not (logged in, displays home.html; logged out,
+displays login.html)
+==============================================================
+thomasZ -- 2018-11-29 13:12
+--------------------------------------------------------------
+- Attempted implementing backend for the scramble template;
+unsuccessful so far (idea: hrefs will most likely need to
+become forms to pass hidden values)
+==============================================================
+thomasZ -- 2018-11-29 14:00
+--------------------------------------------------------------
+- Backend for the scramble template (meaning that clicking on
+the books button will send VERY basic books info to scramble.html) works
+- Added a logout button to each page
+- Note to self: make home.html not extend base.html
+==============================================================
+jackL -- 2018-11-29 14:05
+--------------------------------------------------------------
+- Implemented api calls for movie genres
+- Working on obtaining a list of movies of a certain genre
+==============================================================
+maryannF -- 2018-11-29 14:05
+--------------------------------------------------------------
+- Created file BookAPI.py that will implement the book-focused apis
+(will later be merged with other api py files)
+- Implemented the retrival of a list from the NYT Books API
+==============================================================
+maryannF -- 2018-11-29 22:24
+--------------------------------------------------------------
+- Update design.pdf to include the NYT api
+==============================================================
+jackL -- 2018-11-30 14:08
+--------------------------------------------------------------
+1. Worked on retrieving movie list based on genre
+==============================================================
+thomasZ -- 2018-12-02 14:57
+--------------------------------------------------------------
+- Moved BookAPI.py to util
+- Created genre.html and supporting code so that after you select
+the type of media, it will load a genre selection screen
+- Implemented API call from BookAPI with one genre so now, scramble.html
+will show one singular, scrambled book title of that genre
+==============================================================
+thomasZ -- 2018-12-02 18:06
+--------------------------------------------------------------
+- The title's words are now passed into scramble.html
+- They are stripped of most frequent punctuation and are now all uppercase
+- Textboxes within forms are generated for each word
+==============================================================
+thomasZ -- 2018-12-02 21:06
+--------------------------------------------------------------
+- Wrote a bunch of code (took hours *sigh*)
+- Implemented a version of checker where if you get the title
+correct, it'll have no more textboxes
+==============================================================
+thomasZ	-- 2018-12-03 10:13
+--------------------------------------------------------------
+- Wrote the code that will direct you to result.html when all fields have
+been guessed correctly
+==============================================================
+thomasZ -- 2018-12-03 13:53
+--------------------------------------------------------------
+- Fixed bug with previous devlog entry's accomplishments
+- Another bug: single word titles, index goes out of range [FIXED]
+- Above is fixed, error due to bad printing statement
+==============================================================
+jackL -- 2018-12-03 14:09
+--------------------------------------------------------------
+- Finished movie retrieval given genre
+- Made poster retrieval work
+==============================================================
+thomasZ -- 2018-12-03 20:14
+--------------------------------------------------------------
+- Fixed the bug where only one-worded genres worked
+- Implemented solution where you can easily add genres and their
+API-value equivalent into lists and it'll show up as buttons
+==============================================================
+thomasZ -- 2018-12-03 22:09
+--------------------------------------------------------------
+- Implemented movie (functionality is now as far as books)
+==============================================================
+jackL -- 2018-12-04 14:06
+--------------------------------------------------------------
+- Started video game api
+- cleaned up code for movie api
+==============================================================
+thomasZ -- 2018-12-04 16:33
+--------------------------------------------------------------
+- Books functionality is complete (but PM wants us to change it?)
+- Movies functionality is on its way
+==============================================================
+thomasZ -- 2018-12-04 18:39
+--------------------------------------------------------------
+- Music functionality is coming along
+- Music functionality is up to scramble.html showing properly;
+its and check's functionality isn't done yet
+==============================================================
+thomasZ -- 2018-12-05 01:20
+--------------------------------------------------------------
+- (Temporarily) commented out key reading b/c it wasn't working
+- Movie posters now show in result page
+
+fristL -- 2018-99-99 99:99
+--------------------------------------------------------------
+1. Thing that happened
+2. Thing that happened
