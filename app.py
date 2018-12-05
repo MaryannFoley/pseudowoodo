@@ -57,13 +57,10 @@ def home():
 
 @app.route("/create_account", methods=['POST'])
 def create_account():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
-    u.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pwd TEXT)")
     uname = request.form["new_username"]
     pwordA = request.form["new_password"]
     pwordB = request.form["confirm_password"]
-    u.execute("SELECT name, pass FROM users");
+    u=db.checkAccts()
     for person in u:
         if uname==person[0]: #checks if your username is unique
             flash("Username taken")# username already exists
@@ -72,9 +69,7 @@ def create_account():
         flash("Passwords don\'t match") # given passwords don't match
         return render_template("register.html")
     else:
-        u.execute("INSERT INTO users values(?,?)", (uname, pwordA))
-    db.commit();
-    db.close();
+        db.createAcct(uname,pwordA)
     return redirect(url_for("home"))
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -90,11 +85,9 @@ def register():
 
 @app.route("/auth", methods=['POST'])
 def auth():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
     givenUname=request.form["username"]
     givenPwd=request.form["password"]
-    u.execute("SELECT name, pass FROM users");
+    u=db.checkAccts()
     found = False #if the user is found
     for person in u: #for every person in the users table
         if givenUname==person[0]:
@@ -109,8 +102,6 @@ def auth():
             break #exit for loop is user is found
     if (not found):
         flash("Please recheck your credentials and try again.")#username was wrong
-    db.commit();
-    db.close();
     return redirect(url_for("login"))
 
 @app.route("/logout", methods=['GET', 'POST'])
