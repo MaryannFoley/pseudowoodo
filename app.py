@@ -128,10 +128,10 @@ def faves():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    book_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT)")
-    movie_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, description TEXT, date TEXT)")
-    game_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT)")
-    music_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT)")
+    book_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT);")
+    movie_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, description TEXT, date TEXT);")
+    game_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT);")
+    music_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT);")
 
     print(book_favorites)
 
