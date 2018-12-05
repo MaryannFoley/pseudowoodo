@@ -3,31 +3,35 @@
 {% block content %}
 <br><br>
 
-<h3> {{user_name}}'s Faves </h3>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <h2>Favorites </h2>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4" style="background-color:#F4F4F4;">
+      Title
+    </div>
+  </div>
+  {% for info in favorites %}
+  <div class="row">
+    <div class="col-sm-4" style="background-color:#F4F4F4;">
+      {{info}}
+       </div>
+  </div>
+   <div class="row">
+    <div class="col-sm-4" style="background-color:#F4F4F4;">
+  <form action = '/favorites'>
+    <input type="submit" name="submit" value = "{{info}}">
+    
+    {% endfor %}
+      </div>
+  </div>
+</div>
 
-<h4> Favorites </h4>
-<table>
-     <thead>
-          <tr>
-               <td> <b> Title &emsp;</b> </td>
-               <td> <b> Info </b> </td>
-          </tr>
-     </thead>
-     <tbody>
-          {% for info in favorites %}
-          <tr>
-               <td>
-                    {{info}}
-               </td>
-               <td>
-                    <form action = '/favorites'>
-                         <input type="submit" name="submit" value = "{{info}}">
-                    </form>
-               </td>
-          </tr>
-          {% endfor %}
-
-</table>
 <br>
 
 <br><br>
