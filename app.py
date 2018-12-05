@@ -122,7 +122,16 @@ def logout():
 @app.route("/faves")
 def faves():
     username=session.get('username')
-    return render_template('user.html', user_name=username)
+
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+
+    favorites = u.execute("SELECT * FROM book_faves, movie_faves, games_faves, music_faves WHERE user = username")
+    
+    db.commit()
+    db.close()
+    
+    return render_template('user.html', user_name=username, favorites=favorites)
 
 @app.route("/add_fav")
 def add_fave():
