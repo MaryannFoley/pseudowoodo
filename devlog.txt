@@ -202,10 +202,11 @@ jackL -- 2018-12-05 01:37
 - Completed dictionary API
 - Need to fix video game api calling
 ==============================================================
-firstL -- 2018-00-00 00:00
+thomasZ -- 2018-12-05 13:06
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Implemented proper try/raise blocks
+- However, it appears a FileNotFoundError still persists despite the file
+being in plain sight in the correct directory
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------
