@@ -12,5 +12,3 @@ def create():
     c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, movie_id TEXT)")
     c.execute("CREATE TABLE IF NOT EXISTS games_faves (user TEXT, game_id TEXT)")
     c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
-
-def

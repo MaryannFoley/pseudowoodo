@@ -20,6 +20,7 @@ from util import BooksAPI, MoviesAPI, MusicAPI, scrambler, db
 # c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, movie_id TEXT)")
 # c.execute("CREATE TABLE IF NOT EXISTS games_faves (user TEXT, game_id TEXT)")
 # c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
+
 db.create()
 
 app = Flask(__name__)
@@ -127,7 +128,10 @@ def faves():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    book_favorites = u.execute("SELECT * FROM book_faves WHERE book_faves.user == (?)", username)
+    book_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT)")
+    movie_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, description TEXT, date TEXT)")
+    game_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT)")
+    music_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT)")
     print(book_favorites)
 
     db.commit()
