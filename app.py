@@ -9,7 +9,7 @@ from flask import flash,Flask,request,render_template,session,url_for,redirect
 
 from util import BooksAPI, MoviesAPI, MusicAPI, scrambler, db
 
-# DB_FILE = "database.db"
+DB_FILE = "database.db"
 #
 # db = sqlite3.connect(DB_FILE)
 # c = db.cursor()
@@ -322,8 +322,6 @@ def result():
                 details[deet] = session.get(deet)
 
     print(details)
-
-
 
     print(session)
     return render_template('result.html', details=details)
