@@ -6,11 +6,13 @@ from urllib import request
 # genre
 # id - way to store specific movie for favorites list
 
+movie_key = "fa2c0e8dd8956b932e67bbe3a99c3255"
+
 def get_genres():
-    f=open("./MoviesKey.txt","r")
-    s=f.read().rstrip("\n")
-    f.close()
-    url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+s+"&language=en-US"
+    #f=open("./MoviesKey.txt","r")
+    #s=f.read().rstrip("\n")
+    #f.close()
+    url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+movie_key+"&language=en-US"
     raw = request.urlopen(url)
     info = raw.read()
     genres = json.loads(info)['genres']
@@ -33,10 +35,10 @@ def get_genres():
 
 
 def get_list(genres):
-    f=open("./MoviesKey.txt","r")
-    s=f.read().rstrip("\n")
-    f.close()
-    url_base = "https://api.themoviedb.org/3/discover/movie?api_key="+s+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
+    #f=open("./MoviesKey.txt","r")
+    #s=f.read().rstrip("\n")
+    #f.close()
+    url_base = "https://api.themoviedb.org/3/discover/movie?api_key="+movie_key+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
     g_query = "&with_genres="
     for i in genres:
         g_query += str(i) + "%2C"
