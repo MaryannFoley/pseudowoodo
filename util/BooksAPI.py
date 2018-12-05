@@ -14,6 +14,11 @@ def nyt(genre):
         s=f.read().rstrip("\n")
         f.close()
         URL=NYTSTUB+"api-key="+s+"&list="+genre
+        #f=open('./BooksKey.txt','r')
+        #s=f.read().rstrip("\n")
+        #f.close()
+        #print(s)
+        URL=NYTSTUB+"api-key="+NYTKEY+"&list="+genre
         request1=urllib.request.urlopen(URL)
         raw1=request1.read()
         jdict1=json.loads(raw1)
@@ -42,8 +47,11 @@ def nyt_genres():
         f=open("util/BooksKey.txt","r")
         s=f.read().rstrip("\n")
         f.close()
+        #f=open('./BooksKey.txt','r')
+        #s=f.read().rstrip("\n")
+        #f.close()
         URLbase="https://api.nytimes.com/svc/books/v3/lists/names.json?api-key="
-        request1=urllib.request.urlopen(URLbase+s)
+        request1=urllib.request.urlopen(URLbase+NYTKEY)
         raw1=request1.read()
         jdict1=json.loads(raw1)
         results=jdict1["results"]

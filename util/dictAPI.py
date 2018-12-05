@@ -6,17 +6,21 @@ from urllib import request
 # genre
 # id - way to store specific movie for favorites list
 
-def get_def():
+def get_def(word):
     f=open("./dictKey.txt","r")
     s=f.read().rstrip("\n")
     f.close()
-    url = ""
+    url = "https://dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + s
     raw = request.urlopen(url)
-    info = raw.read()
-    genres = json.loads(info)['genres']
+    info = json.loads(raw.read())
+    defin = []
+    for i in info:
+        defin.append(i['shortdef'])
+
+    #for i in defin:
+    #    print(i)
+    #    print("\n")
 
 
-
-
-word = "velocity"
-print(get_def(word))
+word = "jack"
+get_def(word)

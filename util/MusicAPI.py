@@ -3,6 +3,8 @@ import json
 import random
 
 #another key: f5362a758e0fb53042df13ded7a45825
+# the key: 13ac239b500b6542edd7120afe6078e1
+
 
 def get_song(genre):
     try:
@@ -12,6 +14,11 @@ def get_song(genre):
         print(type(s))
         f.close()
         url = baseurl +s+ "track.search?f_lyrics_language=en&f_music_genre_id=" + genre
+        baseurl = "http://api.musixmatch.com/ws/1.1/"
+        #f=open("./MusicKey.txt","r")
+        #s=f.read().rsplit("\n")
+        #f.close()
+        url = baseurl+"track.search?f_lyrics_language=en&f_music_genre_id=" + genre + '&apikey=' + s
 
         httpresponse = urllib.request.urlopen(url) #this is initial httpresponse
         readresponse = httpresponse.read() #we are reading response
@@ -19,9 +26,6 @@ def get_song(genre):
         #print(readresponse)
 
         data = json.loads(decodedresponse)['message']['body']['track_list']
-        print(data)
-
-       # print(data)
 
         song_choice = random.choice(data)
 
@@ -37,10 +41,15 @@ def get_song(genre):
 def get_genres():
     try:
         f=open("util/MusicKey.txt","r")
-        s=f.read().rsplit("\n")
+        s=f.read().rstrip("\n")
         f.close()
         baseurl = "http://api.musixmatch.com/ws/1.1/&apikey="
         url = baseurl + s+"music.genres.get?"
+        #f=open("./MusicKey.txt","r")
+        #s=f.read().rsplit("\n")
+        #f.close()
+        baseurl = "http://api.musixmatch.com/ws/1.1/"
+        url = baseurl +"music.genres.get?apikey="+s
 
         httpresponse = urllib.request.urlopen(url) #this is initial httpresponse
         readresponse = httpresponse.read() #we are reading response
