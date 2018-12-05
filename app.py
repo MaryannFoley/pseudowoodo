@@ -132,6 +132,7 @@ def faves():
     movie_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, description TEXT, date TEXT)")
     game_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT)")
     music_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT)")
+
     print(book_favorites)
 
     db.commit()
