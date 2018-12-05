@@ -185,10 +185,10 @@ thomasZ -- 2018-12-04 18:39
 - Music functionality is up to scramble.html showing properly;
 its and check's functionality isn't done yet
 ==============================================================
-fristL -- 2018-99-99 99:99
+thomasZ -- 2018-12-05 01:20
 --------------------------------------------------------------
-1. Thing that happened
-2. Thing that happened
+- (Temporarily) commented out key reading b/c it wasn't working
+- Movie posters now show in result page
 ==============================================================
 fristL -- 2018-99-99 99:99
 --------------------------------------------------------------
