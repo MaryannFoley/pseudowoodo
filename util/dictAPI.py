@@ -21,6 +21,7 @@ def get_def(word):
     #    print(i)
     #    print("\n")
 
+    return defin
 
 word = "jack"
 get_def(word)

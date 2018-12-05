@@ -8,7 +8,7 @@ import random
 
 def get_song(genre):
     try:
-        f=open("MusicKey.txt","r")
+        f=open("util/MusicKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
     
@@ -41,7 +41,7 @@ def get_song(genre):
 
 def get_genres():
     try:
-        f=open("MusicKey.txt","r")
+        f=open("util/MusicKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
     

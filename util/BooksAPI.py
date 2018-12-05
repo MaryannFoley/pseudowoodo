@@ -10,7 +10,7 @@ NYTKEY="031e6a0aa9cc40f69ac3128de3f9d7fb"
 
 def nyt(genre):
     try:
-        f=open("BooksKey.txt","r")
+        f=open("util/BooksKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
 
@@ -49,7 +49,7 @@ def nyt(genre):
 
 def nyt_genres():
     try:
-        f=open("BooksKey.txt","r")
+        f=open("util/BooksKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
     
