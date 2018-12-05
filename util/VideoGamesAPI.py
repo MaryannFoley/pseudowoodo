@@ -7,7 +7,7 @@ from urllib import request
 # id - way to store specific movie for favorites list
 
 def get_genres():
-    f = open("./VideoGamesKey.txt","r")
+    f = open("../VideoGamesKey.txt","r")
     key=f.read()
     f.close()
     key = key.rstrip("\n")
@@ -19,10 +19,13 @@ def get_genres():
             "User-key" : key,
             }
     url = base_url + "/genres/"
+
     print(url)
     print(header)
     print(header['User-key'])
+
     r = request.Request(url, headers = header )
+
     print(r.has_header("User-key"))
     print(r.has_header("Accept"))
     print(r)
