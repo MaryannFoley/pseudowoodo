@@ -1,18 +1,47 @@
 {% extends "base.html" %}
 {% block title %} {{scramble}} {% endblock %}
 {% block content %}
-<h2> {{ media_type }} </h2>
+<head>
+  <style>
+  .button{
+  background-color: #F4F4F4;
+  border:none;
+  color:black;
+  padding: 15px 32px;
+  text-align:center;
+  text-decoration:none;
+  diplay:inline-block;
+  font-size:16px;
+  margin:0px 0px;
+  curspor:pointer;
+  }
+  </style>
+</head>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+
+      <h2> {{ media_type }} </h2>
+    </div>
+  </div>
+</div>
+
+
 
 <p>
-
+  <div class="container-fluid">
+    <div class="row">
   {% for i in range(genres| length) %}
-  <form action="/scramble", method="POST">
-    <input type="hidden" name="genre" value="{{genres[i]}}">
-    <input type="hidden" name="apigenre" value="{{genres_API[i]}}">
-    <button type="submit">{{genres[i]}}</button>
-  </form>
-  {% endfor %}
-  
+  <div class="col-sm-3" style="background-color:#F4F4F4;">
+	<form action="/scramble", method="POST">
+	  <input type="hidden" name="genre" value="{{genres[i]}}">
+	  <input type="hidden" name="apigenre" value="{{genres_API[i]}}">
+	  <button class="button "type="submit">{{genres[i]}}</button>
+	</form>
+      </div>
+      {% endfor %}
+    </div>
+
   <br>
   
 </p>
