@@ -15,16 +15,20 @@ def get_genres():
 
     base_url = "https://api-endpoint.igdb.com"
     header = {
-            "user-key" : key,
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "User-key" : key,
             }
-    #print("|" + header["user-key"] + "|")
     url = base_url + "/genres/"
-    r = request.Request(url, header)
+    print(url)
+    print(header)
+    r = request.Request(url, headers = header )
+    print(r.has_header("User-key"))
+    print(r.has_header("Accept"))
+    print(r)
 
     raw = request.urlopen(r)
-    info = raw.read()
-    print(info)
+    #info = raw.read()
+    #print(info)
     #genres = json.loads(info)
 
     #print(genres)

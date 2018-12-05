@@ -7,8 +7,9 @@ import random
 def get_song(genre):
     try:
         baseurl = "http://api.musixmatch.com/ws/1.1/&apikey="
-        f=open("./MusicKey.txt","r")
-        s=f.read().rsplit("\n")
+        f=open("util/MusicKey.txt","r")
+        s=f.read().rstrip("\n")
+        print(type(s))
         f.close()
         url = baseurl +s+ "track.search?f_lyrics_language=en&f_music_genre_id=" + genre
 
@@ -18,6 +19,7 @@ def get_song(genre):
         #print(readresponse)
 
         data = json.loads(decodedresponse)['message']['body']['track_list']
+        print(data)
 
        # print(data)
 
@@ -34,7 +36,7 @@ def get_song(genre):
 
 def get_genres():
     try:
-        f=open("./MusicKey.txt","r")
+        f=open("util/MusicKey.txt","r")
         s=f.read().rsplit("\n")
         f.close()
         baseurl = "http://api.musixmatch.com/ws/1.1/&apikey="

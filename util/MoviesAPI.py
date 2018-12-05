@@ -7,7 +7,7 @@ from urllib import request
 # id - way to store specific movie for favorites list
 
 def get_genres():
-    f=open("./MoviesKey.txt","r")
+    f=open("util/MoviesKey.txt","r")
     s=f.read().rstrip("\n")
     f.close()
     url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+s+"&language=en-US"
@@ -33,7 +33,7 @@ def get_genres():
 
 
 def get_list(genres):
-    f=open("./MoviesKey.txt","r")
+    f=open("util/MoviesKey.txt","r")
     s=f.read().rstrip("\n")
     f.close()
     url_base = "https://api.themoviedb.org/3/discover/movie?api_key="+s+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
@@ -61,7 +61,7 @@ def get_random_one(test):
     return random.choice(list)
 
 test = [878]
-print(get_random_one(test))
+#print(get_random_one(test))
 #print(get_list(test))
 
 #notes for thomas
