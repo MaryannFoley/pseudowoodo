@@ -4,8 +4,8 @@
 <head>
   <style>
   .button{
-  background-color: #F4F4F4;
-  border:none;
+  background-color: #6DAEDB;
+  border:2px solid black;
   color:black;
   padding: 15px 32px;
   text-align:center;
@@ -19,7 +19,7 @@
 </head>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-12" style="background-color:#F4F4F4;">
+    <div class="col-sm-12" style="background-color:#6DAEDB;">
 
       <h2> {{ media_type }} </h2>
     </div>
@@ -32,7 +32,7 @@
   <div class="container-fluid">
     <div class="row">
   {% for i in range(genres| length) %}
-  <div class="col-sm-3" style="background-color:#F4F4F4;">
+  <div class="col-sm-3" style="background-color:#6DAEDB;">
 	<form action="/scramble", method="POST">
 	  <input type="hidden" name="genre" value="{{genres[i]}}">
 	  <input type="hidden" name="apigenre" value="{{genres_API[i]}}">

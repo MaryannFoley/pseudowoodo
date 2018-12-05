@@ -1,34 +1,59 @@
 {% extends "base.html" %}
 {% block title %} something {% endblock %}
 {% block content %}
-<h2> Congratulations! You've Guess It! </h2>
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-sm-12" style="background-color:#94C4E4;">
+      <h2> <center>Congratulations! You've Guess It! </center></h2>
+    </div>
+  </div>
+</div>
+</br>
+<div class="container-fluid">
+  {% for deet in details %}
+  {% if deet == "Amazon" %}
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#94C4E4;">
+      <p> <center>Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a></center> </p>
+    </div>
+      </div>
 
-{% for deet in details %}
+  {% else %}
+    {% if deet == "Lyrics" %}
+      <div class="row ">
+    <div class="col-sm-12" style="background-color:#94C4E4;">
+      <p> <center>Lyrics: <a href={{details[deet]}}>{{details[deet]}}</a></center> </p>
+  </div>
+    </div>
 
-{% if deet == "Amazon" %}
-<p> Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a> </p>
+  {% else %}
+    {% if deet == "Date" %}
+      <div class="row">
 
-{% else %}
+    <div class="col-sm-12" style="background-color:#94C4E4;">
+      <p> <center>Release Date: {{details[deet]}}</center> </p>
+    </div>
+      </div>
+        {% else %}
 {% if deet == "Poster" %}
-<p> <img src={{details[deet]}} alt="Img"> </p>
+      <div class="row">
+    <div class="col-sm-12" style="background-color:#94C4E4;">
+      <p><center> <img src={{details[deet]}} alt="Img"></center> </p>
+    </div>
+      </div>
+    {% else %}
+      <div class="row">
+    <div class="col-sm-12" style="background-color:#94C4E4;">
+      <p><center>{{deet}}: {{details[deet]}}</center></p>
+    </div>
+      </div>
+      
+</div>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
 
-{% else %}
-{% if deet == "Lyrics" %}
-<p> Lyrics: <a href={{details[deet]}}>{{details[deet]}}</a> </p>
 
-{% else %}
-{% if deet == "Date" %}
-<p> Release Date: {{details[deet]}} </p>
-
-
-{% else %}
-<p>{{deet}}: {{details[deet]}}</p>
-
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-
-
-{% endfor %}
-{% endblock %}
+  {% endfor %}
+  {% endblock %}
