@@ -11,17 +11,21 @@ def get_def(word):
     s=f.read().rstrip("\n")
     f.close()
     url = "https://dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + s
-    raw = request.urlopen(url)
-    info = json.loads(raw.read())
-    defin = []
-    for i in info:
-        defin.append(i['shortdef'])
+    try:
+        raw = request.urlopen(url)
+        info = json.loads(raw.read())
+        defin = []
+        for i in info:
+            defin.append(i['shortdef'])
 
-    #for i in defin:
-    #    print(i)
-    #    print("\n")
+        for i in defin:
+            print(i)
+            print("\n")
+    except:
+        # wont be scrambled
+        print("NO")
 
     return defin
 
-word = "jack"
+word = "twenty-five"
 get_def(word)

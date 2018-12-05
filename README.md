@@ -55,4 +55,5 @@ To install dependencies, run `pip3 install -r requirements.txt`
 1. Activate your virtual enviornment
 2. Clone and cd into this repo
 3. Run `python3 app.py`
+    - Note: run app.py in pseudowoodo directory because our files utilize relative paths.
 4. Enjoy!
