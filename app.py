@@ -126,13 +126,13 @@ def faves():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    book_favorites = u.execute("SELECT * FROM book_faves, movie_faves, games_faves, music_faves WHERE book_faves.user = username")
+    book_favorites = u.execute("SELECT * FROM book_faves WHERE book_faves.user == (?)", username)
     print(book_favorites)
     
     db.commit()
     db.close()
     
-    return render_template('user.html', user_name=username, favorites=favorites)
+    return render_template('user.html', user_name=username)
 
 @app.route("/add_fav")
 def add_fave():
