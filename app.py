@@ -213,13 +213,15 @@ def scramble():
         types_API = types_Music_API
         info = MusicAPI.get_song(genre_encoded)['track']
         
-        title = info['track_name']
+        title = info['track_name'].upper()
         date = info['first_release_date'][0:10]
         album = info['album_name']
         artist = info['artist_name']
+        lyrics = info['track_share_url']
 
         session['Album'] = album
         session['Artist'] = artist
+        session['Lyrics'] = lyrics
 
     #---------------------------
         
@@ -302,7 +304,7 @@ def result():
     book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon']
     movie_deets = ['Title', 'Poster', 'Description', 'Date']
     game_deets = []
-    music_deets = ['Title', 'Artist', 'Album', 'Date', 'Cover']
+    music_deets = ['Title', 'Artist', 'Album', 'Date', 'Lyrics']
     
     pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}  
 
