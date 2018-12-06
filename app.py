@@ -420,7 +420,7 @@ def result():
     else:
         in_faves = False
 
-    #print('in_faves', in_faves)   
+    print('in_faves', in_faves)   
 
     db.commit()
     db.close()
