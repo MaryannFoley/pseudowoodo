@@ -217,10 +217,12 @@ thomasZ -- 2018-12-05 19:40
 and clicking the "More Information" button in favorites
 - Implemented the display of favorite's more information at /result
 ==============================================================
-firstL -- 2018-00-00 00:00
+thomasZ -- 2018-12-06 00:23
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Implemented the adding of favorites
+- Bug: you can add the same thing to faves multiple times
+- Created Add to Faves button on results page
+- Created backend compatible from multiple pathways for viewing result.html & fave things
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------

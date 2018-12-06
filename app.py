@@ -146,13 +146,37 @@ def add_fave():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    #get media type
-    #add to correct database
+    print(request.args)
+    user = session.get('username')
+    media_type = request.args['Type']
+    title = request.args['Title']
     
+    if media_type == 'Books':
+        author = request.args['Author']
+        description = request.args['Description']
+        date = request.args['Date']
+        amazon = request.args['Amazon']
+        u.execute('INSERT INTO book_faves VALUES (?,?,?,?,?,?,?)', (user, media_type, title, author, description, date, amazon))
+
+    elif media_type == 'Movies':
+        poster = request.args['Poster']
+        description = request.args['Description']
+        date = request.args['Date']
+        u.execute('INSERT INTO movie_faves VALUES (?,?,?,?,?,?)', (user, media_type, title, poster, description, date))
+
+    elif media_type == 'Music':
+        artist = request.args['Artist']
+        album = request.args['Album']
+        date = request.args['Date']
+        lyrics = request.args['Lyrics']
+        u.execute('INSERT INTO music_faves VALUES (?,?,?,?,?,?,?)', (user, media_type, title, artist, album, date, lyrics))
+
+    else:
+        u.execute('INSERT INTO game_faves VALUES (?,?,?)', (user, media_type, title))
     
     db.commit()
     db.close()
-    return ""
+    return redirect(url_for('faves'))
 #==================================== MEDIA ====================================
 
 @app.route("/genre", methods=['POST'])
@@ -321,10 +345,10 @@ def check():
 
 @app.route("/result")
 def result():
-    book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon']
-    movie_deets = ['Title', 'Poster', 'Description', 'Date']
+    book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon', 'Type']
+    movie_deets = ['Title', 'Poster', 'Description', 'Date', 'Type']
     game_deets = []
-    music_deets = ['Title', 'Artist', 'Album', 'Date', 'Lyrics']
+    music_deets = ['Title', 'Artist', 'Album', 'Date', 'Lyrics', 'Type']
 
     pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}
 
@@ -337,20 +361,23 @@ def result():
     else:
         source = 'request'
         page_title = "Information"
-        media_type = request.args['media_type']
-
+        media_type = request.args['Type']
+    print(media_type)
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
-                if source == 'session':
-                    details[deet] = session.get(deet)
+                if deet == 'Type':
+                    details[deet] = media_type
                 else:
-                    if deet == "Poster":
-                        details[deet] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + request.args[deet]
+                    if source == 'session':
+                        details[deet] = session.get(deet)
                     else:
-                        details[deet] = request.args[deet]
+                        if deet == "Poster":
+                            details[deet] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + request.args[deet]
+                        else:
+                            details[deet] = request.args[deet]
                     
-    print(details)
+    #print(details)
 
     print(session)
     return render_template('result.html', details=details, title=page_title)
@@ -366,7 +393,10 @@ def remove_punct(word):
     no_leftparenth = no_colon.replace('(', '')
     no_rightparenth = no_leftparenth.replace(')', '')
     no_quote = no_rightparenth.replace('"', '')
-    return no_quote
+    no_comma = no_quote.replace(',', '')
+    no_left_brack = no_comma.replace('[', '')
+    no_right_brack = no_left_brack.replace(']', '')
+    return no_right_brack
 
 
 #===================================== RUN  ====================================

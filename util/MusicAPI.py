@@ -69,11 +69,15 @@ def get_genres():
 
     list = data['message']['body']['music_genre_list']
 
+    empty_genres = [34, 100029, 100028, 100024, 100025, 8217, 1279, 1246, 1245, 1244, 1239, 1238, 1236, 1235, 1234, 1233, ]
+    non_english = [1686, 1656, 1278, 1269, 1268, 1267, 1266, 1265, 1264, 1263, 100034, 100033, 1185, 1247, 1240, 1237, 1287, 1286, 1285, 1284, 1229, 1228, 1227, 1226, 1224, 1223, 1222, 1221, 1220, 1262, 1243, 1232, 50000068, 50000066, 50000064, 50000063, 50000061, 100024, 1197, 1122, 51, 30, 29, 28, 27, 19, 12 ]
+
     for genre in list:
-        if genre['music_genre']['music_genre_id'] != 34:
+        if genre['music_genre']['music_genre_id'] not in empty_genres and genre['music_genre']['music_genre_id'] not in non_english:
             genres.append(genre['music_genre']['music_genre_name'])
             genres_encoded.append(genre['music_genre']['music_genre_id'])
 
+    #print(genres_encoded)
     return genres, genres_encoded
 
 #print(get_song('1086'))
