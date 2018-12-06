@@ -11,21 +11,32 @@ def get_def(word):
     s=f.read().rstrip("\n")
     f.close()
     url = "https://dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + s
+    
+    defin = []
     try:
         raw = request.urlopen(url)
         info = json.loads(raw.read())
-        defin = []
         for i in info:
             defin.append(i['shortdef'])
 
-        for i in defin:
-            print(i)
-            print("\n")
+        #for i in defin:
+        #    print(i)
+        #    print("\n")
     except:
         # wont be scrambled
         print("NO")
 
-    return defin
-
-word = "twenty-five"
-get_def(word)
+    #print(defin)
+        
+    if len(defin) != 0:
+        success = True
+        random_def = random.choice(defin[0])
+    else:
+        success = False
+        random_def = ''
+        #print(random_def)
+        
+    return (success, random_def)
+    
+word = "nice"
+print(get_def(word))
