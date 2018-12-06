@@ -9,6 +9,7 @@ from urllib import request
 base_url = "https://api-2445582011268.apicast.io/"
 
 
+# return genre in list, id in list, indices matching
 def get_genres():
     '''Generate a dictionary of genre ids as key and genre names as values'''
     f = open("VideoGamesKey.txt","r")
@@ -34,11 +35,20 @@ def get_genres():
     info = raw.read()
     genres = json.loads(info)
 
-    req = request.Request(url + '2', headers = header)
+    req = request.Request(url, headers = header)
     raw = request.urlopen(req).read()
-    temp = json.loads(raw)
-    name = temp[0]['games'][0]
-    print(name)
+    data = json.loads(raw)
+
+    genre_numbers = []
+    genre_names = []
+    for i in data:
+        req = request.Request(url + str(i['id']), headers = header)
+        raw = request.urlopen(req).read()
+        data = json.loads(raw)[0]['name']
+
+        genre_numbers.append(i['id'])
+        genre_names.append(data)
+    return genre_names, genre_numbers
 
 def get_game_list(genre_id):
     '''Generates list of game ids containing given genre'''
@@ -56,10 +66,15 @@ def get_game_list(genre_id):
     raw = request.urlopen(req).read()
     temp = json.loads(raw)
     id_list = temp[0]['games']
+    
     return id_list
 
-def get_rand_game(id_list):
-    '''Gets information of a game randomly chosen from id_list'''
+# return: name, url, summary, human date, cover url (image)
+def get_rand_game(genre_id):
+    '''Gets information of a random game within the provided genre'''
+
+    id_list = get_game_list(genre_id)
+
     f = open("VideoGamesKey.txt","r")
     key=f.read()
     f.close()
@@ -73,11 +88,20 @@ def get_rand_game(id_list):
     game = random.choice(id_list)
     req = request.Request(url + str(game), headers = header)
     raw = request.urlopen(req).read()
-    data = json.loads(raw)[0]
-    print(data['name'])
+    info = json.loads(raw)[0]
 
-    return data['name']
+    data = {}
+    data['name'] = info['name']
+    data['url'] = info['url']
+    data['summary'] = info['summary']
+    data['release_date'] = info['release_dates'][0]['human']
+    data['cover'] = info['cover']['url']
+
+    #for i in data:
+    #    print(i, data[i]) 
+
+    return data
 
 
 #get_genres()
-get_rand_game(get_game_list(2))
+#get_rand_game(25)
