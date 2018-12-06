@@ -7,7 +7,11 @@ from urllib import request
 # id - way to store specific movie for favorites list
 
 def get_def(word):
-    f=open("./dictKey.txt","r")
+    try:
+        f=open("util/dictKey.txt","r")
+    except FileNotFoundError as e:
+        raise Exception('<file>.txt is not found')
+    
     s=f.read().rstrip("\n")
     f.close()
     url = "https://dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + s
@@ -38,5 +42,5 @@ def get_def(word):
         
     return (success, random_def)
     
-word = "nice"
+word = "tom"
 print(get_def(word))
