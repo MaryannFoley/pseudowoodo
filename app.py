@@ -3,6 +3,7 @@ import os
 import random
 import sqlite3
 import urllib
+
 from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
@@ -50,7 +51,7 @@ types_Games_API = []
 def home():
     print(session)
     if session.get('username'):
-        return render_template('home.html')
+        return render_template('home.html', username=session.get('username'))
     return render_template('login.html')
 
 #=============================== REGISTER/LOGIN ===============================
@@ -60,7 +61,7 @@ def create_account():
     uname = request.form["new_username"]
     pwordA = request.form["new_password"]
     pwordB = request.form["confirm_password"]
-    u=db.checkAccts()
+    u = db.checkAccts()
     for person in u:
         if uname==person[0]: #checks if your username is unique
             flash("Username taken")# username already exists
@@ -87,7 +88,7 @@ def register():
 def auth():
     givenUname=request.form["username"]
     givenPwd=request.form["password"]
-    u=db.checkAccts()
+    u = db.checkAccts()
     found = False #if the user is found
     for person in u: #for every person in the users table
         if givenUname==person[0]:
