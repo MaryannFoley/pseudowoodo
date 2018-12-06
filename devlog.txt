@@ -224,10 +224,12 @@ thomasZ -- 2018-12-06 00:23
 - Created Add to Faves button on results page
 - Created backend compatible from multiple pathways for viewing result.html & fave things
 ==============================================================
-firstL -- 2018-00-00 00:00
+thomasZ -- 2018-12-06 01:07
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Created backend that distinguishes works of media that are already
+in your favorites and not in your favorites
+- Distinguished by a situational button (add to faves when it's not in
+favorites yet, remove from faves when it is)
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------

@@ -134,7 +134,7 @@ def faves():
     temp = u.execute("SELECT * from music_faves WHERE music_faves.user == (?);", (username,))
     user_faves.extend(temp.fetchall())
 
-    print(user_faves)
+    #print(user_faves)
     
     db.commit()
     db.close()
@@ -146,7 +146,7 @@ def add_fave():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    print(request.args)
+    #print(request.args)
     user = session.get('username')
     media_type = request.args['Type']
     title = request.args['Title']
@@ -156,27 +156,40 @@ def add_fave():
         description = request.args['Description']
         date = request.args['Date']
         amazon = request.args['Amazon']
-        u.execute('INSERT INTO book_faves VALUES (?,?,?,?,?,?,?)', (user, media_type, title, author, description, date, amazon))
+        u.execute('INSERT INTO book_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, author, description, date, amazon))
 
     elif media_type == 'Movies':
         poster = request.args['Poster']
         description = request.args['Description']
         date = request.args['Date']
-        u.execute('INSERT INTO movie_faves VALUES (?,?,?,?,?,?)', (user, media_type, title, poster, description, date))
+        u.execute('INSERT INTO movie_faves VALUES (?,?,?,?,?,?);', (user, media_type, title, poster, description, date))
 
     elif media_type == 'Music':
         artist = request.args['Artist']
         album = request.args['Album']
         date = request.args['Date']
         lyrics = request.args['Lyrics']
-        u.execute('INSERT INTO music_faves VALUES (?,?,?,?,?,?,?)', (user, media_type, title, artist, album, date, lyrics))
+        u.execute('INSERT INTO music_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, artist, album, date, lyrics))
 
     else:
-        u.execute('INSERT INTO game_faves VALUES (?,?,?)', (user, media_type, title))
+        u.execute('INSERT INTO game_faves VALUES (?,?,?);', (user, media_type, title))
     
     db.commit()
     db.close()
     return redirect(url_for('faves'))
+
+@app.route("/remove_fav")
+def remove_fav():
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+
+    print(request.args)
+
+
+    
+    db.commit()
+    db.close()
+    
 #==================================== MEDIA ====================================
 
 @app.route("/genre", methods=['POST'])
@@ -283,7 +296,6 @@ def scramble():
 
     session['Title'] = title.upper()
     session['Date'] = date
-    print('Date', date)
 
     for type in types:
         if genre == type:
@@ -362,7 +374,7 @@ def result():
         source = 'request'
         page_title = "Information"
         media_type = request.args['Type']
-    print(media_type)
+        
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
@@ -376,11 +388,40 @@ def result():
                             details[deet] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + request.args[deet]
                         else:
                             details[deet] = request.args[deet]
-                    
+
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+
+    user = session.get('username')
+    title = details['Title']
+    if details['Type'] == 'Books': 
+        author = details['Author']
+        dupes = u.execute('SELECT * FROM book_faves WHERE user = (?) AND title = (?) AND author = (?);', (user, title, author))
+    elif details['Type'] == 'Movies':
+        date = details['Date']
+        dupes = u.execute('SELECT * FROM movie_faves WHERE user = (?) AND title = (?) AND date = (?);', (user, title, date))
+    elif details['Type'] == 'Music':
+        artist = details['Artist']
+        dupes = u.execute('SELECT * FROM music_faves WHERE user = (?) AND title = (?) AND artist = (?);', (user, title, artist))
+    else:
+        dupes = u.execute('SELECT * FROM game_faves WHERE user = (?) AND title = (?);', (user, title))
+
+    dupes_fetched = dupes.fetchall()
+    print('*****dupes_fetched*****', dupes_fetched)
+    if len(dupes_fetched) > 0:
+        in_faves = True
+    else:
+        in_faves = False
+
+    print('in_faves', in_faves)
+        
+    db.commit()
+    db.close()
+    
     #print(details)
 
     print(session)
-    return render_template('result.html', details=details, title=page_title)
+    return render_template('result.html', details=details, title=page_title, in_faves=in_faves)
 
 #==================================== HELPER ===================================
 

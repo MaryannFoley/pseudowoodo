@@ -14,10 +14,15 @@
 </br>
 <div class="container-fluid">
   <div class="row ">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#6DAEDB;">
+      {% if in_faves %}
+      <form action="/remove_fav">
+	<center><input type="submit" name="submit" value="Remove from Favorites"></center>
+      </form>
+      {% else %}
       <form action="/add_fav">
-	{{details}}
-	{{details["Type"]}}
+	<!--{{details}}
+	    {{details["Type"]}}-->
 	<center><input type="submit" name="submit" value="Add to Favorites"></center>
 	<input type="hidden" name="Title" value="{{details['Title']}}">
 	<input type="hidden" name="Type" value="{{details['Type']}}">
@@ -43,6 +48,7 @@
 	{% endif %}
 	{% endif %}
       </form>
+      {% endif %}
     </div>
   </div>
 </div>
