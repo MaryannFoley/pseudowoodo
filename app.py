@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
-from util import BooksAPI, MoviesAPI, MusicAPI, scrambler, db
+from util import BooksAPI, dictAPI, MoviesAPI, MusicAPI, scrambler, db
 
 DB_FILE = "data/database.db"
 #
@@ -233,7 +233,6 @@ def scramble():
     genre = session.get('genre')
     genre_encoded = session.get('genre_encoded')
 
-    print(session)
 
     if media_type == 'Books':
         types = types_Books
@@ -308,21 +307,34 @@ def scramble():
 
             scrambled_title_words = []
             correctly_guessed = []
+            dictionary = {}
             for word in title_words:
                 scrambled_title_words.append(scrambler.scramble_word(word))
                 correctly_guessed.append(False)
+                dictionary[word] = dictAPI.get_def(word)
+
+            #dictionary['emma'] = 'chin'
+            session['dict'] = dictionary
+                        
+            print('---------------------scramble')
+            print(session)
+            ddd = {'eky', 'sass'}
+            
             return render_template('scramble.html', genre=genre, title_words=title_words,
-                                   scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+                                   scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed, dictionary=dictionary)
+
+        
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 
 @app.route("/check", methods=['POST'])
 def check():
 
+    print('---------------------check')
     print(session)
-
-    #print(request.form)
+    print(request.form)
     genre = session.get('genre')
+    dictionary = session.get('dict')
     title_words = []
     scrambled_title_words = []
     correctly_guessed = []
@@ -348,7 +360,8 @@ def check():
 
     for each in correctly_guessed:
         if not each:
-            return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+            return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words,
+                                   correctly_guessed=correctly_guessed, dictionary=dictionary)
     session['from'] = 'scramble'
     return redirect(url_for('result'))
 
@@ -407,13 +420,13 @@ def result():
         dupes = u.execute('SELECT * FROM game_faves WHERE user = (?) AND title = (?);', (user, title))
 
     dupes_fetched = dupes.fetchall()
-    print('*****dupes_fetched*****', dupes_fetched)
+    #print('*****dupes_fetched*****', dupes_fetched)
     if len(dupes_fetched) > 0:
         in_faves = True
     else:
         in_faves = False
 
-    print('in_faves', in_faves)
+    #print('in_faves', in_faves)
         
     db.commit()
     db.close()

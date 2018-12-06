@@ -12,12 +12,12 @@
   
   <form action="/check", method="POST">
 
-    <input type="hidden" name="genre" value="{{genre_type}}">
+    <input type="hidden" name="genre" value="{{genre}}">
     
     {% for i in range(title_words| length) %}
     {% set word = title_words[i] %}
     {% if correctly_guessed[i] == False %}
-    <input type="text" name="guess_for_{{word}}" placeholder={{word}}>
+    <input type="text" name="guess_for_{{word}}" placeholder="{{word}}, Word {{i+1}}">
     {% else %}
     <input type="hidden" name="guess_for_{{word}}" value={{word}}>
     {{word}}
@@ -26,13 +26,25 @@
     
     <input type="hidden" name="scrambled_for_{{word}}" value={{scrambled_title_words[i]}}>
     <input type="hidden" name="status_for_{{word}}" value={{correctly_guessed[i]}}>
-    
+
     {% endfor %}
 
+    <br>
+    <br>
+
+    {% for i in range(title_words| length) %}
+    {% set word = title_words[i] %}
+    {% if correctly_guessed[i] == False %}
+    Word {{i+1}} Definition: {{dictionary[word][1]}}
+    <br>
+    {% endif %}
+    {% endfor %}
+    <br>
   
-  
-  <button type="submit">Check your guess!</button>
+    <button type="submit">Check your guess!</button>
+    
   </form>
+
 
 </p>
 
