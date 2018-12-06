@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
-from util import BooksAPI, dictAPI, MoviesAPI, MusicAPI, scrambler, db
+from util import BooksAPI, dictAPI, MoviesAPI, MusicAPI, VideoGamesAPI, scrambler, db
 
 DB_FILE = "data/database.db"
 #
@@ -39,8 +39,8 @@ types_Movies_API = MoviesAPI.get_genres()[1]
 types_Music = MusicAPI.get_genres()[0]
 types_Music_API = MusicAPI.get_genres()[1]
 
-types_Games = []
-types_Games_API = []
+types_Games = VideoGamesAPI.get_genres()[0]
+types_Games_API = VideoGamesAPI.get_genres()[1]
 
 #======== Misc =========
 

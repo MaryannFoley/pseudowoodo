@@ -12,7 +12,11 @@ base_url = "https://api-2445582011268.apicast.io/"
 # return genre in list, id in list, indices matching
 def get_genres():
     '''Generate a dictionary of genre ids as key and genre names as values'''
-    f = open("VideoGamesKey.txt","r")
+    try:
+        f = open("util/VideoGamesKey.txt","r")
+    except FileNotFoundError as e:
+        raise Exception('file was not found')
+        
     key=f.read()
     f.close()
     key = key.rstrip("\n")
@@ -48,6 +52,7 @@ def get_genres():
 
         genre_numbers.append(i['id'])
         genre_names.append(data)
+    print(genre_names)
     return genre_names, genre_numbers
 
 def get_game_list(genre_id):
@@ -103,5 +108,5 @@ def get_rand_game(genre_id):
     return data
 
 
-#get_genres()
+get_genres()
 #get_rand_game(25)
