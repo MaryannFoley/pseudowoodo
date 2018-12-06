@@ -43,24 +43,22 @@ def get_genres():
     raw = request.urlopen(req).read()
     data = json.loads(raw)
 
-    g_list = ""
     genre_numbers = []
     genre_names = []
     for i in data:
-        g_list += str(i['id']) + ","
-    print(g_list)
-    #req = request.Request(url + str(i['id']), headers = header)
-    #raw = request.urlopen(req).read()
-    #data = json.loads(raw)[0]['name']
+        req = request.Request(url + str(i['id']), headers = header)
+        raw = request.urlopen(req).read()
+        data = json.loads(raw)
+        genre_numbers.append(i['id'])
+        genre_names.append(data[0]['name'])
+    # print(genre_names)
+    # print(genre_numbers)
 
-    #genre_numbers.append(i['id'])
-    #genre_names.append(data)
-    print(genre_names)
     return genre_names, genre_numbers
 
 def get_game_list(genre_id):
     '''Generates list of game ids containing given genre'''
-    f = open("VideoGamesKey.txt","r")
+    f = open("util/VideoGamesKey.txt","r")
     key=f.read()
     f.close()
     key = key.rstrip("\n")
