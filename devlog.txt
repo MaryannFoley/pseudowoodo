@@ -208,10 +208,14 @@ thomasZ -- 2018-12-05 13:06
 - However, it appears a FileNotFoundError still persists despite the file
 being in plain sight in the correct directory
 ==============================================================
-firstL -- 2018-00-00 00:00
+thomasZ -- 2018-12-05 19:40
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Created the tables to store user favorites in database
+- Implemented the displaying of favorite information to front-end
+- Connected the "More Information" button to result.html
+- Altered /result so that it handles traffic from guessing correctly
+and clicking the "More Information" button in favorites
+- Implemented the display of favorite's more information at /result
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------
