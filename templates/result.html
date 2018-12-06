@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 {% block title %} something {% endblock %}
 {% block content %}
-
+<head>
+  <style>
+    .button {
+    background-color:#94C4E4;
+    margin:auto;
+    position: absolute;
+    right: 44%;
+    }
+  </style>
+</head>
 <h2> {{page_title}} </h2>
 
 <div class="container-fluid">
@@ -12,20 +21,19 @@
   </div>
 </div>
 </br>
-<div class="container-fluid">
-  <div class="row ">
-    <div class="col-sm-12" style="background-color:#6DAEDB;">
+<br>
       {% if in_faves %}
-      <form action="/remove_fav">
-	<center><input type="submit" name="submit" value="Remove from Favorites"></center>
-      </form>
+	  <form action="/remove_fav">	
+	    <button type="submit" class="button" name="submit" value="Remove from Favorites" > Remove From Favorites</button>
+	  </form>
+	
       {% else %}
       <form action="/add_fav">
 	<!--{{details}}
 	    {{details["Type"]}}-->
-	<center><input type="submit" name="submit" value="Add to Favorites"></center>
-	<input type="hidden" name="Title" value="{{details['Title']}}">
-	<input type="hidden" name="Type" value="{{details['Type']}}">
+	    <button type="submit" class="button" name="submit" value="Add To Favorites" > Remove From Favorites</button>
+	    <input type="hidden" name="Title" value="{{details['Title']}}">
+	    <input type="hidden" name="Type" value="{{details['Type']}}">
 	{% if details["Type"] == "Books" %}
 	<input type="hidden" name="Author" value="{{details['Author']}}">
 	<input type="hidden" name="Description" value="{{details['Description']}}">
@@ -52,6 +60,9 @@
     </div>
   </div>
 </div>
+<br>
+<br>
+<br>
 <br>
 <div class="container-fluid">
   {% for deet in details %}
