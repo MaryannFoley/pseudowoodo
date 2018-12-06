@@ -43,15 +43,18 @@ def get_genres():
     raw = request.urlopen(req).read()
     data = json.loads(raw)
 
+    g_list = ""
     genre_numbers = []
     genre_names = []
     for i in data:
-        req = request.Request(url + str(i['id']), headers = header)
-        raw = request.urlopen(req).read()
-        data = json.loads(raw)[0]['name']
+        g_list += str(i['id']) + ","
+    print(g_list)
+    #req = request.Request(url + str(i['id']), headers = header)
+    #raw = request.urlopen(req).read()
+    #data = json.loads(raw)[0]['name']
 
-        genre_numbers.append(i['id'])
-        genre_names.append(data)
+    #genre_numbers.append(i['id'])
+    #genre_names.append(data)
     print(genre_names)
     return genre_names, genre_numbers
 
