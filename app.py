@@ -117,27 +117,21 @@ def logout():
 def faves():
     username=session.get('username')
 
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
-
     user_faves = []
-    
-    temp = u.execute("SELECT * from book_faves WHERE book_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
 
-    temp = u.execute("SELECT * from movie_faves WHERE movie_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
-    
-    temp = u.execute("SELECT * from game_faves WHERE game_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
+    temp=db.getFaves("book",username)
+    user_faves.extend(temp)
 
-    temp = u.execute("SELECT * from music_faves WHERE music_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
+    temp=db.getFaves("movie",username)
+    user_faves.extend(temp)
+
+    temp=db.getFaves("game",username)
+    user_faves.extend(temp)
+
+    temp=db.getFaves("music",username)
+    user_faves.extend(temp)
 
     #print(user_faves)
-    
-    db.commit()
-    db.close()
 
     return render_template('user.html', user_name=username, favorites=user_faves)
 
@@ -150,30 +144,30 @@ def add_fave():
     user = session.get('username')
     media_type = request.args['Type']
     title = request.args['Title']
-    
+
     if media_type == 'Books':
         author = request.args['Author']
         description = request.args['Description']
         date = request.args['Date']
         amazon = request.args['Amazon']
-        u.execute('INSERT INTO book_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, author, description, date, amazon))
+        db.addBook(user, media_type, title, author, description, date, amazon)
 
     elif media_type == 'Movies':
         poster = request.args['Poster']
         description = request.args['Description']
         date = request.args['Date']
-        u.execute('INSERT INTO movie_faves VALUES (?,?,?,?,?,?);', (user, media_type, title, poster, description, date))
+        db.addMovie(user, media_type, title, poster, description, date)
 
     elif media_type == 'Music':
         artist = request.args['Artist']
         album = request.args['Album']
         date = request.args['Date']
         lyrics = request.args['Lyrics']
-        u.execute('INSERT INTO music_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, artist, album, date, lyrics))
+        db.addMusic(user, media_type, title, artist, album, date, lyrics)
 
     else:
-        u.execute('INSERT INTO game_faves VALUES (?,?,?);', (user, media_type, title))
-    
+        db.addGame(user, media_type, title)
+
     db.commit()
     db.close()
     return redirect(url_for('faves'))
@@ -186,10 +180,10 @@ def remove_fav():
     print(request.args)
 
 
-    
+
     db.commit()
     db.close()
-    
+
 #==================================== MEDIA ====================================
 
 @app.route("/genre", methods=['POST'])
@@ -374,7 +368,7 @@ def result():
         source = 'request'
         page_title = "Information"
         media_type = request.args['Type']
-        
+
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
@@ -394,7 +388,7 @@ def result():
 
     user = session.get('username')
     title = details['Title']
-    if details['Type'] == 'Books': 
+    if details['Type'] == 'Books':
         author = details['Author']
         dupes = u.execute('SELECT * FROM book_faves WHERE user = (?) AND title = (?) AND author = (?);', (user, title, author))
     elif details['Type'] == 'Movies':
@@ -414,10 +408,10 @@ def result():
         in_faves = False
 
     print('in_faves', in_faves)
-        
+
     db.commit()
     db.close()
-    
+
     #print(details)
 
     print(session)
