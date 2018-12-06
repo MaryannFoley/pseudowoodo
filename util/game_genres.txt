@@ -1,0 +1,10 @@
+16 Turn-based strategy (TBS)
+2 Point-and-click
+13 Simulator
+24 Tactical
+26 Quiz/Trivia
+33 Arcade
+9 Puzzle
+30 Pinball
+11 Real Time Strategy (RTS)
+25 Hack and slash/Beat 'em up

@@ -6,51 +6,78 @@ from urllib import request
 # genre
 # id - way to store specific movie for favorites list
 
+base_url = "https://api-2445582011268.apicast.io/"
+
+
 def get_genres():
-    f = open("../VideoGamesKey.txt","r")
+    '''Generate a dictionary of genre ids as key and genre names as values'''
+    f = open("VideoGamesKey.txt","r")
     key=f.read()
     f.close()
     key = key.rstrip("\n")
-    #print("|" + key + "|")
-
-    base_url = "https://api-endpoint.igdb.com"
+    url = base_url + "genres/"
     header = {
             "Accept": "application/json",
             "User-key" : key,
             }
-    url = base_url + "/genres/"
 
-    print(url)
-    print(header)
-    print(header['User-key'])
 
     r = request.Request(url, headers = header )
 
-    print(r.has_header("User-key"))
-    print(r.has_header("Accept"))
-    print(r)
+    try:
+        raw = request.urlopen(r)
+    except urllib.HTTPError as err:
+        if err.code == 403:
+            print("WHY")
 
-    raw = request.urlopen(r)
-    #info = raw.read()
-    #print(info)
-    #genres = json.loads(info)
 
-    #print(genres)
+    info = raw.read()
+    genres = json.loads(info)
 
-    # genre_numbers = []
-    # genre_names = []
+    req = request.Request(url + '2', headers = header)
+    raw = request.urlopen(req).read()
+    temp = json.loads(raw)
+    name = temp[0]['games'][0]
+    print(name)
 
-    #print(genres)
+def get_game_list(genre_id):
+    '''Generates list of game ids containing given genre'''
+    f = open("VideoGamesKey.txt","r")
+    key=f.read()
+    f.close()
+    key = key.rstrip("\n")
+    url = base_url + "genres/"
+    header = {
+            "Accept": "application/json",
+            "User-key" : key,
+            }
 
-    # for genre in genres:
-    #     #print(genre)
-    #     genre_numbers.append(genre['id'])
-    #     genre_names.append(genre['name'])
+    req = request.Request(url + str(genre_id), headers = header)
+    raw = request.urlopen(req).read()
+    temp = json.loads(raw)
+    id_list = temp[0]['games']
+    return id_list
 
-    # return genre_names, genre_numbers
+def get_rand_game(id_list):
+    '''Gets information of a game randomly chosen from id_list'''
+    f = open("VideoGamesKey.txt","r")
+    key=f.read()
+    f.close()
+    key = key.rstrip("\n")
+    url = base_url + "games/"
+    header = {
+            "Accept": "application/json",
+            "User-key" : key,
+            }
 
-# i { 'id' : int, 'name' : 'genre name' }
-#for i in genres["genres"]:
-#    print(i)
+    game = random.choice(id_list)
+    req = request.Request(url + str(game), headers = header)
+    raw = request.urlopen(req).read()
+    data = json.loads(raw)[0]
+    print(data['name'])
 
-get_genres()
+    return data['name']
+
+
+#get_genres()
+get_rand_game(get_game_list(2))
