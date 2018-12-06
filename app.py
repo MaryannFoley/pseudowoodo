@@ -9,7 +9,7 @@ from flask import flash,Flask,request,render_template,session,url_for,redirect
 
 from util import BooksAPI, MoviesAPI, MusicAPI, scrambler, db
 
-DB_FILE = "database.db"
+DB_FILE = "data/database.db"
 #
 # db = sqlite3.connect(DB_FILE)
 # c = db.cursor()
@@ -119,22 +119,36 @@ def faves():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
 
-    book_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT);")
-    movie_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, description TEXT, date TEXT);")
-    game_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT);")
-    music_favorites = u.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT);")
+    user_faves = []
+    
+    temp = u.execute("SELECT * from book_faves WHERE book_faves.user == (?);", (username,))
+    user_faves.extend(temp.fetchall())
 
-    print(book_favorites)
+    temp = u.execute("SELECT * from movie_faves WHERE movie_faves.user == (?);", (username,))
+    user_faves.extend(temp.fetchall())
+    
+    temp = u.execute("SELECT * from game_faves WHERE game_faves.user == (?);", (username,))
+    user_faves.extend(temp.fetchall())
 
+    temp = u.execute("SELECT * from music_faves WHERE music_faves.user == (?);", (username,))
+    user_faves.extend(temp.fetchall())
+
+    print(user_faves)
+    
     db.commit()
     db.close()
 
-    return render_template('user.html', user_name=username)
+    return render_template('user.html', user_name=username, favorites=user_faves)
 
 @app.route("/add_fav")
 def add_fave():
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
+
+    #get media type
+    #add to correct database
+    
+    
     db.commit()
     db.close()
     return ""
@@ -298,6 +312,7 @@ def check():
     for each in correctly_guessed:
         if not each:
             return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+    session['from'] = 'scramble'
     return redirect(url_for('result'))
 
 
@@ -305,9 +320,6 @@ def check():
 
 @app.route("/result")
 def result():
-
-    media_type = session.get('media_type')
-
     book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon']
     movie_deets = ['Title', 'Poster', 'Description', 'Date']
     game_deets = []
@@ -316,15 +328,31 @@ def result():
     pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}
 
     details = {}
+    if 'from' in session:
+        session.pop('from')
+        source = 'session'
+        page_title = "Congratulations! You've Guessed It!"
+        media_type = session.get('media_type')
+    else:
+        source = 'request'
+        page_title = "Information"
+        media_type = request.args['media_type']
+
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
-                details[deet] = session.get(deet)
-
+                if source == 'session':
+                    details[deet] = session.get(deet)
+                else:
+                    if deet == "Poster":
+                        details[deet] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + request.args[deet]
+                    else:
+                        details[deet] = request.args[deet]
+                    
     print(details)
 
     print(session)
-    return render_template('result.html', details=details)
+    return render_template('result.html', details=details, title=page_title)
 
 #==================================== HELPER ===================================
 

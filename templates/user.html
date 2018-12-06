@@ -25,26 +25,62 @@
     </div>
   </div>
 </div>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-4" style="background-color:#F4F4F4;">
-      Title
+      Title (Type)
     </div>
   </div>
+  
   {% for info in favorites %}
   <div class="row">
     <div class="col-sm-4" style="background-color:#F4F4F4;">
-      {{info}}
-       </div>
+      {{info[2]}}, ({{info[1]}}) {{info}}
+    </div>
   </div>
+
+  <!--
+      For reference
+      c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, type TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT);")
+      c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, type TEXT, title TEXT, poster TEXT, description TEXT, date TEXT);")
+      c.execute("CREATE TABLE IF NOT EXISTS game_faves (user TEXT, type TEXT, title TEXT);")
+      c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, type TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT);")
+
+    -->
+  
    <div class="row">
-    <div class="col-sm-4" style="background-color:#F4F4F4;">
-  <form action = '/favorites'>
-    <input type="submit" name="submit" value = "{{info}}">
-    
-    {% endfor %}
-      </div>
-  </div>
+     <div class="col-sm-4" style="background-color:#F4F4F4;">
+       <form action = "/result">
+	 <input type="hidden" name="Title" value="{{info[2]}}">
+	 <input type="hidden" name="media_type" value="{{info[1]}}">
+	 {% if info[1] == "Books" %}
+	 <input type="hidden" name="Author" value="{{info[3]}}">
+	 <input type="hidden" name="Description" value="{{info[4]}}">
+	 <input type="hidden" name="Date" value="{{info[5]}}">
+	 <input type="hidden" name="Amazon" value="{{info[6]}}">
+	 {% else %}
+	 {% if info[1] == "Movies" %}
+	 <input type="hidden" name="Poster" value="{{info[3]}}">
+	 <input type="hidden" name="Description" value="{{info[4]}}">
+	 <input type="hidden" name="Date" value="{{info[5]}}">
+	 {% else %}
+	 {% if info[1] == "Music" %}
+	 <input type="hidden" name="Artist" value="{{info[3]}}">
+	 <input type="hidden" name="Album" value="{{info[4]}}">
+	 <input type="hidden" name="Date" value="{{info[5]}}">
+	 <input type="hidden" name="Lyrics" value="{{info[6]}}">
+	 {% else %}
+	 <!-- VIDEO GAME STUFF HERE -->
+	 {% endif %}
+	 {% endif %}
+	 {% endif %}
+	 <input type="submit" name="submit" value = "More Information">
+       </form>
+     </div>
+   </div>
+   {% endfor %}
+   
 </div>
 
 <br>

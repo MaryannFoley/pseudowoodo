@@ -92,5 +92,5 @@ def getInfo():
     except Exception as e:
         raise Exception('Error: API error')
 
-print(nyt("combined-print-and-e-book-fiction"))
+#print(nyt("combined-print-and-e-book-fiction"))
 #getInfo()

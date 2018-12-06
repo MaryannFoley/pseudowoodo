@@ -87,5 +87,5 @@ def get_random_one(test):
     return random.choice(list)
 
 test = [878]
-print(get_random_one(test))
+#print(get_random_one(test))
 #print(get_list(test))

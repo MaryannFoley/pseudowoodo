@@ -76,4 +76,4 @@ def get_genres():
 
     return genres, genres_encoded
 
-print(get_song('1086'))
+#print(get_song('1086'))
