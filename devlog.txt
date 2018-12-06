@@ -231,10 +231,11 @@ in your favorites and not in your favorites
 - Distinguished by a situational button (add to faves when it's not in
 favorites yet, remove from faves when it is)
 ==============================================================
-firstL -- 2018-00-00 00:00
+thomasZ -- 2018-12-06 12:46
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Editted the dictionary API to pass success or not, and to focus on
+the first meaning of the word that shows up and picking a random defintion
+that is of that meaning
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------
