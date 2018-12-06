@@ -62,7 +62,7 @@ def get_genres():
         data = json.loads(decodedresponse)
         
     except Exception as e:
-        raise Exception('Error: API error')
+        return get_genres()
 
     genres = []
     genres_encoded = []
