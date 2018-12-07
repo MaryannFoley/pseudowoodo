@@ -193,6 +193,7 @@ def remove_fav():
 
     datab.commit()
     datab.close()
+    return 'yeet'
 
 #==================================== MEDIA ====================================
 
