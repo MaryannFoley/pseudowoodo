@@ -34,7 +34,7 @@ def get_genres():
         raw = request.urlopen(r)
     except:
         print("Brokeboi")
-        return
+        return [], []
 
 
     info = raw.read()
