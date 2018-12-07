@@ -35,11 +35,14 @@ This allows us to access the DB to save favorites
 The back end framework that allows you to host the website
 - wheel
 
-## Where to obtain API keys
-[NYT Books API (Bestseller lists)](http://developer.nytimes.com/signup)
+__NOTE:__ Activate your virtual enviornment and cd into this directory before installing this!
 
-[Goodreads API (Book info)](https://www.goodreads.com/api/keys)
-- You must have an account to make a Goodreads developer key
+To install dependencies, run `pip3 install -r requirements.txt`
+
+## Where to obtain API keys
+
+[NYT Books API (Bestseller lists)](http://developer.nytimes.com/signup)
+- No account needed
 
 [tMDB API (Movie API)](https://www.themoviedb.org/settings/api)
 - Requires account to get a key. Once logged in, click the link above
@@ -47,9 +50,20 @@ The back end framework that allows you to host the website
 [igdb API (video game API)](https://api.igdb.com/signup?plan_ids[]=2357355916792)
 - Requires account to get a key. Click link to create account
 
-__NOTE:__ Activate your virtual enviornment and cd into this directory before installing this!
+[Musixmatch API (music API)](https://developer.musixmatch.com/signup)
+- Requires account to get a key. Click link to create account
 
-To install dependencies, run `pip3 install -r requirements.txt`
+[Merriam-Webster API (dictonary API)](https://dictionaryapi.com/register/index)
+- Requires developer account to get a key. Click link to create account
+
+#### Where to put your keys
+
+Put each of your keys in a different file in the util folder. Each of these documents should contain only the key and no new lines or other characters.
+- NYT Books API Key goes in a file named `BooksKey.txt`
+- tMDB API Key goes in a file named `MoviesKey.txt`
+- igdb API Key goes in a file named `VideoGamesKey.txt`
+- Musixmatch API key goes in a file named `MusicKey.txt`
+- Merriam-Webster API key goes in a file named `dictKey.txt`
 
 ## Launch instructions:
 1. Activate your virtual enviornment
