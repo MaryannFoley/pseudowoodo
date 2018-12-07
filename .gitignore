@@ -4,7 +4,12 @@
 
 # Text
 *.txt~
-./util/*.txt
+./util/MusicKey.txt
+./util/dictKey.txt
+./util/MusicKey.txt
+./util/MoviesKey.txt
+
+
 
 __pycache__/
 *.py[cod]
