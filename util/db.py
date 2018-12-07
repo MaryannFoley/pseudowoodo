@@ -33,6 +33,7 @@ def createAcct(uname,pwd):
     DB_FILE = "data/database.db"
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
+    u.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, pwd TEXT);")
     u.execute("INSERT INTO users values(?,?);", (uname, pwd))
     db.commit()
     db.close()
