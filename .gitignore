@@ -4,10 +4,10 @@
 
 # Text
 *.txt~
-./util/MusicKey.txt
-./util/dictKey.txt
-./util/MusicKey.txt
-./util/MoviesKey.txt
+#./util/MusicKey.txt
+#./util/dictKey.txt
+#./util/MusicKey.txt
+#./util/MoviesKey.txt
 
 
 

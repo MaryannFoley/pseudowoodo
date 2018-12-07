@@ -9,7 +9,7 @@ from urllib import request
 
 def get_def(word):
     try:
-        f=open("util/dictKey.txt","r")
+        f=open("./dictKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('<file>.txt is not found')
 

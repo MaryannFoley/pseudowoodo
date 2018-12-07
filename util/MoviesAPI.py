@@ -11,7 +11,7 @@ movie_key = "fa2c0e8dd8956b932e67bbe3a99c3255"
 
 def get_genres():
     try:
-        f=open("util/MoviesKey.txt","r")
+        f=open("./MoviesKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
 
@@ -48,7 +48,7 @@ def get_genres():
 
 def get_list(genres):
     try:
-        f=open("util/MoviesKey.txt","r")
+        f=open("./MoviesKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
 
