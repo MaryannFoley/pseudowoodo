@@ -1,4 +1,5 @@
 import json, random
+import urllib
 from urllib import request
 
 
@@ -16,7 +17,7 @@ def get_genres():
         f = open("util/VideoGamesKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('file was not found')
-        
+
     key=f.read()
     f.close()
     key = key.rstrip("\n")
@@ -31,9 +32,9 @@ def get_genres():
 
     try:
         raw = request.urlopen(r)
-    except urllib.HTTPError as err:
-        if err.code == 403:
-            print("WHY")
+    except:
+        print("Brokeboi")
+        return
 
 
     info = raw.read()
@@ -52,7 +53,7 @@ def get_genres():
 
         genre_numbers.append(i['id'])
         genre_names.append(data[0]['name'])
-        
+
     # print(genre_names)
     # print(genre_numbers)
 
@@ -74,7 +75,7 @@ def get_game_list(genre_id):
     raw = request.urlopen(req).read()
     temp = json.loads(raw)
     id_list = temp[0]['games']
-    
+
     return id_list
 
 # return: name, url, summary, human date, cover url (image)
@@ -114,7 +115,7 @@ def get_rand_game(genre_id):
     except Exception as e:
         data['cover'] = 'N/A'
     #for i in data:
-    #    print(i, data[i]) 
+    #    print(i, data[i])
 
     return data
 

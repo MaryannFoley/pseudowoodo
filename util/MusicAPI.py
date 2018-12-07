@@ -1,4 +1,5 @@
 import urllib.request
+import urllib
 import json
 import random
 
@@ -11,7 +12,7 @@ def get_song(genre):
         f=open("util/MusicKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
-    
+
     s=f.read().rstrip("\n")
     #print(type(s))
     f.close()
@@ -26,12 +27,12 @@ def get_song(genre):
         #print(readresponse)
 
         data = json.loads(decodedresponse)['message']['body']['track_list']
-        
+
     except Exception as e:
         raise Exception('Error: API error')
-        
+
     song_choice = random.choice(data)
-    
+
     #print(song_choice)
 
     #body = data["message"]["body"]["track_list"][0]["track"]["track_name"]
@@ -44,7 +45,7 @@ def get_genres():
         f=open("util/MusicKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
-    
+
     s=f.read().rstrip("\n")
     f.close()
 
@@ -60,7 +61,7 @@ def get_genres():
         decodedresponse = readresponse.decode() #we decode it for the json to load later
 
         data = json.loads(decodedresponse)
-        
+
     except Exception as e:
         return get_genres()
 

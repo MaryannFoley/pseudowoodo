@@ -1,4 +1,5 @@
 import json, random
+import urllib
 from urllib import request
 
 
@@ -11,11 +12,11 @@ def get_def(word):
         f=open("util/dictKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('<file>.txt is not found')
-    
+
     s=f.read().rstrip("\n")
     f.close()
     url = "https://dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + s
-    
+
     defin = []
     try:
         raw = request.urlopen(url)
@@ -31,7 +32,7 @@ def get_def(word):
         print("NO")
 
     #print(defin)
-        
+
     if len(defin) != 0:
         success = True
         random_def = random.choice(defin[0])
@@ -39,8 +40,8 @@ def get_def(word):
         success = False
         random_def = ''
         #print(random_def)
-        
+
     return (success, random_def)
-    
+
 word = "tom"
 print(get_def(word))

@@ -1,4 +1,5 @@
 import json, random
+import urllib
 from urllib import request
 
 
@@ -17,7 +18,7 @@ def get_genres():
     s=f.read().rstrip("\n")
     f.close()
 
-    try:    
+    try:
         url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+s+"&language=en-US"
         #f=open("./MoviesKey.txt","r")
         #s=f.read().rstrip("\n")
@@ -27,17 +28,17 @@ def get_genres():
         genres = json.loads(info)['genres']
     except Exception as e:
         raise Exception('Error: API error')
-        
+
     genre_numbers = []
     genre_names = []
-        
+
     #print(genres)
-        
+
     for genre in genres:
         #print(genre)
         genre_numbers.append(genre['id'])
         genre_names.append(genre['name'])
-            
+
     return genre_names, genre_numbers
 
 # i { 'id' : int, 'name' : 'genre name' }
@@ -50,7 +51,7 @@ def get_list(genres):
         f=open("util/MoviesKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
-        
+
     s=f.read().rstrip("\n")
     f.close()
 
@@ -70,7 +71,7 @@ def get_list(genres):
         data = json.loads(info)
     except Exception as e:
         raise Exception('Error: API error')
-    
+
     #for i in data['results']:
         #print('popularity : ' + str(i['popularity']) + ' title : ' + i['title'])
         #print(get_poster(i))
