@@ -435,9 +435,9 @@ def result():
         source = 'request'
         page_title = "Information"
         media_type = request.args['Type']
-
-    if session['surrender'] == "yes":
-        page_title = "You gave up, better luck next time!"
+    if "surrender" in session:
+        if session['surrender'] == "yes":
+            page_title = "You gave up, better luck next time!"
 
     for media in pairing:
         if media == media_type:
@@ -453,34 +453,28 @@ def result():
                         else:
                             details[deet] = request.args[deet]
 
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
-
     user = session.get('username')
     title = details['Title']
     if details['Type'] == 'Books':
         author = details['Author']
-        dupes = u.execute('SELECT * FROM book_faves WHERE user = (?) AND title = (?) AND author = (?);', (user, title, author))
+        dupes = db.getBook(user, title, author)
     elif details['Type'] == 'Movies':
         date = details['Date']
-        dupes = u.execute('SELECT * FROM movie_faves WHERE user = (?) AND title = (?) AND date = (?);', (user, title, date))
+        dupes = db.getMovie(user, title, date)
     elif details['Type'] == 'Music':
         artist = details['Artist']
-        dupes = u.execute('SELECT * FROM music_faves WHERE user = (?) AND title = (?) AND artist = (?);', (user, title, artist))
+        dupes = db.getMusic(user, title, artist)
     else:
-        dupes = u.execute('SELECT * FROM game_faves WHERE user = (?) AND title = (?);', (user, title))
+        dupes = db.getGame(user, title)
 
-    dupes_fetched = dupes.fetchall()
     #print('*****dupes_fetched*****', dupes_fetched)
-    if len(dupes_fetched) > 0:
+    if len(dupes) > 0:
         in_faves = True
     else:
         in_faves = False
 
     print('in_faves', in_faves)
 
-    db.commit()
-    db.close()
 
     #print(details)
 

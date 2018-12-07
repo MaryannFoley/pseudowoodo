@@ -79,6 +79,46 @@ def addGame(user, media_type, title):
     db.commit()
     db.close()
 
+def getBook(user,title,author):
+    DB_FILE = "data/database.db"
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    u.execute('SELECT * FROM book_faves WHERE user = (?) AND title = (?) AND author = (?);', (user, title, author))
+    x = u.fetchall()
+    db.commit()
+    db.close()
+    return x
+
+def getMovie(user, title, date):
+    DB_FILE = "data/database.db"
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    u.execute('SELECT * FROM movie_faves WHERE user = (?) AND title = (?) AND date = (?);', (user, title, date))
+    x = u.fetchall()
+    db.commit()
+    db.close()
+    return x
+
+def getMusic(user,title, artist):
+    DB_FILE = "data/database.db"
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    u.execute('SELECT * FROM music_faves WHERE user = (?) AND title = (?) AND artist = (?);', (user, title, artist))
+    x = u.fetchall()
+    db.commit()
+    db.close()
+    return x
+
+def getGame(user, title):
+    DB_FILE = "data/database.db"
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    u.execute('SELECT * FROM game_faves WHERE user = (?) AND title = (?);', (user, title))
+    x = u.fetchall()
+    db.commit()
+    db.close()
+    return x
+
 def deleteFave(user,media_type,title):
     DB_FILE = "data/database.db"
     db = sqlite3.connect(DB_FILE)
