@@ -62,11 +62,11 @@ def create_account():
     pwordA = request.form["new_password"]
     pwordB = request.form["confirm_password"]
 
-    if ' ' in uname or pwordA or pwordB:
+    if ' ' in uname or ' ' in pwordA or ' ' in pwordB:
         flash('User credentials cannot contain spaces!')
         return render_template("register.html")
 
-    if '' == uname or pwordA or pwordB:
+    if '' == uname or '' == pwordA or '' == pwordB:
         flash('User credentials cannot be empty!')
         return render_template("register.html")
 
