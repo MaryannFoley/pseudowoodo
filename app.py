@@ -35,6 +35,9 @@ types_Music_API = MusicAPI.get_genres()[1]
 types_Games = VideoGamesAPI.get_genres()[0]
 types_Games_API = VideoGamesAPI.get_genres()[1]
 
+if len(types_Games) == 0:
+    types_Games = ['Turn-based strategy (TBS)', 'Point-and-click', 'Simulator', 'Tactical', 'Quiz/Trivia', 'Arcade', 'Puzzle', 'Pinball', 'Real Time Strategy (RTS)', "Hack and slash/Beat 'em up"]
+    types_Games_API = [16, 2, 13, 24, 26, 33, 9, 30, 11, 25]
 #==================================== HOME ====================================
 
 """Home: if logged in, go to home.html; if not, go to login"""
