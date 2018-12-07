@@ -58,7 +58,7 @@ To install dependencies, run `pip3 install -r requirements.txt`
 
 #### Where to put your keys
 
-Put each of your keys in a different file in the util folder. Each of these documents should contain only the key and no new lines or other characters.
+Put each of your keys in a different file in the `util` folder. Each of these documents should contain only the key and no new lines or other characters.
 - NYT Books API Key goes in a file named `BooksKey.txt`
 - tMDB API Key goes in a file named `MoviesKey.txt`
 - igdb API Key goes in a file named `VideoGamesKey.txt`
