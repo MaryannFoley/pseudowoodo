@@ -39,11 +39,7 @@
     <input type="hidden" name="genre" value="{{genre}}">
     {% for i in range(title_words| length) %}
     {% set word = title_words[i] %}
-<<<<<<< HEAD
     {% if correctly_guessed[i] == False and dictionary[word][0] %}
-=======
-    {% if correctly_guessed[i] == False %}
->>>>>>> 9b7975ebfb0c7c4285ccf6c6fa693360c45f6891
     <input type="text" name="guess_for_{{word}}" placeholder="Word {{i+1}}">
     {% else %}
     <input type="hidden" name="guess_for_{{word}}" value={{word}}>
