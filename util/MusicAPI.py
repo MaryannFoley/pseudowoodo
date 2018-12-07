@@ -27,11 +27,11 @@ def get_song(genre):
         #print(readresponse)
 
         data = json.loads(decodedresponse)['message']['body']['track_list']
+        song_choice = random.choice(data)
 
     except Exception as e:
         raise Exception('Error: API error')
 
-    song_choice = random.choice(data)
 
     #print(song_choice)
 
