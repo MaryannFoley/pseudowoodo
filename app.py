@@ -115,6 +115,9 @@ def logout():
 
 @app.route("/faves")
 def faves():
+
+    if not session.get('username'):
+        return redirect(url_for("home"))
     username=session.get('username')
 
     user_faves = []
@@ -137,9 +140,9 @@ def faves():
 
 @app.route("/add_fav")
 def add_fave():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
 
+    if not session.get('username'):
+        return redirect(url_for("home"))
     #print(request.args)
     user = session.get('username')
     media_type = request.args['Type']
@@ -168,26 +171,30 @@ def add_fave():
     else:
         db.addGame(user, media_type, title)
 
-    db.commit()
-    db.close()
     return redirect(url_for('faves'))
 
 @app.route("/remove_fav")
 def remove_fav():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
-
-    print(request.args)
-
-
-
-    db.commit()
-    db.close()
+    if not session.get('username'):
+        return redirect(url_for("home"))
+    if request.args["Type"]=="Books":
+        type="book"
+    elif request.args["Type"]=="Movies":
+        type=movie
+    elif request.args["Type"]=="Video Games":
+        type="game"
+    else:
+        type="music"
+    db.deleteFave(session.get("username"),type,request.args['Title'])
+    return(redirect(url_for("faves")))
 
 #==================================== MEDIA ====================================
 
 @app.route("/genre", methods=['POST'])
 def genre():
+
+    if not session.get('username'):
+        return redirect(url_for("home"))
     session['media_type'] = request.form['media']
     print(session)
 
@@ -218,6 +225,8 @@ def genre():
 @app.route("/scramble", methods=['POST'])
 def scramble():
 
+    if not session.get('username'):
+        return redirect(url_for("home"))
     if 'from' in session and session.get('from') == "genre.html":
         session['genre'] = request.form['genre']
         session['genre_encoded'] = request.form['apigenre']
@@ -309,21 +318,23 @@ def scramble():
 
             #dictionary['emma'] = 'chin'
             session['dict'] = dictionary
-                        
+
             print('---------------------scramble')
             print(session)
             ddd = {'eky', 'sass'}
-            
+
             return render_template('scramble.html', genre=genre, title_words=title_words,
                                    scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed, dictionary=dictionary)
 
-        
+
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 
 @app.route("/check", methods=['POST'])
 def check():
 
+    if not session.get('username'):
+        return redirect(url_for("home"))
     print('---------------------check')
     print(session)
     print(request.form)
@@ -364,6 +375,9 @@ def check():
 
 @app.route("/result")
 def result():
+
+    if not session.get('username'):
+        return redirect(url_for("home"))
     book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon', 'Type']
     movie_deets = ['Title', 'Poster', 'Description', 'Date', 'Type']
     game_deets = []
@@ -420,7 +434,7 @@ def result():
     else:
         in_faves = False
 
-    print('in_faves', in_faves)   
+    print('in_faves', in_faves)
 
     db.commit()
     db.close()

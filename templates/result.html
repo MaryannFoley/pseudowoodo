@@ -23,10 +23,12 @@
 </br>
 <br>
       {% if in_faves %}
-	  <form action="/remove_fav">	
-	    <button type="submit" class="button" name="submit" value="Remove from Favorites" > Remove From Favorites</button>
+	  <form action="/remove_fav">
+	    <button type="submit" class="button" name="submit" value="Remove From Favorites" > Remove From Favorites</button>
+      <input type="hidden" name="Title" value="{{details['Title']}}">
+	    <input type="hidden" name="Type" value="{{details['Type']}}">
 	  </form>
-	
+
       {% else %}
       <form action="/add_fav">
 	<!--{{details}}
@@ -103,7 +105,7 @@
       <p><center>{{deet}}: {{details[deet]}}</center></p>
     </div>
   </div>
-  
+
 </div>
 {% endif %}
 {% endif %}

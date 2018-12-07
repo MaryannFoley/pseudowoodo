@@ -78,3 +78,16 @@ def addGame(user, media_type, title):
     u.execute('INSERT INTO game_faves VALUES (?,?,?);', (user, media_type, title))
     db.commit()
     db.close()
+
+def deleteFave(user,media_type,title):
+    DB_FILE = "data/database.db"
+    db = sqlite3.connect(DB_FILE)
+    u = db.cursor()
+    u.execute("SELECT * from "+media_type+"_faves WHERE "+media_type+"_faves.title = ? AND user=?;", (title,user,))
+    x = u.fetchall()
+    print(x)
+    if len(x)==0:
+        return
+    u.execute("DELETE FROM "+media_type+"_faves WHERE title = ? AND user=?",(title,user))
+    db.commit()
+    db.close()
