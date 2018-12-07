@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %} something {% endblock %}
+{% block content %}
+<head>
+  <style>
+    .button {
+    background-color:#F4F4F4;
+    margin:auto;
+    position: absolute;
+    right: 44%;
+    }
+  </style>
+</head>
+<h2> {{page_title}} </h2>
+
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <h2> <center> {{title}} </center></h2>
+    </div>
+  </div>
+</div>
+</br>
+<br>
+      {% if in_faves %}
+	  <form action="/remove_fav">
+	    <button type="submit" class="button" name="submit" value="Remove From Favorites" > Remove From Favorites</button>
+      <input type="hidden" name="Title" value="{{details['Title']}}">
+	    <input type="hidden" name="Type" value="{{details['Type']}}">
+	  </form>
+
+      {% else %}
+      <form action="/add_fav">
+	<!--{{details}}
+	    {{details["Type"]}}-->
+	    <button type="submit" class="button" name="submit" value="Add To Favorites" > Add to Favorites </button>
+	    <input type="hidden" name="Title" value="{{details['Title']}}">
+	    <input type="hidden" name="Type" value="{{details['Type']}}">
+	{% if details["Type"] == "Books" %}
+	<input type="hidden" name="Author" value="{{details['Author']}}">
+	<input type="hidden" name="Description" value="{{details['Description']}}">
+	<input type="hidden" name="Date" value="{{details['Date']}}">
+	<input type="hidden" name="Amazon" value="{{details['Amazon']}}">
+	{% else %}
+	{% if details["Type"] == "Movies" %}
+	<input type="hidden" name="Poster" value="{{details['Poster']}}">
+	<input type="hidden" name="Description" value="{{details['Description']}}">
+	<input type="hidden" name="Date" value="{{details['Date']}}">
+	{% else %}
+	{% if details["Type"] == "Music" %}
+	<input type="hidden" name="Artist" value="{{details['Artist']}}">
+	<input type="hidden" name="Album" value="{{details['Album']}}">
+	<input type="hidden" name="Date" value="{{details['Date']}}">
+	<input type="hidden" name="Lyrics" value="{{details['Lyrics']}}">
+	{% else %}
+	<!-- VIDEO GAME STUFF HERE -->
+	{% endif %}
+	{% endif %}
+	{% endif %}
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+  {% for deet in details %}
+  {% if deet == "Amazon" %}
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <p> <center>Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a></center> </p>
+    </div>
+  </div>
+
+  {% else %}
+  {% if deet == "Lyrics" %}
+  <div class="row ">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <p> <center>Lyrics: <a href={{details[deet]}}>{{details[deet]}}</a></center> </p>
+    </div>
+  </div>
+
+  {% else %}
+  {% if deet == "Date" %}
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <p> <center>Release Date: {{details[deet]}}</center> </p>
+    </div>
+  </div>
+  {% else %}
+  {% if deet == "Poster" %}
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <p><center> <img src={{details[deet]}} alt="Img"></center> </p>
+    </div>
+  </div>
+  
+  {% else %}
+  <div class="row">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
+      <p><center>{{deet}}: {{details[deet]}}</center></p>
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+</div>
+
+{% endfor %}
+{% endblock %}

@@ -40,7 +40,7 @@
     {% for i in range(title_words| length) %}
     {% set word = title_words[i] %}
     {% if correctly_guessed[i] == False %}
-    <input type="text" name="guess_for_{{word}}" placeholder="{{word}}, Word {{i+1}}">
+    <input type="text" name="guess_for_{{word}}" placeholder="Word {{i+1}}">
     {% else %}
     <input type="hidden" name="guess_for_{{word}}" value={{word}}>
     {{word}}
