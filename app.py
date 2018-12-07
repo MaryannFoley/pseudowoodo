@@ -200,13 +200,12 @@ def remove_fav():
 
 #==================================== MEDIA ====================================
 
-@app.route("/genre", methods=['POST'])
+@app.route("/genre", methods=['GET', 'POST'])
 def genre():
 
     if not session.get('username'):
         return redirect(url_for("home"))
     session['media_type'] = request.form['media']
-    print(session)
 
     media_type = session.get('media_type')
 
@@ -248,51 +247,61 @@ def scramble():
 
 
     if media_type == 'Books':
-        types = types_Books
-        types_API = types_Books_API
-        info = BooksAPI.nyt(genre_encoded)
+        try:
+            types = types_Books
+            types_API = types_Books_API
+            info = BooksAPI.nyt(genre_encoded)
 
-        title = info['book_details'][0]['title']
-        date = info['published_date']
-        description = info['book_details'][0]['description']
-        link = info['amazon_product_url']
-        author = info['book_details'][0]['author']
+            title = info['book_details'][0]['title']
+            date = info['published_date']
+            description = info['book_details'][0]['description']
+            link = info['amazon_product_url']
+            author = info['book_details'][0]['author']
 
-        session['Description'] = description
-        session['Amazon'] = link
-        session['Author'] = author
+            session['Description'] = description
+            session['Amazon'] = link
+            session['Author'] = author
+        except Exception as e:
+            return redirect(url_for("home"))
+            
 
     #---------------------------
 
     elif media_type == 'Movies':
-        types = types_Movies
-        types_API = types_Movies_API
-        info = MoviesAPI.get_random_one([genre_encoded])
+        try:
+            types = types_Movies
+            types_API = types_Movies_API
+            info = MoviesAPI.get_random_one([genre_encoded])
 
-        title = info['title'].upper()
-        date = info['release_date']
-        description = info['overview']
-        poster = info['poster_path']
+            title = info['title'].upper()
+            date = info['release_date']
+            description = info['overview']
+            poster = info['poster_path']
 
-        session['Description'] = description
-        session['Poster'] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + poster
+            session['Description'] = description
+            session['Poster'] = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + poster
+        except Exception as e:
+            return redirect(url_for("home"))
 
-    #---------------------------
+    #---    ------------------------
 
     elif media_type == 'Music':
-        types = types_Music
-        types_API = types_Music_API
-        info = MusicAPI.get_song(genre_encoded)['track']
+        try:
+            types = types_Music
+            types_API = types_Music_API
+            info = MusicAPI.get_song(genre_encoded)['track']
 
-        title = info['track_name'].upper()
-        date = info['first_release_date'][0:10]
-        album = info['album_name']
-        artist = info['artist_name']
-        lyrics = info['track_share_url']
+            title = info['track_name'].upper()
+            date = info['first_release_date'][0:10]
+            album = info['album_name']
+            artist = info['artist_name']
+            lyrics = info['track_share_url']
 
-        session['Album'] = album
-        session['Artist'] = artist
-        session['Lyrics'] = lyrics
+            session['Album'] = album
+            session['Artist'] = artist
+            session['Lyrics'] = lyrics
+        except Exception as e:
+            return redirect(url_for("home"))
 
     #---------------------------
 
