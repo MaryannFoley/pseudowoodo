@@ -137,8 +137,8 @@ def faves():
 
 @app.route("/add_fav")
 def add_fave():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
+    datab = sqlite3.connect(DB_FILE)
+    u = datab.cursor()
 
     #print(request.args)
     user = session.get('username')
@@ -166,23 +166,24 @@ def add_fave():
         db.addMusic(user, media_type, title, artist, album, date, lyrics)
 
     else:
+        #-----------------------------------------------------------------------------VIDO GAME HERE-------------------------------------------------------
         db.addGame(user, media_type, title)
 
-    db.commit()
-    db.close()
+    datab.commit()
+    datab.close()
     return redirect(url_for('faves'))
 
 @app.route("/remove_fav")
 def remove_fav():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
+    datab = sqlite3.connect(DB_FILE)
+    u = datab.cursor()
 
     print(request.args)
 
 
 
-    db.commit()
-    db.close()
+    datab.commit()
+    datab.close()
 
 #==================================== MEDIA ====================================
 
@@ -280,11 +281,33 @@ def scramble():
     else:
         types = types_Games
         types_API = types_Games_API
-        info = BooksAPI.nyt(genre_encoded) #needs to be updated
+        info = VideoGamesAPI.get_rand_game(genre_encoded) #needs to be updated
 
-        title = info['book_details'][0]['title']
-        date = 'video game date ehre'
-
+        print(info)
+        title = info['name'].upper()
+        try:
+            date = info['release_date']
+        except Exception as e:
+            date = 'N/A'
+        try:
+            link = info['url']
+        except Exception as e:
+            link = 'N/A'
+            
+        try:
+            summary = info['summary']
+        except Exception as e:
+            summary = 'N/A'
+        try:
+            cover = info['cover']
+        except Exception as e:
+            cover = 'N/A'
+            
+        session['Link'] = link
+        session['Description'] = summary
+        session['Cover'] = cover
+        
+        
     #print(info)
 
     session['Title'] = title.upper()
@@ -312,7 +335,6 @@ def scramble():
                         
             print('---------------------scramble')
             print(session)
-            ddd = {'eky', 'sass'}
             
             return render_template('scramble.html', genre=genre, title_words=title_words,
                                    scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed, dictionary=dictionary)
@@ -338,24 +360,33 @@ def check():
     #    print(each+': ', request.form[each])
 
     #print('---------------------')
+    white_flag = request.form['surrender']
+    session['surrender'] = white_flag
+    if white_flag == 'no':
+        for each in request.form:
+            if 'scrambled' in each:
+                word = each.split('_')[2]
+                title_words.append(word)
+                scrambled_title_words.append(request.form['scrambled_for_'+word])
 
-    for each in request.form:
-        if 'scrambled' in each:
-            word = each.split('_')[2]
-            title_words.append(word)
-            scrambled_title_words.append(request.form['scrambled_for_'+word])
+                if word == request.form['guess_for_'+word].upper():
+                    #print('correct!')
+                    correctly_guessed.append(True)
+                else:
+                    #print('incorrect')
+                    correctly_guessed.append(False)
 
-            if word == request.form['guess_for_'+word].upper():
-                #print('correct!')
-                correctly_guessed.append(True)
-            else:
-                #print('incorrect')
-                correctly_guessed.append(False)
-
+    else:
+        i = 0
+        while i < len(correctly_guessed):
+            correctly_guessed[i] = True
+            i = i + 1
+                    
     for each in correctly_guessed:
         if not each:
             return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words,
-                                   correctly_guessed=correctly_guessed, dictionary=dictionary)
+                    correctly_guessed=correctly_guessed, dictionary=dictionary)
+        
     session['from'] = 'scramble'
     return redirect(url_for('result'))
 
@@ -366,7 +397,7 @@ def check():
 def result():
     book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon', 'Type']
     movie_deets = ['Title', 'Poster', 'Description', 'Date', 'Type']
-    game_deets = []
+    game_deets = ['Title', 'Cover', 'Description', 'Date', 'Link', 'Type']
     music_deets = ['Title', 'Artist', 'Album', 'Date', 'Lyrics', 'Type']
 
     pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}
@@ -381,6 +412,9 @@ def result():
         source = 'request'
         page_title = "Information"
         media_type = request.args['Type']
+
+    if session['surrender'] == "yes":
+        page_title = "You gave up, better luck next time!"
 
     for media in pairing:
         if media == media_type:

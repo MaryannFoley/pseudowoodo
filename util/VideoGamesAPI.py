@@ -49,8 +49,10 @@ def get_genres():
         req = request.Request(url + str(i['id']), headers = header)
         raw = request.urlopen(req).read()
         data = json.loads(raw)
+
         genre_numbers.append(i['id'])
         genre_names.append(data[0]['name'])
+        
     # print(genre_names)
     # print(genre_numbers)
 
@@ -81,7 +83,7 @@ def get_rand_game(genre_id):
 
     id_list = get_game_list(genre_id)
 
-    f = open("VideoGamesKey.txt","r")
+    f = open("util/VideoGamesKey.txt","r")
     key=f.read()
     f.close()
     key = key.rstrip("\n")
@@ -99,10 +101,18 @@ def get_rand_game(genre_id):
     data = {}
     data['name'] = info['name']
     data['url'] = info['url']
-    data['summary'] = info['summary']
-    data['release_date'] = info['release_dates'][0]['human']
-    data['cover'] = info['cover']['url']
-
+    try:
+        data['summary'] = info['summary']
+    except Exception as e:
+        data['summary'] = 'N/A'
+    try:
+        data['release_date'] = info['release_dates'][0]['human']
+    except Exception as e:
+        data['release_date'] = 'N/A'
+    try:
+        data['cover'] = info['cover']['url']
+    except Exception as e:
+        data['cover'] = 'N/A'
     #for i in data:
     #    print(i, data[i]) 
 

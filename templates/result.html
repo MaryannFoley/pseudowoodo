@@ -4,10 +4,10 @@
 <head>
   <style>
     .button {
-    background-color:#94C4E4;
-    margin:auto;
-    position: absolute;
-    right: 44%;
+	background-color:#94C4E4;
+	margin:auto;
+	position: absolute;
+	right: 44%;
     }
   </style>
 </head>
@@ -21,45 +21,43 @@
   </div>
 </div>
 </br>
-<br>
-      {% if in_faves %}
-	  <form action="/remove_fav">	
-	    <button type="submit" class="button" name="submit" value="Remove from Favorites" > Remove From Favorites</button>
-	  </form>
-	
-      {% else %}
-      <form action="/add_fav">
-	<!--{{details}}
-	    {{details["Type"]}}-->
-	    <button type="submit" class="button" name="submit" value="Add To Favorites" > Add to Favorites </button>
-	    <input type="hidden" name="Title" value="{{details['Title']}}">
-	    <input type="hidden" name="Type" value="{{details['Type']}}">
-	{% if details["Type"] == "Books" %}
-	<input type="hidden" name="Author" value="{{details['Author']}}">
-	<input type="hidden" name="Description" value="{{details['Description']}}">
-	<input type="hidden" name="Date" value="{{details['Date']}}">
-	<input type="hidden" name="Amazon" value="{{details['Amazon']}}">
-	{% else %}
-	{% if details["Type"] == "Movies" %}
-	<input type="hidden" name="Poster" value="{{details['Poster']}}">
-	<input type="hidden" name="Description" value="{{details['Description']}}">
-	<input type="hidden" name="Date" value="{{details['Date']}}">
-	{% else %}
-	{% if details["Type"] == "Music" %}
-	<input type="hidden" name="Artist" value="{{details['Artist']}}">
-	<input type="hidden" name="Album" value="{{details['Album']}}">
-	<input type="hidden" name="Date" value="{{details['Date']}}">
-	<input type="hidden" name="Lyrics" value="{{details['Lyrics']}}">
-	{% else %}
-	<!-- VIDEO GAME STUFF HERE -->
-	{% endif %}
-	{% endif %}
-	{% endif %}
-      </form>
-      {% endif %}
-    </div>
-  </div>
-</div>
+</br>
+
+{% if in_faves %}
+<form action="/remove_fav">	
+  <button type="submit" class="button" name="submit" value="Remove from Favorites" > Remove From Favorites</button></form>
+
+{% else %}
+<form action="/add_fav">
+  <!--{{details}}
+      {{details["Type"]}}-->
+  <button type="submit" class="button" name="submit" value="Add To Favorites" > Add to Favorites </button>
+  <input type="hidden" name="Title" value="{{details['Title']}}">
+  <input type="hidden" name="Type" value="{{details['Type']}}">
+  {% if details["Type"] == "Books" %}
+  <input type="hidden" name="Author" value="{{details['Author']}}">
+  <input type="hidden" name="Description" value="{{details['Description']}}">
+  <input type="hidden" name="Date" value="{{details['Date']}}">
+  <input type="hidden" name="Amazon" value="{{details['Amazon']}}">
+  {% else %}
+  {% if details["Type"] == "Movies" %}
+  <input type="hidden" name="Poster" value="{{details['Poster']}}">
+  <input type="hidden" name="Description" value="{{details['Description']}}">
+  <input type="hidden" name="Date" value="{{details['Date']}}">
+  {% else %}
+  {% if details["Type"] == "Music" %}
+  <input type="hidden" name="Artist" value="{{details['Artist']}}">
+  <input type="hidden" name="Album" value="{{details['Album']}}">
+  <input type="hidden" name="Date" value="{{details['Date']}}">
+  <input type="hidden" name="Lyrics" value="{{details['Lyrics']}}">
+  {% else %}
+  <!-- VIDEO GAME STUFF HERE -->
+  {% endif %}
+  {% endif %}
+  {% endif %}
+</form>
+{% endif %}
+
 <br>
 <br>
 <br>
@@ -103,13 +101,11 @@
       <p><center>{{deet}}: {{details[deet]}}</center></p>
     </div>
   </div>
-  
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
 </div>
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-
 
 {% endfor %}
 {% endblock %}
