@@ -3,7 +3,34 @@
 {% block content %}
   
 <h2> {{ genre }} </h2>
+<head>
+  <style>
+    input[type=text] {
+    width: 10%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    }
+    .button{
+    font-family: "Times New Roman", Times, serif;
+    float: left;
+    background-color:#F4F4F4 !important;
+    border: none;
+    width:100%;
+    color: black;
+    padding: 14px 16px;
+    text-align: center;
+    text-decoration: none;
+    diaplay: inline-block;
+    font-size: 15px;
+    margin: 0px 0px;
+    cursor: pointer;
+    }
+    
+  </style>
 
+</head>
+<body>
 <p> 
   Scrambled Title: 
   {% for word in scrambled_title_words %}
@@ -11,9 +38,7 @@
   {% endfor %}
   
   <form action="/check", method="POST">
-
-    <input type="hidden" name="genre" value="{{genre}}">
-    
+    <input type="hidden" name="genre" value="{{genre}}">    
     {% for i in range(title_words| length) %}
     {% set word = title_words[i] %}
     {% if correctly_guessed[i] == False %}
@@ -21,9 +46,7 @@
     {% else %}
     <input type="hidden" name="guess_for_{{word}}" value={{word}}>
     {{word}}
-    {% endif %}
-    
-    
+    {% endif %}    
     <input type="hidden" name="scrambled_for_{{word}}" value={{scrambled_title_words[i]}}>
     <input type="hidden" name="status_for_{{word}}" value={{correctly_guessed[i]}}>
 
@@ -31,28 +54,45 @@
 
     <br>
     <br>
-
-    {% for i in range(title_words| length) %}
-    {% set word = title_words[i] %}
-    {% if correctly_guessed[i] == False %}
-    Word {{i+1}} Definition:
-    {% if dictionary[word][0] %}
-    {{dictionary[word][1]}}
-    {% else %}
-    No definition avaliable
-    {% endif %}
-    <br>
-    {% endif %}
-    {% endfor %}
-    <br>
-
+    <p>
+    <div class="container">
+      <table class="table table-striped">
+	<tr>
+	  <th>Word Number</th>
+	  <th>Definition</th>
+	</tr>
+	<tr>
+      {% for i in range(title_words| length) %}
+      {% set word = title_words[i] %}
+      {% if correctly_guessed[i] == False %}
+      <td>
+	Word {{i+1}}:
+      </td>
+      {% if dictionary[word][0] %}
+      <td>
+	{{dictionary[word][1]}}
+      </td>
+      {% else %}
+      <td>
+	No definition avaliable
+      </td>
+      {% endif %}
+      {% endif %}
+      </tr>
+      {% endfor %}
+      <br>
+    </div>
     <input type="hidden" name="surrender" value="no">
-    <button type="submit">Check your guess!</button>  
+    <button type="submit" class="button">Check your guess!</button>  
   </form>
-
+</p>
+</body>
+  <br>
+  <br>
+  <br>
   <form action="/check", method="POST">
     <input type="hidden" name="surrender" value="yes">
-    <button type="submit">Give up!</button>
+    <button class="button"type="submit">Give up!</button>
   </form>
 
 
