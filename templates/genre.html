@@ -31,14 +31,16 @@
 <p>
   <div class="container-fluid">
     <div class="row">
-  {% for i in range(genres| length) %}
+      {% for i in range(genres| length) %}
+      {% if genres[i]!="Guitar"  %}
   <div class="col-sm-3" style="background-color:#F4F4F4;">
 	<form action="/scramble", method="POST">
 	  <input type="hidden" name="genre" value="{{genres[i]}}">
 	  <input type="hidden" name="apigenre" value="{{genres_API[i]}}">
 	  <button class="button "type="submit">{{genres[i]}}</button>
 	</form>
-      </div>
+  </div>
+  {% endif %}
       {% endfor %}
     </div>
 
