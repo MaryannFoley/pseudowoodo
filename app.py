@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from flask import flash,Flask,request,render_template,session,url_for,redirect
 
-from util import BooksAPI, MoviesAPI, MusicAPI, scrambler, db
+from util import BooksAPI, dictAPI, MoviesAPI, MusicAPI, VideoGamesAPI, scrambler, db
 
 DB_FILE = "data/database.db"
 #
@@ -39,8 +39,8 @@ types_Movies_API = MoviesAPI.get_genres()[1]
 types_Music = MusicAPI.get_genres()[0]
 types_Music_API = MusicAPI.get_genres()[1]
 
-types_Games = []
-types_Games_API = []
+types_Games = VideoGamesAPI.get_genres()[0]
+types_Games_API = VideoGamesAPI.get_genres()[1]
 
 #======== Misc =========
 
@@ -61,6 +61,15 @@ def create_account():
     uname = request.form["new_username"]
     pwordA = request.form["new_password"]
     pwordB = request.form["confirm_password"]
+
+    if ' ' in uname or pwordA or pwordB:
+        flash('User credentials cannot contain spaces!')
+        return render_template("register.html")
+
+    if '' == uname or pwordA or pwordB:
+        flash('User credentials cannot be empty!')
+        return render_template("register.html")
+
     u = db.checkAccts()
     for person in u:
         if uname==person[0]: #checks if your username is unique
@@ -115,85 +124,87 @@ def logout():
 
 @app.route("/faves")
 def faves():
+
+    if not session.get('username'):
+        return redirect(url_for("home"))
     username=session.get('username')
 
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
-
     user_faves = []
-    
-    temp = u.execute("SELECT * from book_faves WHERE book_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
 
-    temp = u.execute("SELECT * from movie_faves WHERE movie_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
-    
-    temp = u.execute("SELECT * from game_faves WHERE game_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
+    temp=db.getFaves("book",username)
+    user_faves.extend(temp)
 
-    temp = u.execute("SELECT * from music_faves WHERE music_faves.user == (?);", (username,))
-    user_faves.extend(temp.fetchall())
+    temp=db.getFaves("movie",username)
+    user_faves.extend(temp)
+
+    temp=db.getFaves("game",username)
+    user_faves.extend(temp)
+
+    temp=db.getFaves("music",username)
+    user_faves.extend(temp)
 
     #print(user_faves)
-    
-    db.commit()
-    db.close()
 
     return render_template('user.html', user_name=username, favorites=user_faves)
 
 @app.route("/add_fav")
 def add_fave():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
 
+    if not session.get('username'):
+        return redirect(url_for("home"))
     #print(request.args)
     user = session.get('username')
     media_type = request.args['Type']
     title = request.args['Title']
-    
+
     if media_type == 'Books':
         author = request.args['Author']
         description = request.args['Description']
         date = request.args['Date']
         amazon = request.args['Amazon']
-        u.execute('INSERT INTO book_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, author, description, date, amazon))
+        db.addBook(user, media_type, title, author, description, date, amazon)
 
     elif media_type == 'Movies':
         poster = request.args['Poster']
         description = request.args['Description']
         date = request.args['Date']
-        u.execute('INSERT INTO movie_faves VALUES (?,?,?,?,?,?);', (user, media_type, title, poster, description, date))
+        db.addMovie(user, media_type, title, poster, description, date)
 
     elif media_type == 'Music':
         artist = request.args['Artist']
         album = request.args['Album']
         date = request.args['Date']
         lyrics = request.args['Lyrics']
-        u.execute('INSERT INTO music_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, artist, album, date, lyrics))
+        db.addMusic(user, media_type, title, artist, album, date, lyrics)
 
     else:
-        u.execute('INSERT INTO game_faves VALUES (?,?,?);', (user, media_type, title))
-    
-    db.commit()
-    db.close()
+        #-----------------------------------------------------------------------------VIDO GAME HERE-------------------------------------------------------
+        db.addGame(user, media_type, title)
+
     return redirect(url_for('faves'))
 
 @app.route("/remove_fav")
 def remove_fav():
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
+    if not session.get('username'):
+        return redirect(url_for("home"))
+    if request.args["Type"]=="Books":
+        type="book"
+    elif request.args["Type"]=="Movies":
+        type=movie
+    elif request.args["Type"]=="Video Games":
+        type="game"
+    else:
+        type="music"
+    db.deleteFave(session.get("username"),type,request.args['Title'])
+    return(redirect(url_for("faves")))
 
-    print(request.args)
-
-
-    
-    db.commit()
-    db.close()
-    
 #==================================== MEDIA ====================================
 
 @app.route("/genre", methods=['POST'])
 def genre():
+
+    if not session.get('username'):
+        return redirect(url_for("home"))
     session['media_type'] = request.form['media']
     print(session)
 
@@ -224,6 +235,8 @@ def genre():
 @app.route("/scramble", methods=['POST'])
 def scramble():
 
+    if not session.get('username'):
+        return redirect(url_for("home"))
     if 'from' in session and session.get('from') == "genre.html":
         session['genre'] = request.form['genre']
         session['genre_encoded'] = request.form['apigenre']
@@ -233,7 +246,6 @@ def scramble():
     genre = session.get('genre')
     genre_encoded = session.get('genre_encoded')
 
-    print(session)
 
     if media_type == 'Books':
         types = types_Books
@@ -287,10 +299,32 @@ def scramble():
     else:
         types = types_Games
         types_API = types_Games_API
-        info = BooksAPI.nyt(genre_encoded) #needs to be updated
+        info = VideoGamesAPI.get_rand_game(genre_encoded) #needs to be updated
 
-        title = info['book_details'][0]['title']
-        date = 'video game date ehre'
+        print(info)
+        title = info['name'].upper()
+        try:
+            date = info['release_date']
+        except Exception as e:
+            date = 'N/A'
+        try:
+            link = info['url']
+        except Exception as e:
+            link = 'N/A'
+
+        try:
+            summary = info['summary']
+        except Exception as e:
+            summary = 'N/A'
+        try:
+            cover = info['cover']
+        except Exception as e:
+            cover = 'N/A'
+
+        session['Link'] = link
+        session['Description'] = summary
+        session['Cover'] = cover
+
 
     #print(info)
 
@@ -308,21 +342,35 @@ def scramble():
 
             scrambled_title_words = []
             correctly_guessed = []
+            dictionary = {}
             for word in title_words:
                 scrambled_title_words.append(scrambler.scramble_word(word))
                 correctly_guessed.append(False)
+                dictionary[word] = dictAPI.get_def(word)
+
+            #dictionary['emma'] = 'chin'
+            session['dict'] = dictionary
+
+            print('---------------------scramble')
+            print(session)
+
             return render_template('scramble.html', genre=genre, title_words=title_words,
-                                   scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+                                   scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed, dictionary=dictionary)
+
+
     print("if you get here, something's very wrong")
     return "if you get here, something's very wrong"
 
 @app.route("/check", methods=['POST'])
 def check():
 
+    if not session.get('username'):
+        return redirect(url_for("home"))
+    print('---------------------check')
     print(session)
-
-    #print(request.form)
+    print(request.form)
     genre = session.get('genre')
+    dictionary = session.get('dict')
     title_words = []
     scrambled_title_words = []
     correctly_guessed = []
@@ -332,23 +380,33 @@ def check():
     #    print(each+': ', request.form[each])
 
     #print('---------------------')
+    white_flag = request.form['surrender']
+    session['surrender'] = white_flag
+    if white_flag == 'no':
+        for each in request.form:
+            if 'scrambled' in each:
+                word = each.split('_')[2]
+                title_words.append(word)
+                scrambled_title_words.append(request.form['scrambled_for_'+word])
 
-    for each in request.form:
-        if 'scrambled' in each:
-            word = each.split('_')[2]
-            title_words.append(word)
-            scrambled_title_words.append(request.form['scrambled_for_'+word])
+                if word == request.form['guess_for_'+word].upper().strip(' '):
+                    #print('correct!')
+                    correctly_guessed.append(True)
+                else:
+                    #print('incorrect')
+                    correctly_guessed.append(False)
 
-            if word == request.form['guess_for_'+word].upper():
-                #print('correct!')
-                correctly_guessed.append(True)
-            else:
-                #print('incorrect')
-                correctly_guessed.append(False)
+    else:
+        i = 0
+        while i < len(correctly_guessed):
+            correctly_guessed[i] = True
+            i = i + 1
 
     for each in correctly_guessed:
         if not each:
-            return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed)
+            return render_template('scramble.html', genre=genre, title_words=title_words, scrambled_title_words=scrambled_title_words,
+                    correctly_guessed=correctly_guessed, dictionary=dictionary)
+
     session['from'] = 'scramble'
     return redirect(url_for('result'))
 
@@ -357,9 +415,12 @@ def check():
 
 @app.route("/result")
 def result():
+
+    if not session.get('username'):
+        return redirect(url_for("home"))
     book_deets = ['Title', 'Author', 'Description', 'Date', 'Amazon', 'Type']
     movie_deets = ['Title', 'Poster', 'Description', 'Date', 'Type']
-    game_deets = []
+    game_deets = ['Title', 'Cover', 'Description', 'Date', 'Link', 'Type']
     music_deets = ['Title', 'Artist', 'Album', 'Date', 'Lyrics', 'Type']
 
     pairing = {'Books': book_deets, 'Movies': movie_deets, 'Video Games': game_deets, 'Music': music_deets}
@@ -374,7 +435,10 @@ def result():
         source = 'request'
         page_title = "Information"
         media_type = request.args['Type']
-        
+    if "surrender" in session:
+        if session['surrender'] == "yes":
+            page_title = "You gave up, better luck next time!"
+
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
@@ -389,35 +453,29 @@ def result():
                         else:
                             details[deet] = request.args[deet]
 
-    db = sqlite3.connect(DB_FILE)
-    u = db.cursor()
-
     user = session.get('username')
     title = details['Title']
-    if details['Type'] == 'Books': 
+    if details['Type'] == 'Books':
         author = details['Author']
-        dupes = u.execute('SELECT * FROM book_faves WHERE user = (?) AND title = (?) AND author = (?);', (user, title, author))
+        dupes = db.getBook(user, title, author)
     elif details['Type'] == 'Movies':
         date = details['Date']
-        dupes = u.execute('SELECT * FROM movie_faves WHERE user = (?) AND title = (?) AND date = (?);', (user, title, date))
+        dupes = db.getMovie(user, title, date)
     elif details['Type'] == 'Music':
         artist = details['Artist']
-        dupes = u.execute('SELECT * FROM music_faves WHERE user = (?) AND title = (?) AND artist = (?);', (user, title, artist))
+        dupes = db.getMusic(user, title, artist)
     else:
-        dupes = u.execute('SELECT * FROM game_faves WHERE user = (?) AND title = (?);', (user, title))
+        dupes = db.getGame(user, title)
 
-    dupes_fetched = dupes.fetchall()
-    print('*****dupes_fetched*****', dupes_fetched)
-    if len(dupes_fetched) > 0:
+    #print('*****dupes_fetched*****', dupes_fetched)
+    if len(dupes) > 0:
         in_faves = True
     else:
         in_faves = False
 
     print('in_faves', in_faves)
-        
-    db.commit()
-    db.close()
-    
+
+
     #print(details)
 
     print(session)
