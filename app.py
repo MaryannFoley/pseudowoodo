@@ -190,7 +190,7 @@ def remove_fav():
     if request.args["Type"]=="Books":
         type="book"
     elif request.args["Type"]=="Movies":
-        type=movie
+        type="movie"
     elif request.args["Type"]=="Video Games":
         type="game"
     else:

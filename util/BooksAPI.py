@@ -30,13 +30,13 @@ def nyt(genre):
         results=jdict1["results"]
     except Exception as e:
         raise Exception('Error: API error')
-        
+
     rand=int(random.random()*len(results))
     #print(jdict1)
     #print(results)
     #print('\n')
     #print(rand)
-    
+
     #print(len(results))
     #print('\n')
     #print(results)
@@ -52,7 +52,7 @@ def nyt_genres():
         f=open("util/BooksKey.txt","r")
     except FileNotFoundError as e:
         raise Exception('Error: <key>.txt file not found')
-    
+
     s=f.read().rstrip("\n")
     f.close()
     #f=open('./BooksKey.txt','r')
@@ -67,30 +67,17 @@ def nyt_genres():
         results=jdict1["results"]
     except Exception as e:
         raise Exception('Error: API error')
-        
+
     list_names = []
     list_names_encoded = []
 
     for each in results:
         list_names.append(each['list_name'])
         list_names_encoded.append(each['list_name_encoded'])
-        
+
     return list_names, list_names_encoded
 
 #nyt_genres()
 
 
 #print(nyt("young-adult"))
-
-def getInfo():
-    try:
-        URL="https://www.goodreads.com/book/title.json?key=lKPxIV6sgpHQ2rZ51dwn9A&title=LOOK+ALIVE+TWENTY-FIVE"
-        request1=urllib.request.urlopen(URL)
-        raw1=request1.read()
-        jdict1=json.loads(raw1)
-        #print(jdict1)
-    except Exception as e:
-        raise Exception('Error: API error')
-
-#print(nyt("combined-print-and-e-book-fiction"))
-#getInfo()
