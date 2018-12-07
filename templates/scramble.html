@@ -25,26 +25,26 @@
     font-size: 15px;
     margin: 0px 0px;
     cursor: pointer;
-    }    
+    }
   </style>
 </head>
 <body>
-<p> 
-  Scrambled Title: 
+<p>
+  Scrambled Title:
   {% for word in scrambled_title_words %}
   <b> {{ word }} </b>
   {% endfor %}
-  
+
   <form action="/check", method="POST">
-    <input type="hidden" name="genre" value="{{genre}}">    
+    <input type="hidden" name="genre" value="{{genre}}">
     {% for i in range(title_words| length) %}
     {% set word = title_words[i] %}
-    {% if correctly_guessed[i] == False %}
-    <input type="text" name="guess_for_{{word}}" placeholder="{{word}}, Word {{i+1}}">
+    {% if correctly_guessed[i] == False and dictionary[word][0] %}
+    <input type="text" name="guess_for_{{word}}" placeholder="Word {{i+1}}">
     {% else %}
     <input type="hidden" name="guess_for_{{word}}" value={{word}}>
     {{word}}
-    {% endif %}    
+    {% endif %}
     <input type="hidden" name="scrambled_for_{{word}}" value={{scrambled_title_words[i]}}>
     <input type="hidden" name="status_for_{{word}}" value={{correctly_guessed[i]}}>
 
@@ -81,7 +81,7 @@
 	    <br>
 	</div>
       <input type="hidden" name="surrender" value="no">
-      <button type="submit" class="button">Check your guess!</button>  
+      <button type="submit" class="button">Check your guess!</button>
   </form>
 
   <br>
