@@ -4,7 +4,7 @@
 
 # Text
 *.txt~
-./util/*.txt
+# ./util/*.txt
 
 __pycache__/
 *.py[cod]
