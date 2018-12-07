@@ -241,6 +241,46 @@ jackL -- 2018-12-06 14:08
 --------------------------------------------------------------
 - Completed video game api
 ==============================================================
+thomasZ -- 2018-12-06 19:47
+--------------------------------------------------------------
+- Implemented Video Games API; filled in all of its corresponding backend in app.py (I think)
+- Implemented Dictionary API; filled in all of its corresponding backend in app.py (I think)
+- Connected Video Games API to front end
+- Connected Dictionary API to front in
+- Implemented Give Up button
+- Placed checks for Video Games API to make a field 'N/A' if nothing is retrieved from
+the API for that field
+==============================================================
+thomasZ -- 2018-12-06 20:16
+--------------------------------------------------------------
+- Disallowed user credentials from having '' and ' '
+- Trailing white space in guesses is stripped; trailing white space in guesses is therefore ignored
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
+firstL -- 2018-00-00 00:00
+--------------------------------------------------------------
+- One thing
+- Another thing
+==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------
 - One thing

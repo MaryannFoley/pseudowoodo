@@ -35,14 +35,24 @@
     {% for i in range(title_words| length) %}
     {% set word = title_words[i] %}
     {% if correctly_guessed[i] == False %}
-    Word {{i+1}} Definition: {{dictionary[word][1]}}
+    Word {{i+1}} Definition:
+    {% if dictionary[word][0] %}
+    {{dictionary[word][1]}}
+    {% else %}
+    No definition avaliable
+    {% endif %}
     <br>
     {% endif %}
     {% endfor %}
     <br>
-  
-    <button type="submit">Check your guess!</button>
-    
+
+    <input type="hidden" name="surrender" value="no">
+    <button type="submit">Check your guess!</button>  
+  </form>
+
+  <form action="/check", method="POST">
+    <input type="hidden" name="surrender" value="yes">
+    <button type="submit">Give up!</button>
   </form>
 
 
