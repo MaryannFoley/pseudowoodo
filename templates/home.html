@@ -6,7 +6,7 @@
   <style>
   .button{
   background-color: #94C4E4;
-  border: 0px solid black;
+  border: none;
   color:black;
   padding: 15px 32px;
   text-align:center;
@@ -20,7 +20,7 @@
 </head>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <h1>Welcome {{username}}! </h1>
     </div>
   </div>
@@ -28,7 +28,7 @@
 <br>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <h2>Topics </h2>
     </div>
   </div>
@@ -36,7 +36,7 @@
 </br>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-3" style="background-color:#94C4E4;">
+    <div class="col-sm-3" style="background-color:#F4F4F4;">
       <form action="/genre", method="POST">
 	<input type="hidden" name="media" value="Books">
 	<button type="submit" class="button">Books</button>
@@ -44,7 +44,7 @@
     </div>
   </div>
     <div class="row">
-    <div class="col-sm-3" style="background-color:#94C4E4;">
+    <div class="col-sm-3" style="background-color:#F4F4F4;">
       <form action="/genre", method="POST">
 	<input type="hidden" name="media" value="Movies">
 	<button type="submit" class="button">Movies</button>
@@ -52,7 +52,7 @@
     </div>
   </div>
     <div class="row">
-    <div class="col-sm-3" style="background-color:#94C4E4;">
+    <div class="col-sm-3" style="background-color:#F4F4F4;">
       <form action="/genre", method="POST">
 	<input type="hidden" name="media" value="Video Games">
 	<button type="submit" class="button">Video Games</button>
@@ -60,7 +60,7 @@
     </div>
   </div>
    <div class="row">
-    <div class="col-sm-3" style="background-color:#94C4E4;">
+    <div class="col-sm-3" style="background-color:#F4F4F4;">
       <form action="/genre", method="POST">
 	<input type="hidden" name="media" value="Music">
 	<button type="submit" class="button">Music</button>

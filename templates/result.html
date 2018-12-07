@@ -4,7 +4,7 @@
 <head>
   <style>
     .button {
-    background-color:#94C4E4;
+    background-color:#F4F4F4;
     margin:auto;
     position: absolute;
     right: 44%;
@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
   <div class="row ">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <h2> <center> {{title}} </center></h2>
     </div>
   </div>
@@ -31,7 +31,7 @@
       <form action="/add_fav">
 	<!--{{details}}
 	    {{details["Type"]}}-->
-	    <button type="submit" class="button" name="submit" value="Add To Favorites" > Remove From Favorites</button>
+	    <button type="submit" class="button" name="submit" value="Add To Favorites" > Add to Favorites</button>
 	    <input type="hidden" name="Title" value="{{details['Title']}}">
 	    <input type="hidden" name="Type" value="{{details['Type']}}">
 	{% if details["Type"] == "Books" %}
@@ -68,7 +68,7 @@
   {% for deet in details %}
   {% if deet == "Amazon" %}
   <div class="row">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <p> <center>Product Link on Amazon: <a href={{details[deet]}}>{{details[deet]}}</a></center> </p>
     </div>
   </div>
@@ -76,7 +76,7 @@
   {% else %}
   {% if deet == "Lyrics" %}
   <div class="row ">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <p> <center>Lyrics: <a href={{details[deet]}}>{{details[deet]}}</a></center> </p>
     </div>
   </div>
@@ -85,7 +85,7 @@
   {% if deet == "Date" %}
   <div class="row">
 
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <p> <center>Release Date: {{details[deet]}}</center> </p>
     </div>
   </div>
@@ -93,13 +93,13 @@
 
   {% if deet == "Poster" %}
   <div class="row">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <p><center> <img src={{details[deet]}} alt="Img"></center> </p>
     </div>
   </div>
   {% else %}
   <div class="row">
-    <div class="col-sm-12" style="background-color:#94C4E4;">
+    <div class="col-sm-12" style="background-color:#F4F4F4;">
       <p><center>{{deet}}: {{details[deet]}}</center></p>
     </div>
   </div>

@@ -4,17 +4,30 @@
 <br><br>
 <head>
   <style>
+    .line{
+    line-height:2.9;
+    }
+    .align{
+    text-align:center;
+    position:static;
+    }
   .button{
   background-color: #F4F4F4;
   border:none;
   color:black;
+  position: absolute;
+  width:490px;
+  line-height:0px;
+  right: 0%;
   padding: 15px 32px;
   text-align:center;
   text-decoration:none;
   diplay:inline-block;
-  font-size:16px;
   margin:0px 0px;
   curspor:pointer;
+  }
+  .no-margin{
+  margin:0px !important;
   }
   </style>
 </head>
@@ -25,32 +38,27 @@
     </div>
   </div>
 </div>
-
+<br>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-4" style="background-color:#F4F4F4;">
-      Title (Type)
+    </div>
+    <div class="col-sm-4" style="background-color:#F4F4F4;">
+    </div>
+    <div class="col-sm-4" style="background-color:#F4F4F4;">
     </div>
   </div>
+</div>
   
   {% for info in favorites %}
   <div class="row">
     <div class="col-sm-4" style="background-color:#F4F4F4;">
-      {{info[2]}}, ({{info[1]}}) {{info}}
+      <div class="line"><center>{{info[2]}}</center></div>
     </div>
-  </div>
-
-  <!--
-      For reference
-      c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, type TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT);")
-      c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, type TEXT, title TEXT, poster TEXT, description TEXT, date TEXT);")
-      c.execute("CREATE TABLE IF NOT EXISTS game_faves (user TEXT, type TEXT, title TEXT);")
-      c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, type TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT);")
-
-    -->
   
-   <div class="row">
-     <div class="col-sm-4" style="background-color:#F4F4F4;">
+    <div class="col-sm-4" style="background-color:#F4F4F4;">
+      <div class="line"> <center>{{info[1]}}</center></div>
+    </div>
        <form action = "/result">
 	 <input type="hidden" name="Title" value="{{info[2]}}">
 	 <input type="hidden" name="Type" value="{{info[1]}}">
@@ -75,10 +83,16 @@
 	 {% endif %}
 	 {% endif %}
 	 {% endif %}
-	 <input type="submit" name="submit" value = "More Information">
-       </form>
+     <div class="col-sm-4" style="background-color:#F4F4F4;">
+       <center> 
+	 <button type="submit" class="button" name="submit" value="More Information" > <center>More In formation</center></button>
+       </center>
+       </br>
+       </br>
      </div>
-   </div>
+       </form>
+  </div>
+</div>
    {% endfor %}
    
 </div>
