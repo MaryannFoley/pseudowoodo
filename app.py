@@ -10,26 +10,19 @@ from flask import flash,Flask,request,render_template,session,url_for,redirect
 
 from util import BooksAPI, dictAPI, MoviesAPI, MusicAPI, VideoGamesAPI, scrambler, db
 
+#=================================== SETUP ====================================
+'''Create database'''
 DB_FILE = "data/database.db"
-#
-# db = sqlite3.connect(DB_FILE)
-# c = db.cursor()
-#
-# #Creating our tables in our database
-# c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, pass TEXT)")
-# c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, isbn TEXT)")
-# c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, movie_id TEXT)")
-# c.execute("CREATE TABLE IF NOT EXISTS games_faves (user TEXT, game_id TEXT)")
-# c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, music_id TEXT)")
 
 db.create()
 
+'''Instantiate Flask'''
 app = Flask(__name__)
 app.secret_key=os.urandom(32)
 
-#============================== GLOBAL VARIABLES ==============================
+#====== GLOBAL VARIABLES ======
 
-#===== Book Genres =====
+"""Input all the genres and their searchable IDs into global lists"""
 types_Books = BooksAPI.nyt_genres()[0]
 types_Books_API = BooksAPI.nyt_genres()[1]
 
@@ -42,11 +35,9 @@ types_Music_API = MusicAPI.get_genres()[1]
 types_Games = VideoGamesAPI.get_genres()[0]
 types_Games_API = VideoGamesAPI.get_genres()[1]
 
-#======== Misc =========
-
-
 #==================================== HOME ====================================
 
+"""Home: if logged in, go to home.html; if not, go to login"""
 @app.route("/")
 def home():
     print(session)
@@ -56,17 +47,18 @@ def home():
 
 #=============================== REGISTER/LOGIN ===============================
 
+'''Create Account: create account based off of restriction checks'''
 @app.route("/create_account", methods=['POST'])
 def create_account():
     uname = request.form["new_username"]
     pwordA = request.form["new_password"]
     pwordB = request.form["confirm_password"]
 
-    if ' ' in uname or ' ' in pwordA or ' ' in pwordB:
+    if ' ' in uname or ' ' in pwordA or ' ' in pwordB: #check for spaces in credentials
         flash('User credentials cannot contain spaces!')
         return render_template("register.html")
 
-    if '' == uname or '' == pwordA or '' == pwordB:
+    if '' == uname or '' == pwordA or '' == pwordB: #check for empty credential fields
         flash('User credentials cannot be empty!')
         return render_template("register.html")
 
@@ -82,23 +74,26 @@ def create_account():
         db.createAcct(uname,pwordA)
     return redirect(url_for("home"))
 
+'''Login: allows user to input user credentials and login'''
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     print(session)
-    if session.get('username'):
+    if session.get('username'): #if user is logged in, just go to home
         return redirect(url_for("home"))
     return render_template("login.html")
 
+'''Register: allows user to register an account'''
 @app.route("/register")
 def register():
     return render_template('register.html')
 
+'''Authenticate: Does the actual "logging in" of the site by authenticating user credentials'''
 @app.route("/auth", methods=['POST'])
 def auth():
     givenUname=request.form["username"]
     givenPwd=request.form["password"]
     u = db.checkAccts()
-    found = False #if the user is found
+    found = False 
     for person in u: #for every person in the users table
         if givenUname==person[0]:
             found = True #user exists
@@ -114,6 +109,7 @@ def auth():
         flash("Please recheck your credentials and try again.")#username was wrong
     return redirect(url_for("login"))
 
+'''Logout: logs a user out of the site'''
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
     if session.get('username'):
@@ -122,6 +118,7 @@ def logout():
 
 #==================================== FAVES ====================================
 
+'''Faves: displays a user's favorite media (marked by user) that can refer back to the media's info page'''
 @app.route("/faves")
 def faves():
 
@@ -129,6 +126,7 @@ def faves():
         return redirect(url_for("home"))
     username=session.get('username')
 
+    #Gather all the favorites into user_faves
     user_faves = []
 
     temp=db.getFaves("book",username)
@@ -148,11 +146,12 @@ def faves():
     return render_template('user.html', user_name=username, favorites=user_faves)
 
 @app.route("/add_fav")
+
 def add_fave():
 
     if not session.get('username'):
         return redirect(url_for("home"))
-    #print(request.args)
+    print(request.args)
     user = session.get('username')
     media_type = request.args['Type']
     title = request.args['Title']
@@ -178,8 +177,11 @@ def add_fave():
         db.addMusic(user, media_type, title, artist, album, date, lyrics)
 
     else:
-        #-----------------------------------------------------------------------------VIDO GAME HERE-------------------------------------------------------
-        db.addGame(user, media_type, title)
+        cover = request.args['Cover']
+        description = request.args['Description']
+        date = request.args['Date']
+        link = request.args['Link']
+        db.addGame(user, media_type, title, cover, description, date, link)
 
     return redirect(url_for('faves'))
 
@@ -283,7 +285,7 @@ def scramble():
         except Exception as e:
             return redirect(url_for("home"))
 
-    #---    ------------------------
+    #---- ------------------------
 
     elif media_type == 'Music':
         try:
@@ -360,8 +362,8 @@ def scramble():
             #dictionary['emma'] = 'chin'
             session['dict'] = dictionary
 
-            print('---------------------scramble')
-            print(session)
+            #print('---------------------scramble')
+            #print(session)
 
             return render_template('scramble.html', genre=genre, title_words=title_words,
                                    scrambled_title_words=scrambled_title_words, correctly_guessed=correctly_guessed, dictionary=dictionary)
@@ -375,9 +377,9 @@ def check():
 
     if not session.get('username'):
         return redirect(url_for("home"))
-    print('---------------------check')
-    print(session)
-    print(request.form)
+    #print('---------------------check')
+    #print(session)
+    #print(request.form)
     genre = session.get('genre')
     dictionary = session.get('dict')
     title_words = []
@@ -451,6 +453,7 @@ def result():
     for media in pairing:
         if media == media_type:
             for deet in pairing[media]:
+                
                 if deet == 'Type':
                     details[deet] = media_type
                 else:
@@ -462,6 +465,7 @@ def result():
                         else:
                             details[deet] = request.args[deet]
 
+                print(details[deet])
     user = session.get('username')
     title = details['Title']
     if details['Type'] == 'Books':

@@ -10,7 +10,7 @@ def create():
     c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, pass TEXT);")
     c.execute("CREATE TABLE IF NOT EXISTS book_faves (user TEXT, type TEXT, title TEXT, author TEXT, description TEXT, date TEXT, amazon TEXT);")
     c.execute("CREATE TABLE IF NOT EXISTS movie_faves (user TEXT, type TEXT, title TEXT, poster TEXT, description TEXT, date TEXT);")
-    c.execute("CREATE TABLE IF NOT EXISTS game_faves (user TEXT, type TEXT, title TEXT);")
+    c.execute("CREATE TABLE IF NOT EXISTS game_faves (user TEXT, type TEXT, title TEXT, cover TEXT, description TEXT, date TEXT, link TEXT);")
     c.execute("CREATE TABLE IF NOT EXISTS music_faves (user TEXT, type TEXT, title TEXT, artist TEXT, album TEXT, date TEXT, lyrics TEXT);")
 
     db.commit()
@@ -72,11 +72,11 @@ def addMusic(user, media_type, title, artist, album, date, lyrics):
     db.commit()
     db.close()
 
-def addGame(user, media_type, title):
+def addGame(user, media_type, title, cover, description, date, link):
     DB_FILE = "data/database.db"
     db = sqlite3.connect(DB_FILE)
     u = db.cursor()
-    u.execute('INSERT INTO game_faves VALUES (?,?,?);', (user, media_type, title))
+    u.execute('INSERT INTO game_faves VALUES (?,?,?,?,?,?,?);', (user, media_type, title, cover, description, date, link))
     db.commit()
     db.close()
 

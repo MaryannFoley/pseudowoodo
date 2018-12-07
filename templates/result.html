@@ -53,7 +53,10 @@
 	<input type="hidden" name="Date" value="{{details['Date']}}">
 	<input type="hidden" name="Lyrics" value="{{details['Lyrics']}}">
 	{% else %}
-	<!-- VIDEO GAME STUFF HERE -->
+	<input type="hidden" name="Cover" value="{{details['Cover']}}">
+	<input type="hidden" name="Description" value="{{details['Description']}}">
+	<input type="hidden" name = "Link" value="{{details['Link']}}">
+	<input type="hidden" name = "Date" value="{{details['Date']}}">
 	{% endif %}
 	{% endif %}
 	{% endif %}
@@ -93,7 +96,7 @@
   </div>
   {% else %}
 
-  {% if deet == "Poster" %}
+  {% if deet == "Poster" or deet == "Cover"%}
   <div class="row">
     <div class="col-sm-12" style="background-color:#F4F4F4;">
       <p><center> <img src={{details[deet]}} alt="Img"></center> </p>
