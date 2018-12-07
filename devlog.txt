@@ -123,6 +123,14 @@ jackL -- 2018-11-30 14:08
 --------------------------------------------------------------
 1. Worked on retrieving movie list based on genre
 ==============================================================
+maryannF -- 2018-11-30 14:09
+--------------------------------------------------------------
+- Correct order of imports
+==============================================================
+maryannF -- 2018-11-30 14:09
+--------------------------------------------------------------
+- Random book choice!
+==============================================================
 thomasZ -- 2018-12-02 14:57
 --------------------------------------------------------------
 - Moved BookAPI.py to util
@@ -159,6 +167,11 @@ jackL -- 2018-12-03 14:09
 - Finished movie retrieval given genre
 - Made poster retrieval work
 ==============================================================
+maryannF -- 2018-12-03 17:00
+--------------------------------------------------------------
+- Add requirements.txt
+- Fix merge conflicts in BooksAPI.py
+==============================================================
 thomasZ -- 2018-12-03 20:14
 --------------------------------------------------------------
 - Fixed the bug where only one-worded genres worked
@@ -168,6 +181,10 @@ API-value equivalent into lists and it'll show up as buttons
 thomasZ -- 2018-12-03 22:09
 --------------------------------------------------------------
 - Implemented movie (functionality is now as far as books)
+==============================================================
+maryannF -- 2018-12-06 00:50
+--------------------------------------------------------------
+- Wrote readme (description, setup instructions, api keys, launch instructions, dependencies)
 ==============================================================
 jackL -- 2018-12-04 14:06
 --------------------------------------------------------------
@@ -184,6 +201,11 @@ thomasZ -- 2018-12-04 18:39
 - Music functionality is coming along
 - Music functionality is up to scramble.html showing properly;
 its and check's functionality isn't done yet
+==============================================================
+maryannF -- 2018-12-04 19:00
+--------------------------------------------------------------
+- Move API keys out of py files
+- Read key .txt files in python
 ==============================================================
 thomasZ -- 2018-12-05 01:20
 --------------------------------------------------------------
@@ -202,6 +224,10 @@ jackL -- 2018-12-05 01:37
 - Completed dictionary API
 - Need to fix video game api calling
 ==============================================================
+maryannF -- 2018-12-05 13:00
+--------------------------------------------------------------
+- Create data folder
+==============================================================
 thomasZ -- 2018-12-05 13:06
 --------------------------------------------------------------
 - Implemented proper try/raise blocks
@@ -216,6 +242,10 @@ thomasZ -- 2018-12-05 19:40
 - Altered /result so that it handles traffic from guessing correctly
 and clicking the "More Information" button in favorites
 - Implemented the display of favorite's more information at /result
+==============================================================
+maryannF -- 2018-12-05 20:00
+--------------------------------------------------------------
+- Move create and check accounts out of app.py
 ==============================================================
 thomasZ -- 2018-12-06 00:23
 --------------------------------------------------------------
@@ -237,6 +267,11 @@ thomasZ -- 2018-12-06 12:46
 the first meaning of the word that shows up and picking a random defintion
 that is of that meaning
 ==============================================================
+maryannF -- 2018-12-06 13:40
+--------------------------------------------------------------
+- Created get favorites funtion and implemented
+- Created add book, movie, music, and game functions and implemented
+==============================================================
 jackL -- 2018-12-06 14:08
 --------------------------------------------------------------
 - Completed video game api
@@ -256,10 +291,14 @@ thomasZ -- 2018-12-06 20:16
 - Disallowed user credentials from having '' and ' '
 - Trailing white space in guesses is stripped; trailing white space in guesses is therefore ignored
 ==============================================================
-firstL -- 2018-00-00 00:00
+maryannF -- 2018-12-06 22:00
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Remove favorite method
+- Add checks for username in all files
+==============================================================
+maryannF -- 2018-12-06 22:40
+--------------------------------------------------------------
+- Finished moving SQL methods out of app.py
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------
