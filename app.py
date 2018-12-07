@@ -61,6 +61,15 @@ def create_account():
     uname = request.form["new_username"]
     pwordA = request.form["new_password"]
     pwordB = request.form["confirm_password"]
+
+    if ' ' in uname or pwordA or pwordB:
+        flash('User credentials cannot contain spaces!')
+        return render_template("register.html")
+
+    if '' == uname or pwordA or pwordB:
+        flash('User credentials cannot be empty!')
+        return render_template("register.html")
+        
     u = db.checkAccts()
     for person in u:
         if uname==person[0]: #checks if your username is unique
@@ -369,7 +378,7 @@ def check():
                 title_words.append(word)
                 scrambled_title_words.append(request.form['scrambled_for_'+word])
 
-                if word == request.form['guess_for_'+word].upper():
+                if word == request.form['guess_for_'+word].upper().strip(' '):
                     #print('correct!')
                     correctly_guessed.append(True)
                 else:

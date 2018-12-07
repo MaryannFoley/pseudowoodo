@@ -251,10 +251,10 @@ thomasZ -- 2018-12-06 19:47
 - Placed checks for Video Games API to make a field 'N/A' if nothing is retrieved from
 the API for that field
 ==============================================================
-firstL -- 2018-00-00 00:00
+thomasZ -- 2018-12-06 20:16
 --------------------------------------------------------------
-- One thing
-- Another thing
+- Disallowed user credentials from having '' and ' '
+- Trailing white space in guesses is stripped; trailing white space in guesses is therefore ignored
 ==============================================================
 firstL -- 2018-00-00 00:00
 --------------------------------------------------------------
