@@ -54,8 +54,8 @@ def get_genres():
         genre_numbers.append(i['id'])
         genre_names.append(data[0]['name'])
 
-    # print(genre_names)
-    # print(genre_numbers)
+    #print(genre_names)
+    #print(genre_numbers)
 
     return genre_names, genre_numbers
 
